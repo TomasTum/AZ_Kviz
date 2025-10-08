@@ -1,6 +1,7 @@
-# AZ_Kviz
+# AZ Kvíz
 
 Ročníkový projekt
+
 Tomáš Tůma
 
 Cíl projektu: Vytvořit desktopovou aplikaci v C# inspirovanou populární televizní soutěží
