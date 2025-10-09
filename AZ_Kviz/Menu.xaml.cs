@@ -20,5 +20,16 @@ namespace AZ_Kviz
         {
             InitializeComponent();
         }
+
+        private void konec_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Nastaveni nastaveni = new Nastaveni();
+            nastaveni.ShowDialog();
+        }
     }
 }
