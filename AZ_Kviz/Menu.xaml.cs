@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Data.Sqlite;
+using System.IO;
 
 namespace AZ_Kviz
 {
