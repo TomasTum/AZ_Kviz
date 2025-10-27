@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Data.Sqlite;
 
 namespace AZ_Kviz
 {
@@ -19,9 +20,13 @@ namespace AZ_Kviz
     /// </summary>
     public partial class Hra : Window
     {
+        private Board board;
+
         public Hra()
         {
             InitializeComponent();
+            board = new Board(GameBoard);
+            board.GenerateBoard();
         }
     }
 }

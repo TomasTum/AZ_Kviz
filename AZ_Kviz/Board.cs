@@ -1,14 +1,56 @@
-﻿using System;
+﻿using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
-using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace AZ_Kviz
 {
-    class Board
+    public class Board
     {
+        private readonly Canvas canvas;
+        private const int TotalRows = 7;
+        private const double HexWidth = 60;
+        private const double HexHeight = 52;
+        private const double StartX = 350;
+        private const double StartY = 40;
+
+        public List<Cell> Cells { get; private set; } = new List<Cell>();
+
+        public Board(Canvas canvas)
+        {
+            this.canvas = canvas;
+        }
+
+        public void GenerateBoard()
+        {
+            int number = 1;
+
+            for (int row = 0; row < TotalRows; row++)
+            {
+                int cols = row + 1;
+                for (int col = 0; col < cols; col++)
+                {
+                    Cell cell = new Cell(number);
+                    cell.SetNumber(number.ToString());
+
+                    double offsetX = StartX - (row * HexWidth / 2) + col * HexWidth;
+                    double offsetY = StartY + row * (HexHeight - 5);
+
+                    Canvas.SetLeft(cell.Button, offsetX);
+                    Canvas.SetTop(cell.Button, offsetY);
+                    canvas.Children.Add(cell.Button);
+
+                    Cells.Add(cell);
+                    number++;
+                }
+            }
+        }
     }
 }

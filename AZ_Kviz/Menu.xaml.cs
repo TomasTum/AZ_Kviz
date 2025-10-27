@@ -23,15 +23,21 @@ namespace AZ_Kviz
             InitializeComponent();
         }
 
-        private void konec_Click(object sender, RoutedEventArgs e)
+        private void Hra_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Hra hra = new Hra();
+            hra.ShowDialog();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Nastaveni_Click(object sender, RoutedEventArgs e)
         {
             Nastaveni nastaveni = new Nastaveni();
             nastaveni.ShowDialog();
+        }
+
+        private void konec_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

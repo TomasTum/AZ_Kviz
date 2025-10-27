@@ -8,7 +8,7 @@ using System.IO;
 
 namespace AZ_Kviz
 {
-    class Player
+    public class Player
     {
     }
 }

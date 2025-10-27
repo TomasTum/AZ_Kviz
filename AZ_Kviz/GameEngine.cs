@@ -8,7 +8,12 @@ using System.IO;
 
 namespace AZ_Kviz
 {
-    class GameEngine
+    public class GameEngine
     {
+
+        
+        
+        
+        
     }
 }
