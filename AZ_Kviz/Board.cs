@@ -14,14 +14,14 @@ namespace AZ_Kviz
 {
     public class Board
     {
-        private readonly Canvas canvas;
-        private const int TotalRows = 7;
-        private const double HexWidth = 60;
-        private const double HexHeight = 52;
-        private const double StartX = 350;
-        private const double StartY = 40;
+        private Canvas canvas;
+        private int TotalRows = 7;
+        private double HexWidth = 60;
+        private double HexHeight = 52;
+        private double StartX = 350;
+        private double StartY = 40;
 
-        public List<Cell> Cells { get; private set; } = new List<Cell>();
+        public List<Cell> Cells { get; set; } = new List<Cell>();
 
         public Board(Canvas canvas)
         {

@@ -21,9 +21,9 @@ namespace AZ_Kviz
 
     public class Cell
     {
-        public int Id { get; private set; }
-        public CellState State { get; private set; }
-        public Button Button { get; private set; }
+        public int Id { get; set; }
+        public CellState State { get; set; }
+        public Button Button { get; set; }
 
         public Cell(int id)
         {
@@ -38,39 +38,63 @@ namespace AZ_Kviz
             {
                 Width = 60,
                 Height = 60,
+                Margin = new Thickness(5),
+                
             };
+
+            // Vytvoření šestihranu
+            Polygon polygon = new Polygon
+            {
+                Points = new PointCollection
+                {
+                    new Point(30,0),
+                    new Point(60,15),
+                    new Point(60,45),
+                    new Point(30,60),
+                    new Point(0,45),
+                    new Point(0,15)
+                },
+                Fill = Brushes.LightGray,
+                Stroke = Brushes.Black,
+                StrokeThickness = 1
+            };
+
+            // Číslo uprostřed
+            TextBlock text = new TextBlock
+            {
+                Text = Id.ToString(),
+                FontSize = 16,
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+
+            ControlTemplate controlTemplate = new ControlTemplate(typeof(Button));
+            Grid grid = new Grid();
+
+            grid.Children.Add(polygon);
+            grid.Children.Add(text);
+
+            //controlTemplate.VisualTree = grid;
+
+
+
+
+            button.Content = grid;
             button.Click += (s, e) => OnClick();
 
-            // Šestihran
-            ControlTemplate template = new ControlTemplate(typeof(Button));
-            FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
-
-            FrameworkElementFactory polygon = new FrameworkElementFactory(typeof(Polygon));
-            polygon.SetValue(Polygon.NameProperty, "HexPolygon");
-            polygon.SetValue(Polygon.PointsProperty, PointCollection.Parse("30,0 60,15 60,45 30,60 0,45 0,15"));
-            polygon.SetValue(Polygon.FillProperty, Brushes.LightGray);
-            polygon.SetValue(Polygon.StrokeProperty, Brushes.Black);
-            polygon.SetValue(Polygon.StrokeThicknessProperty, 1.0);
-            grid.AppendChild(polygon);
-
-            FrameworkElementFactory content = new FrameworkElementFactory(typeof(ContentPresenter));
-            content.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
-            content.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
-            content.SetValue(TextBlock.FontSizeProperty, 16.0);
-            content.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
-            grid.AppendChild(content);
-
-            template.VisualTree = grid;
-            button.Template = template;
-
+           
             return button;
         }
+
+
 
         private void OnClick()
         {
             Random rnd = new Random();
             var question = Database.GetQuestionById(rnd.Next(1, 6));
-            MessageBox.Show(question.Value.Otazka.ToString());
+            MessageBox.Show(question.Value.Otazka.ToString(),"Políčko: " + Id);
         }
 
         public void SetNumber(string number)
