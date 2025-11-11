@@ -10,7 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\azkviz.db" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="AZ kviz.ico" />
+    <Content Include="Data\azkviz.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

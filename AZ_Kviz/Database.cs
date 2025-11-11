@@ -11,25 +11,37 @@ namespace AZ_Kviz
 {
     public class Database
     {
-        // Cesta k databázi (Data složka je v kořenové složce projektu)
-        private static string dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data", "azkviz.db");
+        //cesta k databázi ve visual studiu
+        private static string dbPath1 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data", "azkviz.db");
+        //cesta k databázi v publikované verzi
+        private static string dbPath2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "azkviz.db");
 
-        // Převod na absolutní cestu
-        private static string absoluteDbPath = Path.GetFullPath(dbPath);
-
-        // Připojovací řetězec
-        private static string connectionString = $"Data Source={absoluteDbPath}";
-
+        private static string connectionString1 => $"Data Source={Path.GetFullPath(dbPath1)}";
+        private static string connectionString2 => $"Data Source={Path.GetFullPath(dbPath2)}";
 
         public static SqliteConnection GetConnection()
         {
-            if (!File.Exists(dbPath))
+            string chosenPath;
+            string chosenConnection;
+
+            if (File.Exists(dbPath1))
             {
-                throw new FileNotFoundException("Databázový soubor nebyl nalezen!", dbPath);
+                chosenPath = dbPath1;
+                chosenConnection = connectionString1;
+            }
+            else if (File.Exists(dbPath2))
+            {
+                chosenPath = dbPath2;
+                chosenConnection = connectionString2;
+            }
+            else
+            {
+                throw new FileNotFoundException("Databázový soubor nebyl nalezen v žádné z očekávaných cest!", $"{dbPath1} nebo {dbPath2}");
             }
 
-            return new SqliteConnection(connectionString);
+            return new SqliteConnection(chosenConnection);
         }
+
 
         public static (string Otazka, string Odpoved)? GetQuestionById(int id)
         {
