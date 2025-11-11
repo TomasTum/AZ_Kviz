@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Data;
 
 namespace AZ_Kviz
 {
@@ -32,6 +33,8 @@ namespace AZ_Kviz
             State = CellState.Free;
         }
 
+        FrameworkElementFactory polygonF;
+
         private Button CreateButton()
         {
             Button button = new Button
@@ -39,49 +42,76 @@ namespace AZ_Kviz
                 Width = 60,
                 Height = 60,
                 Margin = new Thickness(5),
-                
             };
 
-            // Vytvoření šestihranu
-            Polygon polygon = new Polygon
+
+            //// Vytvoření šestihranu
+            //Polygon polygon = new Polygon
+            //{
+            //    Points = new PointCollection
+            //    {
+            //        new Point(30,0),
+            //        new Point(60,15),
+            //        new Point(60,45),
+            //        new Point(30,60),
+            //        new Point(0,45),
+            //        new Point(0,15)
+            //    },
+            //    Fill = Brushes.LightGray,
+            //    Stroke = Brushes.Black,
+            //    StrokeThickness = 1
+            //};
+
+            //// Číslo uprostřed
+            //TextBlock text = new TextBlock
+            //{
+            //    Text = Id.ToString(),
+            //    FontSize = 16,
+            //    FontWeight = FontWeights.Bold,
+            //    HorizontalAlignment = HorizontalAlignment.Center,
+            //    VerticalAlignment = VerticalAlignment.Center
+            //};
+
+
+            //Grid grid = new Grid();
+            //grid.Children.Add(polygon);
+            //grid.Children.Add(text);
+            //button.Content = grid;
+
+
+            ControlTemplate template = new ControlTemplate(typeof(Button));
+            FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
+
+            polygonF = new FrameworkElementFactory(typeof(Polygon));
+            polygonF.SetValue(Polygon.NameProperty, "HexPolygon");
+            polygonF.SetValue(Polygon.PointsProperty, PointCollection.Parse("30,0 60,15 60,45 30,60 0,45 0,15"));
+
+
+            //polygonF.SetValue(Polygon.FillProperty, Brushes.White); nahrazeno níže
+            var fillBinding = new Binding("Background")
             {
-                Points = new PointCollection
-                {
-                    new Point(30,0),
-                    new Point(60,15),
-                    new Point(60,45),
-                    new Point(30,60),
-                    new Point(0,45),
-                    new Point(0,15)
-                },
-                Fill = Brushes.LightGray,
-                Stroke = Brushes.Black,
-                StrokeThickness = 1
+                RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent)
             };
+            polygonF.SetBinding(Polygon.FillProperty, fillBinding);
 
-            // Číslo uprostřed
-            TextBlock text = new TextBlock
-            {
-                Text = Id.ToString(),
-                FontSize = 16,
-                FontWeight = FontWeights.Bold,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
+            // nastavit implicitní background
+            button.Background = Brushes.White;
 
+            polygonF.SetValue(Polygon.StrokeProperty, Brushes.Black);
+            polygonF.SetValue(Polygon.StrokeThicknessProperty, 1.0);
+            grid.AppendChild(polygonF);
 
-            ControlTemplate controlTemplate = new ControlTemplate(typeof(Button));
-            Grid grid = new Grid();
+            FrameworkElementFactory content = new FrameworkElementFactory(typeof(ContentPresenter));
+            content.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+            content.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
+            content.SetValue(TextBlock.FontSizeProperty, 16.0);
+            content.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
+            grid.AppendChild(content);
 
-            grid.Children.Add(polygon);
-            grid.Children.Add(text);
+            template.VisualTree = grid;
+            button.Template = template;
 
-            //controlTemplate.VisualTree = grid;
-
-
-
-
-            button.Content = grid;
+            
             button.Click += (s, e) => OnClick();
 
            
@@ -92,6 +122,9 @@ namespace AZ_Kviz
 
         private void OnClick()
         {
+            Button.Background = Brushes.LightBlue;
+
+
             Random rnd = new Random();
             var question = Database.GetQuestionById(rnd.Next(1, 6));
             MessageBox.Show(question.Value.Otazka.ToString(),"Políčko: " + Id);
