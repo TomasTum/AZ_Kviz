@@ -11,8 +11,15 @@ namespace AZ_Kviz
 {
     public class Database
     {
-        private static string dbPath = Path.Combine("Data", "azkviz.db");
-        private static string connectionString = $"Data Source={dbPath}";
+        // Cesta k databázi (Data složka je v kořenové složce projektu)
+        private static string dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data", "azkviz.db");
+
+        // Převod na absolutní cestu
+        private static string absoluteDbPath = Path.GetFullPath(dbPath);
+
+        // Připojovací řetězec
+        private static string connectionString = $"Data Source={absoluteDbPath}";
+
 
         public static SqliteConnection GetConnection()
         {
