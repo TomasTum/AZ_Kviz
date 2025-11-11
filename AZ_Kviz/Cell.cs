@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Data;
+using System.Reflection;
 
 namespace AZ_Kviz
 {
@@ -42,6 +43,7 @@ namespace AZ_Kviz
                 Width = 60,
                 Height = 60,
                 Margin = new Thickness(5),
+                Cursor = System.Windows.Input.Cursors.Hand,
             };
 
 
