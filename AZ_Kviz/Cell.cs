@@ -46,41 +46,6 @@ namespace AZ_Kviz
                 Cursor = System.Windows.Input.Cursors.Hand,
             };
 
-
-            //// Vytvoření šestihranu
-            //Polygon polygon = new Polygon
-            //{
-            //    Points = new PointCollection
-            //    {
-            //        new Point(30,0),
-            //        new Point(60,15),
-            //        new Point(60,45),
-            //        new Point(30,60),
-            //        new Point(0,45),
-            //        new Point(0,15)
-            //    },
-            //    Fill = Brushes.LightGray,
-            //    Stroke = Brushes.Black,
-            //    StrokeThickness = 1
-            //};
-
-            //// Číslo uprostřed
-            //TextBlock text = new TextBlock
-            //{
-            //    Text = Id.ToString(),
-            //    FontSize = 16,
-            //    FontWeight = FontWeights.Bold,
-            //    HorizontalAlignment = HorizontalAlignment.Center,
-            //    VerticalAlignment = VerticalAlignment.Center
-            //};
-
-
-            //Grid grid = new Grid();
-            //grid.Children.Add(polygon);
-            //grid.Children.Add(text);
-            //button.Content = grid;
-
-
             ControlTemplate template = new ControlTemplate(typeof(Button));
             FrameworkElementFactory grid = new FrameworkElementFactory(typeof(Grid));
 
@@ -141,21 +106,6 @@ namespace AZ_Kviz
         {
             State = newState;
 
-            if (Button.Template.FindName("HexPolygon", Button) is Polygon poly)
-            {
-                switch (State)
-                {
-                    case CellState.Player1:
-                        poly.Fill = Brushes.LightBlue;
-                        break;
-                    case CellState.Player2:
-                        poly.Fill = Brushes.LightCoral;
-                        break;
-                    default:
-                        poly.Fill = Brushes.White;
-                        break;
-                }
-            }
         }
     }
 }
