@@ -8,8 +8,8 @@
         Title="AZ-kvíz" Height="450" Width="800" FontFamily="Arial">
     <Grid>
         <Label Content="AZ-kvíz" FontWeight="Bold" FontSize="40" Width="220" Margin="290,50,290,305" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="20" Width="300" >
-            <Button x:Name="Hra" Content="Nová hra" Height="45" Margin="5" FontSize="20" Click="Hra_Click">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="20" Width="300">
+            <Button x:Name="Hra" Content="Nová hra" Height="45" Margin="5" FontSize="20" Click="Hra_Click" Cursor="Hand">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFFFCF78" Offset="0.109"/>
@@ -17,7 +17,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button x:Name="Nastaveni" Content="Nastavení" Height="45" Margin="5" Click="Nastaveni_Click" FontSize="20">
+            <Button x:Name="Nastaveni" Content="Nastavení" Height="45" Margin="5" Click="Nastaveni_Click" FontSize="20" Cursor="Hand">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFFFCF78" Offset="0.109"/>
@@ -25,7 +25,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <Button x:Name="Konec" Content="Konec" Height="45" Margin="5" Click="konec_Click" FontSize="20" Cursor="">
+            <Button x:Name="Konec" Content="Konec hry" Height="45" Margin="5" Click="Konec_Click" FontSize="20" Cursor="Hand">
                 <Button.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFFFCF78" Offset="0.109"/>

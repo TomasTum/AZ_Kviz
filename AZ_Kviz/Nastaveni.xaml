@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="Nastaveni" Height="450" Width="800">
     <Grid>
-        
+        <Label Content="Nastavení" FontWeight="Bold" FontSize="40" Width="220" Margin="290,50,290,305" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
+        <Button x:Name="databaze" Content="Databáze otázek" Height="45" Width="250" Margin="275,195,275,194" Click="Databaze_Click" FontSize="20" Cursor="Hand">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                    <GradientStop Color="Orange" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="zpet" Content="Zpět" Height="45" Width="150" Margin="325,351,325,38" Click="Konec_Click" FontSize="20" Cursor="Hand">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                    <GradientStop Color="Orange" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

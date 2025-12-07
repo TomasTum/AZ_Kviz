@@ -35,7 +35,7 @@ namespace AZ_Kviz
             nastaveni.ShowDialog();
         }
 
-        private void konec_Click(object sender, RoutedEventArgs e)
+        private void Konec_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

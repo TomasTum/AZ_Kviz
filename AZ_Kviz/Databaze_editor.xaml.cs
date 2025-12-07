@@ -11,28 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Microsoft.Data.Sqlite;
-using System.IO;
 
 namespace AZ_Kviz
 {
     /// <summary>
-    /// Interakční logika pro Nastaveni.xaml
+    /// Interakční logika pro Databaze_editor.xaml
     /// </summary>
-    public partial class Nastaveni : Window
+    public partial class Databaze_editor : Window
     {
-        public Nastaveni()
+        public Databaze_editor()
         {
             InitializeComponent();
-        }
-
-        private void Databaze_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-        private void Konec_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }
