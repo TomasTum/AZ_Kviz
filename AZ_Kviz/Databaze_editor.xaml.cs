@@ -23,5 +23,7 @@ namespace AZ_Kviz
         {
             InitializeComponent();
         }
+
+       
     }
 }
