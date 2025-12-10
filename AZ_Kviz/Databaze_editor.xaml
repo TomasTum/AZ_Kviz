@@ -6,17 +6,42 @@
         xmlns:local="clr-namespace:AZ_Kviz"
         xmlns:Sqlite="clr-namespace:Microsoft.Data.Sqlite;assembly=Microsoft.Data.Sqlite" x:Class="AZ_Kviz.Databaze_editor"
         mc:Ignorable="d"
-        Title="Databaze_editor" Height="450" Width="800">
-    <Grid>
-        <Label Content="Databáze" FontWeight="Bold" FontSize="40" Width="220" Margin="290,50,290,305" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
-        <DataGrid HorizontalAlignment="Center" Height="163" Margin="0,158,0,0" VerticalAlignment="Top" Width="696">
+        SizeToContent="WidthAndHeight"
+        MinHeight="700" MinWidth="900"
+        Title="Databaze_editor" >
+    <Grid Loaded="Grid_Loaded">
+        <Label Content="Databáze" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
+        <DataGrid x:Name="Datagrid" HorizontalAlignment="Center" Height="270" Margin="0,136,0,0" VerticalAlignment="Top" Width="624" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" FontSize="14"/>
-                <DataGridTextColumn Header="Otázka" FontSize="14"/>
-                <DataGridTextColumn Header="Správná odpověď" FontSize="14"/>
-                <DataGridTextColumn Header="Kategorie" FontSize="14"/>
+                <DataGridTextColumn x:Name="ID" Header="ID" FontSize="14" Binding="{Binding Id}"/>
+                <DataGridTextColumn x:Name="Otazka" Header="Otázka" FontSize="14" Binding="{Binding Otazka}"/>
+                <DataGridTextColumn x:Name="SpravnaOdpoved" Header="Správná odpověď" FontSize="14" Binding="{Binding SpravnaOdpoved}"/>
+                <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" FontSize="14" Binding="{Binding Kategorie}"/>
             </DataGrid.Columns>
         </DataGrid>
-
+        <Button Content="Přidat otázku" Margin="325,457,325,182" Height="45" Width="250" FontSize="20" Cursor="Hand">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                    <GradientStop Color="Orange" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button Content="Odebrat otázku" Margin="325,519,325,120" Height="45" Width="250" FontSize="20" Cursor="Hand">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                    <GradientStop Color="Orange" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="zpet" Content="Zpět" Height="45" Width="150" Margin="375,594,375,45" Click="Konec_Click" FontSize="20" Cursor="Hand">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                    <GradientStop Color="Orange" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

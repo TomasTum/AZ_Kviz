@@ -24,6 +24,25 @@ namespace AZ_Kviz
             InitializeComponent();
         }
 
-       
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Zavoláme novou metodu z tvé třídy Database
+                var data = Database.GetAllQuestions();
+
+                // Naplníme tabulku
+                Datagrid.ItemsSource = data;
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Chyba při načítání dat: " + ex.Message);
+            }
+        }
+
+        private void Konec_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

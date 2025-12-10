@@ -28,7 +28,8 @@ namespace AZ_Kviz
 
         private void Databaze_Click(object sender, RoutedEventArgs e)
         {
-            
+            Databaze_editor databaze_Editor = new Databaze_editor();
+            databaze_Editor.ShowDialog();
         }
         private void Konec_Click(object sender, RoutedEventArgs e)
         {

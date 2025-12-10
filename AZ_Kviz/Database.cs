@@ -65,5 +65,36 @@ namespace AZ_Kviz
                 return null;
             }
         }
+
+        public static List<Question> GetAllQuestions()
+        {
+            var seznam = new List<Question>();
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Category FROM Questions";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            seznam.Add(new Question
+                            {
+                                // Čísla v závorce (0, 1, 2...) odpovídají pořadí v SELECT příkazu
+                                Id = reader.GetInt32(0),
+                                Otazka = reader.GetString(1),
+                                SpravnaOdpoved = reader.GetString(2),
+                                // Ošetření, kdyby kategorie byla prázdná (null)
+                                Kategorie = reader.IsDBNull(3) ? "" : reader.GetString(3)
+                            });
+                        }
+                    }
+                }
+            }
+            return seznam;
+        }
     }
 }
