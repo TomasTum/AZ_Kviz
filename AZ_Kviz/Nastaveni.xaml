@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AZ_Kviz"
         mc:Ignorable="d"
-        Title="Nastaveni" Height="500" Width="830" Cursor="">
+        Title="Nastaveni" Height="500" Width="830">
     <Grid>
         <Label Content="Nastavení" FontWeight="Bold" FontSize="40" Width="220" Margin="0,87,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
         <Button x:Name="databaze" Content="Databáze otázek" Height="45" Width="250" Margin="275,195,275,194" Click="Databaze_Click" FontSize="20" Cursor="Hand">
