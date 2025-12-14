@@ -37,7 +37,7 @@ namespace AZ_Kviz
 
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Application.Current.Shutdown();
         }
     }
 }

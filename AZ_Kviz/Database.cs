@@ -96,5 +96,37 @@ namespace AZ_Kviz
             }
             return seznam;
         }
+
+        public static void DeleteQuestion(int id)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "DELETE FROM Questions WHERE Id = @id";
+                    command.Parameters.AddWithValue("@id", id);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void AddQuestion(string otazka, string odpoved, string kategorie)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "INSERT INTO Questions (QuestionText, CorrectAnswer, Category) VALUES (@otazka, @odpoved, @kategorie)";
+                    command.Parameters.AddWithValue("@otazka", otazka);
+                    command.Parameters.AddWithValue("@odpoved", odpoved);
+                    command.Parameters.AddWithValue("@kategorie", string.IsNullOrEmpty(kategorie) ? (object)DBNull.Value : kategorie);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
