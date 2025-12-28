@@ -91,10 +91,17 @@ namespace AZ_Kviz
         {
             Button.Background = Brushes.LightBlue;
 
+            int maxId = Database.GetAllQuestions().Max(q => q.Id);      //poslední id v db
 
             Random rnd = new Random();
-            var question = Database.GetQuestionById(rnd.Next(1, 6));
-            MessageBox.Show(question.Value.Otazka.ToString(),"Políčko: " + Id);
+
+            var question = Database.GetQuestionById(rnd.Next(1, maxId + 1));
+            while (question == null)
+            {
+                question = Database.GetQuestionById(rnd.Next(1, maxId + 1));
+            }
+            MessageBox.Show(question.Value.Otazka.ToString(), "Políčko: " + Id);
+
         }
 
         public void SetNumber(string number)
