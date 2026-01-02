@@ -19,6 +19,7 @@ namespace AZ_Kviz
         private static string connectionString1 => $"Data Source={Path.GetFullPath(dbPath1)}";
         private static string connectionString2 => $"Data Source={Path.GetFullPath(dbPath2)}";
 
+        //ziskani spravne cesty k databazi
         public static SqliteConnection GetConnection()
         {
             string chosenPath;
@@ -43,13 +44,14 @@ namespace AZ_Kviz
         }
 
 
+        //nacteni otazky podle id
         public static (string Otazka, string Odpoved)? GetQuestionById(int id)
         {
             using var connection = GetConnection();
             connection.Open();
 
             using var cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT QuestionText, CorrectAnswer FROM Questions WHERE Id = @id";
+            cmd.CommandText = "SELECT QuestionText, CorrectAnswer, Shortcut, Category FROM Questions WHERE Id = @id";
             cmd.Parameters.AddWithValue("@id", id);
 
             using var reader = cmd.ExecuteReader();
@@ -66,6 +68,7 @@ namespace AZ_Kviz
             }
         }
 
+        //nacteni vsech otazek z databaze do editoru
         public static List<Question> GetAllQuestions()
         {
             var seznam = new List<Question>();
@@ -75,7 +78,7 @@ namespace AZ_Kviz
                 connection.Open();
                 using (var cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Category FROM Questions";
+                    cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Shortcut, Category FROM Questions";
 
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -87,8 +90,9 @@ namespace AZ_Kviz
                                 Id = reader.GetInt32(0),
                                 Otazka = reader.GetString(1),
                                 SpravnaOdpoved = reader.GetString(2),
+                                Zkratka = reader.GetString(3),
                                 // Ošetření, kdyby kategorie byla prázdná (null)
-                                Kategorie = reader.IsDBNull(3) ? "" : reader.GetString(3)
+                                Kategorie = reader.IsDBNull(4) ? "" : reader.GetString(4)
                             });
                         }
                     }
@@ -97,6 +101,7 @@ namespace AZ_Kviz
             return seznam;
         }
 
+        //smazani otazky z databaze
         public static void DeleteQuestion(int id)
         {
             using (var connection = GetConnection())
@@ -112,16 +117,18 @@ namespace AZ_Kviz
             }
         }
 
-        public static void AddQuestion(string otazka, string odpoved, string kategorie)
+        //priadani otazky do databaze
+        public static void AddQuestion(string otazka, string odpoved, string zkratka, string kategorie)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "INSERT INTO Questions (QuestionText, CorrectAnswer, Category) VALUES (@otazka, @odpoved, @kategorie)";
+                    command.CommandText = "INSERT INTO Questions (QuestionText, CorrectAnswer, Shortcut, Category) VALUES (@otazka, @odpoved, @zkratka, @kategorie)";
                     command.Parameters.AddWithValue("@otazka", otazka);
                     command.Parameters.AddWithValue("@odpoved", odpoved);
+                    command.Parameters.AddWithValue("@zkratka", zkratka);
                     command.Parameters.AddWithValue("@kategorie", string.IsNullOrEmpty(kategorie) ? (object)DBNull.Value : kategorie);
 
                     command.ExecuteNonQuery();

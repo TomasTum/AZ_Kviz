@@ -33,7 +33,7 @@ namespace AZ_Kviz
         {
             string otazka = textbox1.Text.Trim();
             string odpoved = textbox2.Text.Trim();
-            string kategorie = textbox3.Text.Trim();
+            string kategorie = combobox1.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(otazka) || string.IsNullOrWhiteSpace(odpoved))
             {
@@ -47,17 +47,26 @@ namespace AZ_Kviz
                     odpoved = char.ToUpper(odpoved[0]) + odpoved.Substring(1);
                     if(!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
 
+                    //pridani otazky
                     if (!otazka.EndsWith("?"))
                     {
                         otazka += "?";
                     }
 
-                    Database.AddQuestion(otazka, odpoved, kategorie);
+                    //zkratka z odpovedi
+                    string[] slova = odpoved.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    string zkratka = "";
+
+                    foreach (string slovo in slova)
+                    {
+                        zkratka += char.ToUpper(slovo[0]);
+                    }
+
+                    Database.AddQuestion(otazka, odpoved, zkratka, kategorie);
                     labelvysledek.Content = "Otázka byla úspěšně přidána.";
                     labelvysledek.Background = Brushes.LightGreen;
                     textbox1.Clear();
                     textbox2.Clear();
-                    textbox3.Clear();
                 }
                 catch (Exception ex)
                 {

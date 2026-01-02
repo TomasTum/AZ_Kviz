@@ -16,6 +16,7 @@
                 <DataGridTextColumn x:Name="ID" Header="ID" FontSize="14" Binding="{Binding Id}"/>
                 <DataGridTextColumn x:Name="Otazka" Header="Otázka" FontSize="14" Binding="{Binding Otazka}"/>
                 <DataGridTextColumn x:Name="SpravnaOdpoved" Header="Správná odpověď" FontSize="14" Binding="{Binding SpravnaOdpoved}"/>
+                <DataGridTextColumn x:Name="Zkratka" Header="Zkratka" FontSize="14" Binding="{Binding Zkratka}"/>
                 <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" FontSize="14" Binding="{Binding Kategorie}"/>
             </DataGrid.Columns>
         </DataGrid>

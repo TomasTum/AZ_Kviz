@@ -11,12 +11,18 @@
     <Grid>
         <Label Content="Vložení" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
         <Label Content="Otázka:" HorizontalAlignment="Left" Margin="139,141,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Label Content="Správná odpověď:" HorizontalAlignment="Left" Margin="139,184,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Label Content="Kategorie:" HorizontalAlignment="Left" Margin="139,226,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="Správná odpověď:" HorizontalAlignment="Left" Margin="139,194,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="Kategorie:" HorizontalAlignment="Left" Margin="139,0,0,0" VerticalAlignment="Center" FontSize="20"/>
         <Label x:Name="labelvysledek" Content="" HorizontalAlignment="Center" Margin="0,286,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textbox1" HorizontalAlignment="Left" Margin="323,149,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="185" FontSize="20"/>
-        <TextBox x:Name="textbox2" HorizontalAlignment="Left" Margin="323,192,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="185" FontSize="20"/>
-        <TextBox x:Name="textbox3" HorizontalAlignment="Left" Margin="323,234,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="185" FontSize="20"/>
+        <TextBox x:Name="textbox1" HorizontalAlignment="Left" Margin="323,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
+        <TextBox x:Name="textbox2" HorizontalAlignment="Left" Margin="323,198,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
+        <ComboBox x:Name="combobox1" IsEditable="True" Width="200" Height="30" FontSize="20" Margin="323,252,142,252">
+            <ComboBoxItem>Technika a zajímavosti</ComboBoxItem>
+            <ComboBoxItem>Historie a zeměpis</ComboBoxItem>
+            <ComboBoxItem>Příroda a věda</ComboBoxItem>
+            <ComboBoxItem>Kultura a umění</ComboBoxItem>
+            <ComboBoxItem>Sport</ComboBoxItem>
+        </ComboBox>
         <Button Content="Uložit" Margin="223,345,222,119" FontSize="20" Height="40" Width="200" Cursor="Hand" Click="Pridat_Click">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

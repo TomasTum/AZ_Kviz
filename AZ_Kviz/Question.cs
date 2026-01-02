@@ -12,6 +12,7 @@ namespace AZ_Kviz
         public int Id { get; set; }
         public string Otazka { get; set; }
         public string SpravnaOdpoved { get; set; }
+        public string Zkratka { get; set; }
         public string Kategorie { get; set; }
 
     }
