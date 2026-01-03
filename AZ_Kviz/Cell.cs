@@ -26,6 +26,7 @@ namespace AZ_Kviz
         public int Id { get; set; }
         public CellState State { get; set; }
         public Button Button { get; set; }
+        public event Action<Cell> Clicked;
 
         public Cell(int id)
         {
@@ -91,16 +92,9 @@ namespace AZ_Kviz
         {
             Button.Background = Brushes.LightBlue;
 
-            int maxId = Database.GetAllQuestions().Max(q => q.Id);      //poslední id v db
-
-            Random rnd = new Random();
-
-            var question = Database.GetQuestionById(rnd.Next(1, maxId + 1));
-            while (question == null)
-            {
-                question = Database.GetQuestionById(rnd.Next(1, maxId + 1));
-            }
-            MessageBox.Show(question.Value.Otazka.ToString(), "Políčko: " + Id);
+            // Místo MessageBoxu vyvoláme událost
+            // Předáme sami sebe (this), aby okno vědělo, o které políčko jde
+            Clicked?.Invoke(this);
 
         }
 

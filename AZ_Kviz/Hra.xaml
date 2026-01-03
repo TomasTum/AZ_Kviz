@@ -5,9 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AZ_Kviz"
         mc:Ignorable="d"
-        Title="Hra" Height="450" Width="800">
+        Title="Hra" Height="450" Width="800"
+        WindowState="Maximized"
+        ResizeMode="NoResize">
     <Grid>
-        <Canvas x:Name="GameBoard" Background="#EEE" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
 
+            <Canvas x:Name="GameBoard" 
+                    Height="450" 
+                    HorizontalAlignment="Stretch" 
+                    Background="Transparent"/>
+
+            <StackPanel x:Name="QuestionArea" 
+                        Visibility="Collapsed" 
+                        Margin="0,20,0,0" 
+                        HorizontalAlignment="Center">
+
+                <TextBlock x:Name="TxtQuestion" 
+                           Text="Tady bude otázka..." 
+                           FontSize="18" 
+                           Margin="0,0,0,10" 
+                           TextAlignment="Center"/>
+
+                <TextBox x:Name="TxtAnswer" 
+                         Width="300" 
+                         Padding="5" 
+                         FontSize="16"/>
+
+                <Button Content="Odpovědět" 
+                        Click="BtnSubmit_Click" 
+                        Margin="0,10,0,0" 
+                        Padding="10,5" 
+                        Width="300"
+                        FontSize="20"
+                        Cursor="Hand"
+                        IsDefault="True">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                            <GradientStop Color="Orange" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

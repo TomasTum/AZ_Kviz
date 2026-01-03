@@ -23,6 +23,8 @@ namespace AZ_Kviz
 
         public List<Cell> Cells { get; set; } = new List<Cell>();
 
+        public event Action<Cell> OnCellClicked;
+
         public Board(Canvas canvas)
         {
             this.canvas = canvas;
@@ -32,6 +34,9 @@ namespace AZ_Kviz
         {
             int number = 1;
 
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double dynamicStartX = screenWidth / 2.0;
+
             for (int row = 0; row < TotalRows; row++)
             {
                 int cols = row + 1;
@@ -40,13 +45,17 @@ namespace AZ_Kviz
                     Cell cell = new Cell(number);
                     cell.SetNumber(number.ToString());
 
-                    double offsetX = StartX - (row * HexWidth / 2) + col * HexWidth;
+                    // Přihlášení k události Clicked buňky
+                    cell.Clicked += (clickCell) => OnCellClicked?.Invoke(clickCell);
+
+                    double offsetX = dynamicStartX - (row * HexWidth / 2.0) + (col * HexWidth) - (HexWidth / 2.0);
                     double offsetY = StartY + row * (HexHeight - 5);
 
                     Canvas.SetLeft(cell.Button, offsetX);
                     Canvas.SetTop(cell.Button, offsetY);
-                    canvas.Children.Add(cell.Button);
 
+
+                    canvas.Children.Add(cell.Button);
                     Cells.Add(cell);
                     number++;
                 }
