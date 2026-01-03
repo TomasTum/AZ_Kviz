@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Data.Sqlite;
+using System.Globalization;
 
 namespace AZ_Kviz
 {
@@ -22,6 +23,7 @@ namespace AZ_Kviz
     {
         private Board board;
         private Cell activeCell;
+        private (string Otazka, string Odpoved)? currentQuestion;
 
         public Hra()
         {
@@ -37,26 +39,75 @@ namespace AZ_Kviz
 
             int maxId = Database.GetAllQuestions().Max(q => q.Id);
             Random rnd = new Random();
-            var question = Database.GetQuestionById(rnd.Next(1, maxId + 1));
+            currentQuestion = Database.GetQuestionById(rnd.Next(1, maxId + 1));
 
             // Zobrazení v UI
-            if (question != null)
+            if (currentQuestion.HasValue)
             {
-                TxtQuestion.Text = question.Value.Otazka;
+                TxtQuestion.Text = currentQuestion.Value.Otazka;
                 TxtAnswer.Text = ""; // Vyčistit předchozí odpověď
                 QuestionArea.Visibility = Visibility.Visible; // Ukázat panel
                 TxtAnswer.Focus(); // Nastavit kurzor do pole
             }
         }
 
-        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        //kontrola odpovědi
+        private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            // Tady pak budeš kontrolovat správnost odpovědi
-            string answer = TxtAnswer.Text;
-            // Příklad: Pokud je odpověď správná, obarvíme políčko na oranžovo
-            activeCell.Button.Background = Brushes.Orange;
-            // Skrýt panel s otázkou
+            if (!currentQuestion.HasValue) return;
+
+            //odstranění diakritiky
+            string cleanUserAnswer = RemoveDiacritics(TxtAnswer.Text.Trim());
+            string cleanCorrectAnswer = RemoveDiacritics(currentQuestion.Value.Odpoved.Trim());
+
+            // porovnání odpovědí
+            if (cleanUserAnswer == cleanCorrectAnswer)
+            {
+                // SPRÁVNĚ
+                activeCell.Button.Background = Brushes.Orange;
+                activeCell.State = CellState.Player1;
+                TxtAnswer.Background = Brushes.LightGreen;
+            }
+            else
+            {
+                // ŠPATNĚ
+                activeCell.Button.Background = Brushes.Gray;
+                activeCell.State = CellState.Black;
+                TxtAnswer.Background = Brushes.IndianRed;
+            }
+
+            await Task.Delay(1000);
+
+            // Vyčistit a skrýt panel
             QuestionArea.Visibility = Visibility.Collapsed;
+            TxtAnswer.Background = Brushes.White;
+            TxtAnswer.Clear();
+            currentQuestion = null;
+        }
+
+
+        //odstranění diakritiky z textu
+        private string RemoveDiacritics(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return text;
+
+            // Rozloží znaky na základní písmeno + diakritické znaménko (FormD)
+            string normalizedString = text.Normalize(NormalizationForm.FormD);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (char c in normalizedString)
+            {
+                // Pokud znak není diakritické znaménko (NonSpacingMark), přidáme ho
+                UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            // Vrátíme text zpět do kompaktní podoby a převedeme na malá písmena pro snadné porovnání
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC).ToLower();
         }
     }
 }

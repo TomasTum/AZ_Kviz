@@ -18,7 +18,8 @@ namespace AZ_Kviz
     {
         Free,
         Player1,
-        Player2
+        Player2,
+        Black
     }
 
     public class Cell
