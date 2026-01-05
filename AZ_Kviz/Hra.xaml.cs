@@ -23,7 +23,7 @@ namespace AZ_Kviz
     {
         private Board board;
         private Cell activeCell;
-        private (string Otazka, string Odpoved)? currentQuestion;
+        private (string Otazka, string Odpoved, string Zkratka)? currentQuestion;
 
         public Hra()
         {
@@ -45,6 +45,7 @@ namespace AZ_Kviz
             if (currentQuestion.HasValue)
             {
                 TxtQuestion.Text = currentQuestion.Value.Otazka;
+                TxtHint.Text = currentQuestion.Value.Zkratka;
                 TxtAnswer.Text = ""; // Vyčistit předchozí odpověď
                 QuestionArea.Visibility = Visibility.Visible; // Ukázat panel
                 TxtAnswer.Focus(); // Nastavit kurzor do pole

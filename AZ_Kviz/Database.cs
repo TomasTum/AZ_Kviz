@@ -45,7 +45,7 @@ namespace AZ_Kviz
 
 
         //nacteni otazky podle id
-        public static (string Otazka, string Odpoved)? GetQuestionById(int id)
+        public static (string Otazka, string Odpoved, string Zkratka)? GetQuestionById(int id)
         {
             using var connection = GetConnection();
             connection.Open();
@@ -59,7 +59,8 @@ namespace AZ_Kviz
             {
                 string otazka = reader.GetString(0);
                 string odpoved = reader.GetString(1);
-                return (otazka, odpoved);
+                string zkratka = reader.GetString(2);
+                return (otazka, odpoved, zkratka);
             }
             else
             {
