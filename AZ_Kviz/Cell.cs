@@ -28,6 +28,7 @@ namespace AZ_Kviz
         public CellState State { get; set; }
         public Button Button { get; set; }
         public event Action<Cell> Clicked;
+        public static bool IsAnyCellActive { get; set; } = false;
 
         public Cell(int id)
         {
@@ -91,9 +92,13 @@ namespace AZ_Kviz
 
         private void OnClick()
         {
-            Button.Background = Brushes.LightBlue;
+            // Zkontrolujeme, zda je políčko volné, nebo jestli už není nějaké jiné políčko aktivní
+            if (IsAnyCellActive || (State != CellState.Free && State != CellState.Black))
+                return; 
 
-            // Místo MessageBoxu vyvoláme událost
+            IsAnyCellActive = true;
+            Button.Background = Brushes.LightBlue;
+            
             // Předáme sami sebe (this), aby okno vědělo, o které políčko jde
             Clicked?.Invoke(this);
 

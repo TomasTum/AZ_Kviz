@@ -24,6 +24,7 @@ namespace AZ_Kviz
         private Board board;
         private Cell activeCell;
         private (string Otazka, string Odpoved, string Zkratka)? currentQuestion;
+        private bool isQuestionActive = false;
 
         public Hra()
         {
@@ -35,6 +36,9 @@ namespace AZ_Kviz
 
         private void Board_OnCellClicked(Cell clickedCell)
         {
+            if (isQuestionActive) return;
+            isQuestionActive = true;
+
             activeCell = clickedCell;
 
             int maxId = Database.GetAllQuestions().Max(q => q.Id);
@@ -44,6 +48,7 @@ namespace AZ_Kviz
             // Zobrazení v UI
             if (currentQuestion.HasValue)
             {
+                isQuestionActive = true;
                 TxtQuestion.Text = currentQuestion.Value.Otazka;
                 TxtHint.Text = currentQuestion.Value.Zkratka;
                 TxtAnswer.Text = ""; // Vyčistit předchozí odpověď
@@ -68,6 +73,7 @@ namespace AZ_Kviz
                 activeCell.Button.Background = Brushes.Orange;
                 activeCell.State = CellState.Player1;
                 TxtAnswer.Background = Brushes.LightGreen;
+
             }
             else
             {
@@ -84,6 +90,8 @@ namespace AZ_Kviz
             TxtAnswer.Background = Brushes.White;
             TxtAnswer.Clear();
             currentQuestion = null;
+            isQuestionActive = false;
+            Cell.IsAnyCellActive = false;
         }
 
 
