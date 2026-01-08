@@ -98,6 +98,7 @@ namespace AZ_Kviz
             string cleanUserAnswer = RemoveDiacritics(TxtAnswer.Text.Trim());
             string cleanCorrectAnswer = RemoveDiacritics(currentQuestion.Value.Odpoved.Trim());
 
+            int delay;
             // porovnání odpovědí
             if (cleanUserAnswer == cleanCorrectAnswer)
             {
@@ -105,7 +106,7 @@ namespace AZ_Kviz
                 activeCell.Button.Background = Brushes.Orange;
                 activeCell.State = CellState.Player1;
                 TxtAnswer.Background = Brushes.LightGreen;
-
+                delay = 1000;
             }
             else
             {
@@ -113,14 +114,20 @@ namespace AZ_Kviz
                 activeCell.Button.Background = Brushes.Gray;
                 activeCell.State = CellState.Black;
                 TxtAnswer.Background = Brushes.IndianRed;
+                // Zobrazení správné odpovědi
+                TxtCorrectAnswer.Text = $"Správná odpověď: {currentQuestion.Value.Odpoved}";
+                TxtCorrectAnswer.Visibility = Visibility.Visible;
+                delay = 3000;
             }
 
-            await Task.Delay(1000);
+            await Task.Delay(delay);
 
             // Vyčistit a skrýt panel
             QuestionArea.Visibility = Visibility.Collapsed;
             TxtAnswer.Background = Brushes.White;
             TxtAnswer.Clear();
+            TxtCorrectAnswer.Text = "";
+            TxtCorrectAnswer.Visibility = Visibility.Collapsed;
             currentQuestion = null;
             isQuestionActive = false;
             Cell.IsAnyCellActive = false;
