@@ -30,6 +30,7 @@ namespace AZ_Kviz
         public event Action<Cell> Clicked;
         public static bool IsAnyCellActive { get; set; } = false;
 
+        // Konstruktor
         public Cell(int id)
         {
             Id = id;
@@ -39,6 +40,7 @@ namespace AZ_Kviz
 
         FrameworkElementFactory polygonF;
 
+        // Vytvoření šestiúhelníkového tlačítka
         private Button CreateButton()
         {
             Button button = new Button
@@ -64,7 +66,7 @@ namespace AZ_Kviz
             };
             polygonF.SetBinding(Polygon.FillProperty, fillBinding);
 
-            // nastavit implicitní background
+            // implicitní background
             button.Background = Brushes.White;
 
             polygonF.SetValue(Polygon.StrokeProperty, Brushes.Black);
@@ -104,15 +106,11 @@ namespace AZ_Kviz
 
         }
 
+        // Nastavení čísla na tlačítko
         public void SetNumber(string number)
         {
             Button.Content = number;
         }
 
-        public void SetState(CellState newState)
-        {
-            State = newState;
-
-        }
     }
 }

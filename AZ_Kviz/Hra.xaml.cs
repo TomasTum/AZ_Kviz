@@ -26,32 +26,64 @@ namespace AZ_Kviz
         private (string Otazka, string Odpoved, string Zkratka)? currentQuestion;
         private bool isQuestionActive = false;
 
+        // Seznam použitých otázek (ID)
+        private HashSet<int> usedQuestionIds = new HashSet<int>();
+        // Seznam všech dostupných otázek (ID)
+        private List<int> allAvailableIds = new List<int>();       
+        private Random rnd = new Random();
+
         public Hra()
         {
             InitializeComponent();
             board = new Board(GameBoard);
             board.OnCellClicked += Board_OnCellClicked;
             board.GenerateBoard();
+            LoadAllQuestionIds();
+        }
+
+        // Načtení všech ID otázek z databáze
+        private void LoadAllQuestionIds()
+        {
+            allAvailableIds = Database.GetAllQuestions().Select(q => q.Id).ToList();
         }
 
         private void Board_OnCellClicked(Cell clickedCell)
         {
+            // Kontrola, nepoužitých otázek
+            if (usedQuestionIds.Count >= allAvailableIds.Count)
+            {
+                MessageBox.Show("Došly otázky v databázi!", "Konec otázek");
+                return;
+            }
+
             if (isQuestionActive) return;
             isQuestionActive = true;
 
             activeCell = clickedCell;
 
-            int maxId = Database.GetAllQuestions().Max(q => q.Id);
-            Random rnd = new Random();
-            currentQuestion = Database.GetQuestionById(rnd.Next(1, maxId + 1));
+            int randomId;
 
-            // Zobrazení v UI
+            // Generování náhodného ID otázky, která ještě nebyla použita
+            do
+            {
+                int index = rnd.Next(0, allAvailableIds.Count);
+                randomId = allAvailableIds[index];
+            }
+            while (usedQuestionIds.Contains(randomId));
+
+            // Přidání vybrané ID do seznamu použitých
+            usedQuestionIds.Add(randomId);
+
+            // Načtení konkrétní otázky z DB
+            currentQuestion = Database.GetQuestionById(randomId);
+
+            // Zobrazení UI
             if (currentQuestion.HasValue)
             {
                 isQuestionActive = true;
                 TxtQuestion.Text = currentQuestion.Value.Otazka;
                 TxtHint.Text = currentQuestion.Value.Zkratka;
-                TxtAnswer.Text = ""; // Vyčistit předchozí odpověď
+                TxtAnswer.Text = ""; // Vyčistit textbox
                 QuestionArea.Visibility = Visibility.Visible; // Ukázat panel
                 TxtAnswer.Focus(); // Nastavit kurzor do pole
             }

@@ -21,8 +21,9 @@ namespace AZ_Kviz
         private double StartX = 350;
         private double StartY = 40;
 
+        // Seznam všech buněk na desce
         public List<Cell> Cells { get; set; } = new List<Cell>();
-
+        // Událost pro kliknutí na buňku
         public event Action<Cell> OnCellClicked;
 
         public Board(Canvas canvas)
@@ -34,9 +35,11 @@ namespace AZ_Kviz
         {
             int number = 1;
 
+            //zjištění šířky obrazovky pro dynamické umístění
             double screenWidth = SystemParameters.PrimaryScreenWidth;
             double dynamicStartX = screenWidth / 2.0;
 
+            // Vytvoření šestiúhelníkové mřížky
             for (int row = 0; row < TotalRows; row++)
             {
                 int cols = row + 1;

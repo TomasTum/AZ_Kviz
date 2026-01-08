@@ -11,15 +11,15 @@ namespace AZ_Kviz
 {
     public class Database
     {
-        //cesta k databázi ve visual studiu
+        // Cesta k databázi ve Visual Studiu
         private static string dbPath1 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data", "azkviz.db");
-        //cesta k databázi v publikované verzi
+        // Cesta k databázi v publikované aplikaci
         private static string dbPath2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "azkviz.db");
 
         private static string connectionString1 => $"Data Source={Path.GetFullPath(dbPath1)}";
         private static string connectionString2 => $"Data Source={Path.GetFullPath(dbPath2)}";
 
-        //ziskani spravne cesty k databazi
+        // Získání připojení k databázi
         public static SqliteConnection GetConnection()
         {
             string chosenPath;
@@ -44,7 +44,7 @@ namespace AZ_Kviz
         }
 
 
-        //nacteni otazky podle id
+        // Načtení otázky podle ID
         public static (string Otazka, string Odpoved, string Zkratka)? GetQuestionById(int id)
         {
             using var connection = GetConnection();
@@ -69,7 +69,7 @@ namespace AZ_Kviz
             }
         }
 
-        //nacteni vsech otazek z databaze do editoru
+        // Načtení všech otázek z databáze
         public static List<Question> GetAllQuestions()
         {
             var seznam = new List<Question>();
@@ -102,7 +102,7 @@ namespace AZ_Kviz
             return seznam;
         }
 
-        //smazani otazky z databaze
+        // Smazání otázky z databáze podle ID
         public static void DeleteQuestion(int id)
         {
             using (var connection = GetConnection())
@@ -118,7 +118,7 @@ namespace AZ_Kviz
             }
         }
 
-        //priadani otazky do databaze
+        // Přidání nové otázky do databáze
         public static void AddQuestion(string otazka, string odpoved, string zkratka, string kategorie)
         {
             using (var connection = GetConnection())
