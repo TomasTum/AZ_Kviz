@@ -16,7 +16,7 @@
         <Label x:Name="labelvysledek" Content="" HorizontalAlignment="Center" Margin="0,286,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
         <TextBox x:Name="textbox1" HorizontalAlignment="Left" Margin="323,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
         <TextBox x:Name="textbox2" HorizontalAlignment="Left" Margin="323,198,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
-        <ComboBox x:Name="combobox1" IsEditable="True" Width="200" Height="30" FontSize="20" Margin="323,252,142,252">
+        <ComboBox x:Name="combobox1" IsEditable="False" Width="200" Height="30" FontSize="20" Margin="323,252,142,252">
             <ComboBoxItem>Technika a zajímavosti</ComboBoxItem>
             <ComboBoxItem>Historie a zeměpis</ComboBoxItem>
             <ComboBoxItem>Příroda a věda</ComboBoxItem>

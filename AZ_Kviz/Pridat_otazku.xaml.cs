@@ -35,9 +35,9 @@ namespace AZ_Kviz
             string odpoved = textbox2.Text.Trim();
             string kategorie = combobox1.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(otazka) || string.IsNullOrWhiteSpace(odpoved))
+            if (string.IsNullOrWhiteSpace(otazka) || string.IsNullOrWhiteSpace(odpoved) || string.IsNullOrWhiteSpace(kategorie))
             {
-                MessageBox.Show("Otázka a správná odpověď nesmí být prázdné.", "Chyba");
+                MessageBox.Show("Otázka, správná odpověď a kategorie nesmí být prázdné.", "Chyba");
             }
             else
             {

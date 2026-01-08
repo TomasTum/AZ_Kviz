@@ -1,0 +1,43 @@
+﻿<Window x:Class="AZ_Kviz.Set_players"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AZ_Kviz"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        MinHeight="550" MinWidth="665"
+        Title="Set_players">
+    <Grid>
+        <Label Content="Nová hra" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
+        <Label Content="Hráč 1:" HorizontalAlignment="Left" Margin="139,141,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="Hráč 2:" HorizontalAlignment="Left" Margin="139,194,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Label Content="Kategorie otázek:" HorizontalAlignment="Left" Margin="139,0,0,0" VerticalAlignment="Center" FontSize="20"/>
+        <TextBox x:Name="jmeno1" HorizontalAlignment="Left" Margin="323,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
+        <TextBox x:Name="jmeno2" HorizontalAlignment="Left" Margin="323,198,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
+        <ComboBox x:Name="combobox1" IsEditable="False" Width="200" Height="30" FontSize="20" Margin="323,252,142,252" SelectedIndex="0">
+            <ComboBoxItem>Vše</ComboBoxItem>
+            <ComboBoxItem>Technika a zajímavosti</ComboBoxItem>
+            <ComboBoxItem>Historie a zeměpis</ComboBoxItem>
+            <ComboBoxItem>Příroda a věda</ComboBoxItem>
+            <ComboBoxItem>Kultura a umění</ComboBoxItem>
+            <ComboBoxItem>Sport</ComboBoxItem>
+        </ComboBox>
+        <Button Content="Hrát" Margin="223,250,222,119" FontSize="20" Height="40" Width="200" Cursor="Hand" Click="Button_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                    <GradientStop Color="Orange" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="zpet" Content="Zpět" Margin="248,419,247,45" Height="40" Width="150" Click="Zpet_Click" FontSize="20" Cursor="Hand">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                    <GradientStop Color="Orange" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+    </Grid>
+</Window>
