@@ -33,18 +33,28 @@ namespace AZ_Kviz
         {
             string player1 = jmeno1.Text;
             string player2 = jmeno2.Text;
+            int requiredQuestions = 40; // Počet otázek potřebných pro hru
 
-            if(string.IsNullOrWhiteSpace(player1) || string.IsNullOrWhiteSpace(player2))
+            if (string.IsNullOrWhiteSpace(player1) || string.IsNullOrWhiteSpace(player2))
             {
                 MessageBox.Show("Prosím, zadejte jména obou hráčů.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             else
             {
-                Hra hra = new Hra();
-                
-                this.Close();
-                hra.ShowDialog();
+                int totalQuestions = Database.GetAllQuestions().Count;
+                if (totalQuestions < requiredQuestions)
+                {
+                    MessageBox.Show($"Není dostatek otázek v databázi pro zahájení hry. Požadováno: {requiredQuestions} otázek, dostupných: {totalQuestions} otázek.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else
+                {
+                    Hra hra = new Hra();
+
+                    this.Close();
+                    hra.ShowDialog();
+                }               
             }
         }
     }
