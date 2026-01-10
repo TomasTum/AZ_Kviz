@@ -26,18 +26,28 @@ namespace AZ_Kviz
         private (string Otazka, string Odpoved, string Zkratka)? currentQuestion;
         private bool isQuestionActive = false;
 
+        private Player player1;
+        private Player player2;
+        private Player currentPlayer; // Aktuální hráč na tahu
+
         // Seznam použitých otázek (ID)
         private HashSet<int> usedQuestionIds = new HashSet<int>();
         // Seznam všech dostupných otázek (ID)
         private List<int> allAvailableIds = new List<int>();       
         private Random rnd = new Random();
 
-        public Hra()
+        public Hra(Player player1, Player player2)
         {
             InitializeComponent();
+
+            this.player1 = player1;
+            this.player2 = player2;
+            this.currentPlayer = player1; // Začíná hráč 1
+
             board = new Board(GameBoard);
             board.OnCellClicked += Board_OnCellClicked;
             board.GenerateBoard();
+
             LoadAllQuestionIds();
         }
 
@@ -103,16 +113,14 @@ namespace AZ_Kviz
             if (cleanUserAnswer == cleanCorrectAnswer)
             {
                 // SPRÁVNĚ
-                activeCell.Button.Background = Brushes.Orange;
-                activeCell.State = CellState.Player1;
+                activeCell.SetState(currentPlayer.State, currentPlayer.PlayerColor);
                 TxtAnswer.Background = Brushes.LightGreen;
                 delay = 1000;
             }
             else
             {
                 // ŠPATNĚ
-                activeCell.Button.Background = Brushes.Gray;
-                activeCell.State = CellState.Black;
+                activeCell.SetState(CellState.Black, Brushes.Gray);
                 TxtAnswer.Background = Brushes.IndianRed;
                 // Zobrazení správné odpovědi
                 TxtCorrectAnswer.Text = $"Správná odpověď: {currentQuestion.Value.Odpoved}";
@@ -131,6 +139,9 @@ namespace AZ_Kviz
             currentQuestion = null;
             isQuestionActive = false;
             Cell.IsAnyCellActive = false;
+
+            // Střídání hráčů
+            currentPlayer = (currentPlayer == player1) ? player2 : player1;
         }
 
 

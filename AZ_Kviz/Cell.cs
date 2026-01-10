@@ -112,5 +112,18 @@ namespace AZ_Kviz
             Button.Content = number;
         }
 
+        // Nastavení stavu políčka a jeho barvy
+        public void SetState(CellState newState, Brush color)
+        {
+            this.State = newState;
+            this.Button.Background = color;
+
+            // Pokud je políčko zabrané hráčem, vypne kurzor ruky
+            if (newState == CellState.Player1 || newState == CellState.Player2)
+            {
+                Button.Cursor = System.Windows.Input.Cursors.Arrow;
+            }
+        }
+
     }
 }

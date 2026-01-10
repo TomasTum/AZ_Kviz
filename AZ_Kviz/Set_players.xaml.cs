@@ -31,11 +31,11 @@ namespace AZ_Kviz
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string player1 = jmeno1.Text;
-            string player2 = jmeno2.Text;
+            string player1Name = jmeno1.Text;
+            string player2Name = jmeno2.Text;
             int requiredQuestions = 40; // Počet otázek potřebných pro hru
 
-            if (string.IsNullOrWhiteSpace(player1) || string.IsNullOrWhiteSpace(player2))
+            if (string.IsNullOrWhiteSpace(player1Name) || string.IsNullOrWhiteSpace(player2Name))
             {
                 MessageBox.Show("Prosím, zadejte jména obou hráčů.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -50,7 +50,10 @@ namespace AZ_Kviz
                 }
                 else
                 {
-                    Hra hra = new Hra();
+                    Player player1 = new Player(player1Name, Brushes.Orange, CellState.Player1);
+                    Player player2 = new Player(player2Name, Brushes.DeepSkyBlue, CellState.Player2);
+
+                    Hra hra = new Hra(player1, player2);
 
                     this.Close();
                     hra.ShowDialog();
