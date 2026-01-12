@@ -1,82 +1,80 @@
 ﻿<Window x:Class="AZ_Kviz.Hra"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AZ_Kviz"
-        mc:Ignorable="d"
-        Title="Hra" Height="450" Width="800"
+        Title="Hra" Height="600" Width="1000"
         WindowState="Maximized"
         ResizeMode="NoResize">
     <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <Canvas x:Name="GameBoard" 
-                    Height="450" 
-                    HorizontalAlignment="Stretch" 
-                    Background="Transparent"/>
+        <Grid Grid.Row="0" Margin="40,20,40,10">
+            <Grid x:Name="Player1Panel" HorizontalAlignment="Left">
+                <Polygon Points="30,0 170,0 200,40 170,80 30,80 0,40" Fill="Orange" Stroke="#E67E22" StrokeThickness="2"/>
+                <TextBlock x:Name="TxtPlayer1Name" Text="Hráč 1" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
 
-            <StackPanel x:Name="QuestionArea"
-                        Visibility="Collapsed"
-                        Margin="0,20,0,0" 
-                        HorizontalAlignment="Center">
+            <Grid x:Name="Player2Panel" HorizontalAlignment="Right">
+                <Polygon Points="30,0 170,0 200,40 170,80 30,80 0,40" Fill="DeepSkyBlue" Stroke="#1F618D" StrokeThickness="2"/>
+                <TextBlock x:Name="TxtPlayer2Name" Text="Hráč 2" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </Grid>
 
-                <TextBlock x:Name="TxtQuestion" 
-                           Text="..." 
-                           FontSize="18" 
-                           Margin="0,0,0,20" 
-                           TextAlignment="Center"
-                           TextWrapping="Wrap"
-                           MaxWidth="800"/>
+        <Canvas x:Name="GameBoard"
+                Grid.Row="1"
+                Height="450" 
+                Width="600"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Background="Transparent"/>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel x:Name="QuestionArea"
+                    Grid.Row="2"
+                    Visibility="Collapsed"
+                    Margin="0,0,0,40" 
+                    HorizontalAlignment="Center">
 
-                    <Grid Width="80" Height="80" Margin="0,0,20,0">
-                        <Polygon Points="40,0 80,20 80,60 40,80 0,60 0,20" 
-                                 Fill="White" 
-                                 Stroke="Black" 
-                                 StrokeThickness="2" />
-                        <TextBlock x:Name="TxtHint" 
-                                   Text="V" 
-                                   FontSize="30" 
-                                   FontWeight="Bold" 
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center"/>
-                    </Grid>
+            <TextBlock x:Name="TxtQuestion" 
+                       Text="..." 
+                       FontSize="20" 
+                       Margin="0,0,0,20" 
+                       TextAlignment="Center" 
+                       TextWrapping="Wrap" 
+                       MaxWidth="800"/>
 
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBox x:Name="TxtAnswer" 
-                                 Width="300" 
-                                 Padding="5" 
-                                 FontSize="16"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Grid Width="80" Height="80" Margin="0,0,20,0">
+                    <Polygon Points="40,0 80,20 80,60 40,80 0,60 0,20" Fill="White" Stroke="Black" StrokeThickness="2" />
+                    <TextBlock x:Name="TxtHint" Text="V" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
 
-                        <Button Content="Odpovědět" 
-                                Click="BtnSubmit_Click" 
-                                Margin="0,10,0,0" 
-                                Padding="10,5" 
-                                Width="300"
-                                FontSize="20"
-                                Cursor="Hand"
-                                IsDefault="True">
-                            <Button.Background>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
-                                    <GradientStop Color="Orange" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Button.Background>
-                        </Button>
-                        <TextBlock x:Name="TxtCorrectAnswer" 
-                            Text="Správná odpověď: ..." 
-                            Foreground="Red" 
-                            FontWeight="Bold" 
-                            FontSize="16" 
+                <StackPanel VerticalAlignment="Center">
+                    <TextBox x:Name="TxtAnswer" Width="300" Padding="8" FontSize="18"/>
+
+                    <Button x:Name="BtnSubmit"
+                            Content="Odpovědět" 
+                            Click="BtnSubmit_Click" 
                             Margin="0,10,0,0" 
-                            HorizontalAlignment="Center" 
-                            Visibility="Collapsed" 
-                            TextWrapping="Wrap" 
-                            MaxWidth="300"/> 
-                    </StackPanel>
+                            Padding="10" 
+                            Width="300"
+                            FontSize="20"
+                            FontWeight="Bold"
+                            Background="Orange"
+                            Foreground="Black"
+                            Cursor="Hand"
+                            IsDefault="True"/>
 
+                    <TextBlock x:Name="TxtCorrectAnswer" 
+                               Text="Správná odpověď: ..." 
+                               Foreground="Red" 
+                               FontWeight="Bold" 
+                               FontSize="16" 
+                               Margin="0,10,0,0" 
+                               HorizontalAlignment="Center" 
+                               Visibility="Collapsed"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

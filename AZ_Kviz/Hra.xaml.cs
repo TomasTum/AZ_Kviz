@@ -43,6 +43,10 @@ namespace AZ_Kviz
             this.player1 = player1;
             this.player2 = player2;
             this.currentPlayer = player1; // Začíná hráč 1
+            UpdateTurnVisuals();
+
+            TxtPlayer1Name.Text = player1.Name;
+            TxtPlayer2Name.Text = player2.Name;
 
             board = new Board(GameBoard);
             board.OnCellClicked += Board_OnCellClicked;
@@ -142,6 +146,7 @@ namespace AZ_Kviz
 
             // Střídání hráčů
             currentPlayer = (currentPlayer == player1) ? player2 : player1;
+            UpdateTurnVisuals();
         }
 
 
@@ -167,6 +172,47 @@ namespace AZ_Kviz
 
             // Vrátíme text zpět do kompaktní podoby a převedeme na malá písmena pro snadné porovnání
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC).ToLower();
+        }
+
+        // Aktualní hrač na tahu - vizuální indikaces
+        private void UpdateTurnVisuals()
+        {
+            // Definice efektu záře
+            var glowEffect = new System.Windows.Media.Effects.DropShadowEffect
+            {
+                BlurRadius = 20,
+                ShadowDepth = 0,
+                Opacity = 0.8
+            };
+
+            if (currentPlayer == player1)
+            {
+                // HRÁČ 1 JE NA TAHU
+                Player1Panel.Opacity = 1.0; // Plná viditelnost
+                glowEffect.Color = Colors.Orange; // Oranžová záře
+                Player1Panel.Effect = glowEffect;
+
+                // HRÁČ 2 ČEKÁ
+                Player2Panel.Opacity = 0.4; // Ztlumení
+                Player2Panel.Effect = null; // Žádná záře
+
+                // Změna barvy tlačítka pro odpověď na barvu hráče 1
+                BtnSubmit.Background = Brushes.Orange;
+            }
+            else
+            {
+                // HRÁČ 2 JE NA TAHU
+                Player2Panel.Opacity = 1.0;
+                glowEffect.Color = Colors.DeepSkyBlue; // Modrá záře
+                Player2Panel.Effect = glowEffect;
+
+                // HRÁČ 1 ČEKÁ
+                Player1Panel.Opacity = 0.4;
+                Player1Panel.Effect = null;
+
+                // Změna barvy tlačítka pro odpověď na barvu hráče 2
+                BtnSubmit.Background = Brushes.DeepSkyBlue;
+            }
         }
     }
 }

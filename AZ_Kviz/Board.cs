@@ -35,9 +35,12 @@ namespace AZ_Kviz
         {
             int number = 1;
 
-            //zjištění šířky obrazovky pro dynamické umístění
-            double screenWidth = SystemParameters.PrimaryScreenWidth;
-            double dynamicStartX = screenWidth / 2.0;
+            // 1. Zjistíme šířku a výšku přímo z Canvasu (nastavenou v XAML)
+            // Pokud není v XAML nastavena, použijeme jako základ 500
+            double canvasWidth = double.IsNaN(canvas.Width) ? 500 : canvas.Width;
+
+            // 2. Startovní X bude přesná polovina šířky Canvasu
+            double centerStartX = canvasWidth / 2.0;
 
             // Vytvoření šestiúhelníkové mřížky
             for (int row = 0; row < TotalRows; row++)
@@ -47,11 +50,16 @@ namespace AZ_Kviz
                 {
                     Cell cell = new Cell(number);
                     cell.SetNumber(number.ToString());
-
-                    // Přihlášení k události Clicked buňky
                     cell.Clicked += (clickCell) => OnCellClicked?.Invoke(clickCell);
 
-                    double offsetX = dynamicStartX - (row * HexWidth / 2.0) + (col * HexWidth) - (HexWidth / 2.0);
+                    // Pozice
+                    // CenterStartX nás hodí doprostřed Canvasu
+                    // (row * HexWidth / 2.0) posouvá celou řadu doleva podle toho, jak je dlouhá
+                    // (col * HexWidth) posouvá konkrétní políčko v řadě doprava
+                    // (HexWidth / 2.0) je drobná korekce na střed samotného šestiúhelníku
+                    double offsetX = centerStartX - (row * HexWidth / 2.0) + (col * HexWidth) - (HexWidth / 2.0);
+
+                    // StartY - jak vysoko pod horním okrajem pyramida začne
                     double offsetY = StartY + row * (HexHeight - 5);
 
                     Canvas.SetLeft(cell.Button, offsetX);
