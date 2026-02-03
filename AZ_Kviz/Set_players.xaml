@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         MinHeight="550" MinWidth="665"
-        Title="Set_players">
+        Title="Nová hra">
     <Grid>
         <Label Content="Nová hra" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
         <Label Content="Hráč 1:" HorizontalAlignment="Left" Margin="139,141,0,0" VerticalAlignment="Top" FontSize="20"/>
@@ -15,13 +15,13 @@
         <Label Content="Kategorie otázek:" HorizontalAlignment="Left" Margin="139,0,0,0" VerticalAlignment="Center" FontSize="20"/>
         <TextBox x:Name="jmeno1" HorizontalAlignment="Left" Margin="323,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
         <TextBox x:Name="jmeno2" HorizontalAlignment="Left" Margin="323,198,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
-        <ComboBox x:Name="combobox1" IsEditable="False" Width="200" Height="30" FontSize="20" Margin="323,252,142,252" SelectedIndex="0">
-            <ComboBoxItem>Vše</ComboBoxItem>
-            <ComboBoxItem>Technika a zajímavosti</ComboBoxItem>
-            <ComboBoxItem>Historie a zeměpis</ComboBoxItem>
-            <ComboBoxItem>Příroda a věda</ComboBoxItem>
-            <ComboBoxItem>Kultura a umění</ComboBoxItem>
-            <ComboBoxItem>Sport</ComboBoxItem>
+        <ComboBox x:Name="kategorieselect" IsEditable="False" Width="200" Height="30" FontSize="20" Margin="323,252,142,252" SelectedIndex="0">
+            <ComboBoxItem Tag="Vše">Vše</ComboBoxItem>
+            <ComboBoxItem Tag="Technika a zajímavosti">Technika a zajímavosti</ComboBoxItem>
+            <ComboBoxItem Tag="Historie a zeměpis">Historie a zeměpis</ComboBoxItem>
+            <ComboBoxItem Tag="Příroda a věda">Příroda a věda</ComboBoxItem>
+            <ComboBoxItem Tag="Kultura a umění">Kultura a umění</ComboBoxItem>
+            <ComboBoxItem Tag="Sport">Sport</ComboBoxItem>
         </ComboBox>
         <Button Content="Hrát" Margin="223,250,222,119" FontSize="20" Height="40" Width="200" Cursor="Hand" Click="Button_Click">
             <Button.Background>

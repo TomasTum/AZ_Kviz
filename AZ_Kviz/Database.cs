@@ -44,7 +44,7 @@ namespace AZ_Kviz
         }
 
 
-        // Načtení otázky podle ID
+        // Načtení otázky podle ID, filtrování podle kategorie
         public static (string Otazka, string Odpoved, string Zkratka)? GetQuestionById(int id)
         {
             using var connection = GetConnection();
@@ -69,7 +69,7 @@ namespace AZ_Kviz
             }
         }
 
-        // Načtení všech otázek z databáze
+        // Načtení všech otázek
         public static List<Question> GetAllQuestions()
         {
             var seznam = new List<Question>();
@@ -80,6 +80,47 @@ namespace AZ_Kviz
                 using (var cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Shortcut, Category FROM Questions";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            seznam.Add(new Question
+                            {
+                                // Čísla v závorce (0, 1, 2...) odpovídají pořadí v SELECT příkazu
+                                Id = reader.GetInt32(0),
+                                Otazka = reader.GetString(1),
+                                SpravnaOdpoved = reader.GetString(2),
+                                Zkratka = reader.GetString(3),
+                                // Ošetření, kdyby kategorie byla prázdná (null)
+                                Kategorie = reader.IsDBNull(4) ? "" : reader.GetString(4)
+                            });
+                        }
+                    }
+                }
+            }
+            return seznam;
+        }
+
+        // Načtení všech otázek, filtrovaných podle kategorie
+        public static List<Question> GetAllQuestions(string kategorie)
+        {
+            var seznam = new List<Question>();
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var cmd = connection.CreateCommand())
+                {
+                    if (kategorie == "Vše")
+                    {
+                        cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Shortcut, Category FROM Questions";
+                    }
+                    else
+                    {
+                        cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Shortcut, Category FROM Questions WHERE Category = @kategorie";
+                        cmd.Parameters.AddWithValue("@kategorie", kategorie);
+                    }
 
                     using (var reader = cmd.ExecuteReader())
                     {

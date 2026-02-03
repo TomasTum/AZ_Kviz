@@ -36,7 +36,9 @@ namespace AZ_Kviz
         private List<int> allAvailableIds = new List<int>();       
         private Random rnd = new Random();
 
-        public Hra(Player player1, Player player2)
+        string selectedCategory;
+
+        public Hra(Player player1, Player player2, string kategorie)
         {
             InitializeComponent();
 
@@ -44,6 +46,8 @@ namespace AZ_Kviz
             this.player2 = player2;
             this.currentPlayer = player1; // Začíná hráč 1
             UpdateTurnVisuals();
+
+            selectedCategory = kategorie;
 
             TxtPlayer1Name.Text = player1.Name;
             TxtPlayer2Name.Text = player2.Name;
@@ -58,7 +62,7 @@ namespace AZ_Kviz
         // Načtení všech ID otázek z databáze
         private void LoadAllQuestionIds()
         {
-            allAvailableIds = Database.GetAllQuestions().Select(q => q.Id).ToList();
+            allAvailableIds = Database.GetAllQuestions(selectedCategory).Select(q => q.Id).ToList();
         }
 
         private void Board_OnCellClicked(Cell clickedCell)
