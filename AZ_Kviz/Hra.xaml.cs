@@ -30,10 +30,9 @@ namespace AZ_Kviz
         private Player player2;
         private Player currentPlayer; // Aktuální hráč na tahu
 
-        // Seznam použitých otázek (ID)
-        private HashSet<int> usedQuestionIds = new HashSet<int>();
         // Seznam všech dostupných otázek (ID)
-        private List<int> allAvailableIds = new List<int>();       
+        private List<int> allAvailableIds = new List<int>();
+        
         private Random rnd = new Random();
 
         string selectedCategory;
@@ -45,8 +44,10 @@ namespace AZ_Kviz
             this.player1 = player1;
             this.player2 = player2;
             this.currentPlayer = player1; // Začíná hráč 1
+            // Nastavení vizuální indikace tahu
             UpdateTurnVisuals();
 
+            //Kategorie otázek pro hru
             selectedCategory = kategorie;
 
             TxtPlayer1Name.Text = player1.Name;
@@ -68,7 +69,7 @@ namespace AZ_Kviz
         private void Board_OnCellClicked(Cell clickedCell)
         {
             // Kontrola, nepoužitých otázek
-            if (usedQuestionIds.Count >= allAvailableIds.Count)
+            if (allAvailableIds.Count == 0)
             {
                 MessageBox.Show("Došly otázky v databázi!", "Konec otázek");
                 return;
@@ -81,19 +82,15 @@ namespace AZ_Kviz
 
             int randomId;
 
-            // Generování náhodného ID otázky, která ještě nebyla použita
-            do
-            {
-                int index = rnd.Next(0, allAvailableIds.Count);
-                randomId = allAvailableIds[index];
-            }
-            while (usedQuestionIds.Contains(randomId));
-
-            // Přidání vybrané ID do seznamu použitých
-            usedQuestionIds.Add(randomId);
+            // Generování náhodného ID otázky, která je v seznamu dostupných a nebyla použita
+            int index = rnd.Next(0, allAvailableIds.Count);
+            randomId = allAvailableIds[index];
 
             // Načtení konkrétní otázky z DB
             currentQuestion = Database.GetQuestionById(randomId);
+
+            // Smazání použitého ID z dostupných otázek
+            allAvailableIds.Remove(randomId);
 
             // Zobrazení UI
             if (currentQuestion.HasValue)
@@ -110,7 +107,11 @@ namespace AZ_Kviz
         //kontrola odpovědi
         private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            // Pokud není aktivní otázka, nic se neděje
             if (!currentQuestion.HasValue) return;
+
+            // Kliknutí jen jednou, zamezení opakovanému klikání
+            BtnSubmit.IsEnabled = false;
 
             //odstranění diakritiky
             string cleanUserAnswer = RemoveDiacritics(TxtAnswer.Text.Trim());
@@ -147,6 +148,7 @@ namespace AZ_Kviz
             currentQuestion = null;
             isQuestionActive = false;
             Cell.IsAnyCellActive = false;
+            BtnSubmit.IsEnabled = true;
 
             // Střídání hráčů
             currentPlayer = (currentPlayer == player1) ? player2 : player1;
@@ -154,7 +156,7 @@ namespace AZ_Kviz
         }
 
 
-        //odstranění diakritiky z textu
+        // Odstranění diakritiky z textu
         private string RemoveDiacritics(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
@@ -166,7 +168,7 @@ namespace AZ_Kviz
 
             foreach (char c in normalizedString)
             {
-                // Pokud znak není diakritické znaménko (NonSpacingMark), přidáme ho
+                // Pokud znak není diakritické znaménko (NonSpacingMark), přidá se
                 UnicodeCategory unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
                 if (unicodeCategory != UnicodeCategory.NonSpacingMark)
                 {
@@ -178,7 +180,7 @@ namespace AZ_Kviz
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC).ToLower();
         }
 
-        // Aktualní hrač na tahu - vizuální indikaces
+        // Aktualní hrač na tahu - vizuální indikace
         private void UpdateTurnVisuals()
         {
             // Definice efektu záře

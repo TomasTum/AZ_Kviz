@@ -167,7 +167,15 @@ namespace AZ_Kviz
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = "INSERT INTO Questions (QuestionText, CorrectAnswer, Shortcut, Category) VALUES (@otazka, @odpoved, @zkratka, @kategorie)";
+                    //Zjistíme nejmenší volné ID pro novou otázku
+                    command.CommandText = @"
+                        INSERT INTO Questions (Id, QuestionText, CorrectAnswer, Shortcut, Category)
+                        VALUES (
+                            COALESCE(
+                                (SELECT 1 WHERE NOT EXISTS (SELECT 1 FROM Questions WHERE Id = 1)),
+                                (SELECT MIN(Id + 1) FROM Questions WHERE (Id + 1) NOT IN (SELECT Id FROM Questions)),1),
+                        @otazka, @odpoved, @zkratka, @kategorie
+                        );";
                     command.Parameters.AddWithValue("@otazka", otazka);
                     command.Parameters.AddWithValue("@odpoved", odpoved);
                     command.Parameters.AddWithValue("@zkratka", zkratka);
