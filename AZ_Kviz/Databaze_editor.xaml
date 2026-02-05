@@ -11,7 +11,7 @@
         Title="Editor databáze otázek" >
     <Grid Loaded="Grid_Loaded">
         <Label Content="Databáze" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
-        <DataGrid x:Name="Datagrid" HorizontalAlignment="Center" Height="270" Margin="0,136,0,0" VerticalAlignment="Top" Width="898" AutoGenerateColumns="False">
+        <DataGrid x:Name="Datagrid" HorizontalAlignment="Center" Height="293" Margin="0,136,0,0" VerticalAlignment="Top" Width="898" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="ID" Header="ID" FontSize="14" Binding="{Binding Id}"/>
                 <DataGridTextColumn x:Name="Otazka" Header="Otázka" FontSize="14" Binding="{Binding Otazka}"/>
@@ -20,7 +20,7 @@
                 <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" FontSize="14" Binding="{Binding Kategorie}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Přidat otázku" Margin="188,454,485,185" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Pridat_Click">
+        <Button Content="Přidat otázku" Margin="108,454,642,185" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Pridat_Click">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFFCF78" Offset="0.109"/>
@@ -28,7 +28,15 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <Button Content="Odebrat otázku" Margin="482,454,188,185" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Odebrat_Click">
+        <Button Content="Upravit otázku" Margin="388,454,388,185" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Upravit_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
+                    <GradientStop Color="Orange" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button Content="Odebrat otázku" Margin="657,454,121,185" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Odebrat_Click">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFFCF78" Offset="0.109"/>
@@ -53,5 +61,6 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
+        
     </Grid>
 </Window>

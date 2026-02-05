@@ -30,6 +30,10 @@ namespace AZ_Kviz
             {
                 var data = Database.GetAllQuestions();
                 Datagrid.ItemsSource = data;
+
+                // Zabrání výchozímu mazání řádku DataGridem a připojí vlastní obsluhu kláves
+                Datagrid.CanUserDeleteRows = false;
+                Datagrid.PreviewKeyDown += Datagrid_PreviewKeyDown;
             }
             catch (System.Exception ex)
             {
@@ -43,6 +47,42 @@ namespace AZ_Kviz
         }
 
         private void Odebrat_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteQuestion();
+        }
+
+        // Použití PreviewKeyDown, aby výchozí chování DataGridu (smazání řádku) nebylo provedeno
+        private void Datagrid_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                DeleteQuestion();
+                e.Handled = true;
+            }
+        }
+
+        private void Pridat_Click(object sender, RoutedEventArgs e)
+        {
+            Pridat_otazku pridat_Otazku = new Pridat_otazku();
+            pridat_Otazku.ShowDialog();
+            // Aktualizace datagridu po přidání otázky
+            var data = Database.GetAllQuestions();
+            Datagrid.ItemsSource = data;
+
+        }
+
+        private void Aktualizovat_Click(object sender, RoutedEventArgs e)
+        {
+            var data = Database.GetAllQuestions();
+            Datagrid.ItemsSource = data;
+        }
+
+        private void Upravit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteQuestion()
         {
             if (Datagrid.SelectedItem is Question vybranyRadek)
             {
@@ -74,20 +114,6 @@ namespace AZ_Kviz
                 MessageBox.Show("Prosím, označte nejprve řádek, který chcete smazat.", "Upozornění");
             }
         }
-
-        private void Pridat_Click(object sender, RoutedEventArgs e)
-        {
-            Pridat_otazku pridat_Otazku = new Pridat_otazku();
-            pridat_Otazku.ShowDialog();
-
-        }
-
-        private void Aktualizovat_Click(object sender, RoutedEventArgs e)
-        {
-            var data = Database.GetAllQuestions();
-            Datagrid.ItemsSource = data;
-        }
-
     }
     
 }
