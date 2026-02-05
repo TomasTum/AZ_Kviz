@@ -23,7 +23,7 @@ namespace AZ_Kviz
     {
         private Board board;
         private Cell activeCell;
-        private (string Otazka, string Odpoved, string Zkratka)? currentQuestion;
+        private (string Otazka, string Odpoved, string Zkratka, string Kategorie)? currentQuestion;
         private bool isQuestionActive = false;
 
         private Player player1;

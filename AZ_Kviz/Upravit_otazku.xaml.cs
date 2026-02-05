@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,13 +15,32 @@ using System.Windows.Shapes;
 namespace AZ_Kviz
 {
     /// <summary>
-    /// Interakční logika pro Pridat_otazku.xaml
+    /// Interakční logika pro Upravit_otazku.xaml
     /// </summary>
-    public partial class Pridat_otazku : Window
+    public partial class Upravit_otazku : Window
     {
-        public Pridat_otazku()
+        private (string Otazka, string Odpoved, string Zkratka, string Kategorie)? question;
+        int id;
+
+        public Upravit_otazku(int index)
         {
             InitializeComponent();
+
+            id = index;
+            question = Database.GetQuestionById(index);
+            if (question.HasValue)
+            {
+                textbox1.Text = question.Value.Otazka;
+                textbox2.Text = question.Value.Odpoved;
+                combobox1.Text = question.Value.Kategorie;
+            }
+            else
+            {
+                MessageBox.Show("Otázka s daným ID nebyla nalezena.", "Chyba");
+                this.Close();
+            }
+
+
         }
 
         private void Konec_Click(object sender, RoutedEventArgs e)
@@ -30,7 +48,7 @@ namespace AZ_Kviz
             this.Close();
         }
 
-        private void Pridat_Click(object sender, RoutedEventArgs e)
+        private void Upravit_Click(object sender, RoutedEventArgs e)
         {
             string otazka = textbox1.Text.Trim();
             string odpoved = textbox2.Text.Trim();
@@ -47,9 +65,9 @@ namespace AZ_Kviz
                     // První písmeno otázky, odpovědi velké
                     otazka = char.ToUpper(otazka[0]) + otazka.Substring(1);
                     odpoved = char.ToUpper(odpoved[0]) + odpoved.Substring(1);
-                    if(!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
+                    if (!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
 
-                    //Přidání otazníku na konec otázky, pokud tam není
+                    // Přidání otazníku na konec otázky, pokud tam není
                     if (!otazka.EndsWith("?"))
                     {
                         otazka += "?";
@@ -64,15 +82,15 @@ namespace AZ_Kviz
                         zkratka += char.ToUpper(slovo[0]);
                     }
 
-                    Database.AddQuestion(otazka, odpoved, zkratka, kategorie);
-                    labelvysledek.Content = "Otázka byla úspěšně přidána.";
+                    Database.UpdateQuestion(id, otazka, odpoved, zkratka, kategorie);
+                    labelvysledek.Content = "Otázka byla úspěšně upravena.";
                     labelvysledek.Background = Brushes.LightGreen;
                     textbox1.Clear();
                     textbox2.Clear();
                 }
                 catch (Exception ex)
                 {
-                    labelvysledek.Content = "Chyba při přidávání otázky: " + ex.Message;
+                    labelvysledek.Content = "Chyba při úpravě otázky: " + ex.Message;
                     labelvysledek.Background = Brushes.Red;
                 }
             }

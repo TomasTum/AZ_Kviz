@@ -44,8 +44,8 @@ namespace AZ_Kviz
         }
 
 
-        // Načtení otázky podle ID, filtrování podle kategorie
-        public static (string Otazka, string Odpoved, string Zkratka)? GetQuestionById(int id)
+        // Načtení otázky podle ID
+        public static (string Otazka, string Odpoved, string Zkratka, string Kategorie)? GetQuestionById(int id)
         {
             using var connection = GetConnection();
             connection.Open();
@@ -60,7 +60,8 @@ namespace AZ_Kviz
                 string otazka = reader.GetString(0);
                 string odpoved = reader.GetString(1);
                 string zkratka = reader.GetString(2);
-                return (otazka, odpoved, zkratka);
+                string kategorie = reader.GetString(3);
+                return (otazka, odpoved, zkratka, kategorie);
             }
             else
             {
@@ -176,6 +177,32 @@ namespace AZ_Kviz
                                 (SELECT MIN(Id + 1) FROM Questions WHERE (Id + 1) NOT IN (SELECT Id FROM Questions)),1),
                         @otazka, @odpoved, @zkratka, @kategorie
                         );";
+                    command.Parameters.AddWithValue("@otazka", otazka);
+                    command.Parameters.AddWithValue("@odpoved", odpoved);
+                    command.Parameters.AddWithValue("@zkratka", zkratka);
+                    command.Parameters.AddWithValue("@kategorie", string.IsNullOrEmpty(kategorie) ? (object)DBNull.Value : kategorie);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Upravení existující otázky v databázi podle ID
+        public static void UpdateQuestion(int id, string otazka, string odpoved, string zkratka, string kategorie)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = @"
+                        UPDATE Questions
+                        SET QuestionText = @otazka,
+                            CorrectAnswer = @odpoved,
+                            Shortcut = @zkratka,
+                            Category = @kategorie
+                        WHERE Id = @id;";
+                    command.Parameters.AddWithValue("@id", id);
                     command.Parameters.AddWithValue("@otazka", otazka);
                     command.Parameters.AddWithValue("@odpoved", odpoved);
                     command.Parameters.AddWithValue("@zkratka", zkratka);

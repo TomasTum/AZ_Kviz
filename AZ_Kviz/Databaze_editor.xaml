@@ -45,7 +45,7 @@
             </Button.Background>
         </Button>
 
-        <Button Content="Aktualizovat" Margin="336,524,337,115" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Aktualizovat_Click">
+        <Button Content="Aktualizovat data" Margin="336,524,337,115" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Aktualizovat_Click">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFFCF78" Offset="0.109"/>

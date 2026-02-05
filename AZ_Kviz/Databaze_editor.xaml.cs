@@ -28,8 +28,7 @@ namespace AZ_Kviz
         {
             try
             {
-                var data = Database.GetAllQuestions();
-                Datagrid.ItemsSource = data;
+                UpdateData();
 
                 // Zabrání výchozímu mazání řádku DataGridem a připojí vlastní obsluhu kláves
                 Datagrid.CanUserDeleteRows = false;
@@ -65,21 +64,35 @@ namespace AZ_Kviz
         {
             Pridat_otazku pridat_Otazku = new Pridat_otazku();
             pridat_Otazku.ShowDialog();
-            // Aktualizace datagridu po přidání otázky
-            var data = Database.GetAllQuestions();
-            Datagrid.ItemsSource = data;
+            
+            UpdateData();
 
         }
 
         private void Aktualizovat_Click(object sender, RoutedEventArgs e)
         {
-            var data = Database.GetAllQuestions();
-            Datagrid.ItemsSource = data;
+            UpdateData();
         }
 
         private void Upravit_Click(object sender, RoutedEventArgs e)
         {
+            if(Datagrid.SelectedItem is Question vybranyRadek)
+            {
+                Upravit_otazku upravit_Otazku = new Upravit_otazku(vybranyRadek.Id);
+                upravit_Otazku.ShowDialog();
+                UpdateData();
+            }
+            else
+            {
+                MessageBox.Show("Prosím, označte nejprve řádek, který chcete upravit.", "Upozornění");
+            }
+        }
 
+        // Aktualizace dat v DataGridu
+        private void UpdateData()
+        {
+                var data = Database.GetAllQuestions();
+                Datagrid.ItemsSource = data;
         }
 
         private void DeleteQuestion()
@@ -95,8 +108,7 @@ namespace AZ_Kviz
                         Database.DeleteQuestion(vybranyRadek.Id);
                         try
                         {
-                            var data = Database.GetAllQuestions();
-                            Datagrid.ItemsSource = data;
+                            UpdateData();
                         }
                         catch (System.Exception ex)
                         {

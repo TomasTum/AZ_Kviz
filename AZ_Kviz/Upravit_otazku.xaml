@@ -1,4 +1,4 @@
-﻿<Window x:Class="AZ_Kviz.Pridat_otazku"
+﻿<Window x:Class="AZ_Kviz.Upravit_otazku"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         MinHeight="550" MinWidth="665"
-        Title="Přidat otázku" >
+        Title="Upravit otázku">
     <Grid>
-        <Label Content="Vložení" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
+        <Label Content="Upravit" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
         <Label Content="Otázka:" HorizontalAlignment="Left" Margin="139,141,0,0" VerticalAlignment="Top" FontSize="20"/>
         <Label Content="Správná odpověď:" HorizontalAlignment="Left" Margin="139,194,0,0" VerticalAlignment="Top" FontSize="20"/>
         <Label Content="Kategorie:" HorizontalAlignment="Left" Margin="139,0,0,0" VerticalAlignment="Center" FontSize="20"/>
@@ -23,7 +23,7 @@
             <ComboBoxItem>Kultura a umění</ComboBoxItem>
             <ComboBoxItem>Sport</ComboBoxItem>
         </ComboBox>
-        <Button Content="Uložit" Margin="223,345,222,119" FontSize="20" Height="40" Width="200" Cursor="Hand" Click="Pridat_Click">
+        <Button Content="Uložit" Margin="223,345,222,119" FontSize="20" Height="40" Width="200" Cursor="Hand" Click="Upravit_Click">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFFCF78" Offset="0.109"/>
@@ -39,6 +39,5 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-
     </Grid>
 </Window>
