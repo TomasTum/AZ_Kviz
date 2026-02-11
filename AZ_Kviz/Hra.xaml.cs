@@ -72,10 +72,13 @@ namespace AZ_Kviz
             if (allAvailableIds.Count == 0)
             {
                 MessageBox.Show("Došly otázky v databázi!", "Konec otázek");
+                this.Close();
                 return;
             }
 
+            // Kontrola, zda již není aktivní otázka
             if (isQuestionActive) return;
+
             isQuestionActive = true;
 
             activeCell = clickedCell;
@@ -104,7 +107,7 @@ namespace AZ_Kviz
             }
         }
 
-        //kontrola odpovědi
+        // Kontrola odpovědi
         private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
             // Pokud není aktivní otázka, nic se neděje
@@ -150,6 +153,15 @@ namespace AZ_Kviz
             Cell.IsAnyCellActive = false;
             BtnSubmit.IsEnabled = true;
 
+            // Kontrola vítěze
+            if (CheckWinner(currentPlayer.State))
+            {
+                string message = $"Vítězem se stává {currentPlayer.Name}!";
+                Konec_hry konec_hry = new Konec_hry(message);
+                this.Close();
+                return;
+            }
+
             // Střídání hráčů
             currentPlayer = (currentPlayer == player1) ? player2 : player1;
             UpdateTurnVisuals();
@@ -193,32 +205,109 @@ namespace AZ_Kviz
 
             if (currentPlayer == player1)
             {
-                // HRÁČ 1 JE NA TAHU
-                Player1Panel.Opacity = 1.0; // Plná viditelnost
-                glowEffect.Color = Colors.Orange; // Oranžová záře
+                // Hráč 1 je na tahu
+                glowEffect.Color = Colors.Orange;
                 Player1Panel.Effect = glowEffect;
 
-                // HRÁČ 2 ČEKÁ
+                // Hráč 2 čeká
                 Player2Panel.Opacity = 0.4; // Ztlumení
                 Player2Panel.Effect = null; // Žádná záře
 
-                // Změna barvy tlačítka pro odpověď na barvu hráče 1
+                // Barva tlačítka pro odpověď na barvu hráče 1
                 BtnSubmit.Background = Brushes.Orange;
             }
             else
             {
-                // HRÁČ 2 JE NA TAHU
+                // Hráč 2 je na tahu
                 Player2Panel.Opacity = 1.0;
-                glowEffect.Color = Colors.DeepSkyBlue; // Modrá záře
+                glowEffect.Color = Colors.DeepSkyBlue;
                 Player2Panel.Effect = glowEffect;
 
-                // HRÁČ 1 ČEKÁ
+                // Hráč 1 čeká
                 Player1Panel.Opacity = 0.4;
                 Player1Panel.Effect = null;
 
-                // Změna barvy tlačítka pro odpověď na barvu hráče 2
+                // Barva tlačítka pro odpověď na barvu hráče 2
                 BtnSubmit.Background = Brushes.DeepSkyBlue;
             }
+        }
+
+        // Zjištění vítěze - BFS pro hledání propojení tří stran
+        private bool CheckWinner(CellState playerState)
+        {
+            List<Cell> playerCells = board.Cells.Where(c => c.State == playerState).ToList();
+            // Minimálně musí mít 7 políček, aby mohl propojit všechny strany
+            if (playerCells.Count < 7) return false;
+
+            // Navštívené buňky pro BFS
+            List<Cell> visited = new List<Cell>();
+
+            foreach (Cell startCell in playerCells)
+            {
+                // Pokud už tuto buňku navštívil, přeskočí ji
+                if (visited.Contains(startCell)) continue;
+
+                // Fronta pro BFS
+                Queue<Cell> queue = new Queue<Cell>();
+                queue.Enqueue(startCell);
+                visited.Add(startCell);
+
+                // Které strany jsou propojené
+                bool touchesLeft = false;
+                bool touchesRight = false;
+                bool touchesBottom = false;
+
+                while (queue.Count > 0)
+                {
+                    // Aktuální políčko
+                    Cell curr = queue.Dequeue();
+
+                    // Kontrola stran
+                    if (curr.Column == 0) touchesLeft = true;
+                    if (curr.Column == curr.Row) touchesRight = true;
+                    if (curr.Row == 6) touchesBottom = true;
+
+                    // Když jsou propojené všechny tři strany je vítěz
+                    if (touchesLeft && touchesRight && touchesBottom) return true;
+
+                    // Najde sousedy
+                    foreach (Cell neighbor in GetNeighbors(curr, playerCells))
+                    {
+                        if (!visited.Contains(neighbor))
+                        {
+                            visited.Add(neighbor);
+                            queue.Enqueue(neighbor);
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+
+        // Metoda pro nalezení sousedních políček v hexagonální síti
+        private List<Cell> GetNeighbors(Cell c, List<Cell> playerCells)
+        {
+            int r = c.Row;
+            int col = c.Column;
+
+            // Relativní souřadnice 6 sousedů v trojúhelníkové síti
+            (int dr, int dc)[] directions = new (int dr, int dc)[]
+            {
+                (0, -1), (0, 1),   // vlevo, vpravo
+                (-1, -1), (-1, 0), // nad (vlevo, vpravo)
+                (1, 0), (1, 1)     // pod (vlevo, vpravo)
+            };
+
+            List<Cell> neighbors = new List<Cell>();
+
+            // Pro každý směr zkontroluje, zda existuje sousední buňka s danými souřadnicemi a patří hráči
+            foreach ((int dr, int dc) d in directions)
+            {
+                Cell n = playerCells.FirstOrDefault(cell => cell.Row == r + d.dr && cell.Column == col + d.dc);
+                if (n != null) neighbors.Add(n);
+            }
+            return neighbors;
         }
     }
 }

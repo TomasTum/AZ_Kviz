@@ -35,8 +35,8 @@ namespace AZ_Kviz
         {
             int number = 1;
 
-            // 1. Zjistíme šířku a výšku přímo z Canvasu (nastavenou v XAML)
-            // Pokud není v XAML nastavena, použijeme jako základ 500
+            // Nastavení pozice pro první buňku (horní řada)
+            // Pokud není v XAML nastavena, použije se jako základ 500
             double canvasWidth = double.IsNaN(canvas.Width) ? 500 : canvas.Width;
 
             // 2. Startovní X bude přesná polovina šířky Canvasu
@@ -50,6 +50,8 @@ namespace AZ_Kviz
                 {
                     Cell cell = new Cell(number);
                     cell.SetNumber(number.ToString());
+                    cell.Row = row;    
+                    cell.Column = col;  
                     cell.Clicked += (clickCell) => OnCellClicked?.Invoke(clickCell);
 
                     // Pozice

@@ -29,6 +29,8 @@ namespace AZ_Kviz
         public Button Button { get; set; }
         public event Action<Cell> Clicked;
         public static bool IsAnyCellActive { get; set; } = false;
+        public int Row { get; set; }
+        public int Column { get; set; }
 
         // Konstruktor
         public Cell(int id)
@@ -101,7 +103,7 @@ namespace AZ_Kviz
             IsAnyCellActive = true;
             Button.Background = Brushes.LightBlue;
             
-            // Předáme sami sebe (this), aby okno vědělo, o které políčko jde
+            // Předáme samo sebe (this), aby okno vědělo, o které políčko jde
             Clicked?.Invoke(this);
 
         }
@@ -118,7 +120,7 @@ namespace AZ_Kviz
             this.State = newState;
             this.Button.Background = color;
 
-            // Pokud je políčko zabrané hráčem, vypne kurzor ruky
+            // Pokud je políčko zabrané hráčem, vypne se kurzor ruky
             if (newState == CellState.Player1 || newState == CellState.Player2)
             {
                 Button.Cursor = System.Windows.Input.Cursors.Arrow;
