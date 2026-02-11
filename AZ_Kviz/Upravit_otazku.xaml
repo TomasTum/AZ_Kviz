@@ -23,21 +23,7 @@
             <ComboBoxItem>Kultura a umění</ComboBoxItem>
             <ComboBoxItem>Sport</ComboBoxItem>
         </ComboBox>
-        <Button Content="Uložit" Margin="223,345,222,119" FontSize="20" Height="40" Width="200" Cursor="Hand" Click="Upravit_Click">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
-                    <GradientStop Color="Orange" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button x:Name="zpet" Content="Zpět" Margin="248,419,247,45" Height="40" Width="150" Click="Konec_Click" FontSize="20" Cursor="Hand">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
-                    <GradientStop Color="Orange" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+        <Button Content="Uložit" Margin="223,345,222,119" FontSize="20" Height="40" Width="200" Background="Orange" Cursor="Hand" Click="Upravit_Click" />
+        <Button x:Name="zpet" Content="Zpět" Margin="248,419,247,45" Height="40" Width="150" FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
     </Grid>
 </Window>

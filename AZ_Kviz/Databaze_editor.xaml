@@ -20,47 +20,10 @@
                 <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" FontSize="14" Binding="{Binding Kategorie}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Přidat otázku" Margin="108,454,642,185" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Pridat_Click">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
-                    <GradientStop Color="Orange" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button Content="Upravit otázku" Margin="388,454,388,185" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Upravit_Click">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
-                    <GradientStop Color="Orange" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button Content="Odebrat otázku" Margin="657,454,121,185" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Odebrat_Click">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
-                    <GradientStop Color="Orange" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-
-        <Button Content="Aktualizovat data" Margin="336,524,337,115" Height="45" Width="250" FontSize="20" Cursor="Hand" Click="Aktualizovat_Click">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
-                    <GradientStop Color="Orange" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button x:Name="zpet" Content="Zpět" Height="45" Width="150" Margin="375,594,375,45" Click="Konec_Click" FontSize="20" Cursor="Hand">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFFCF78" Offset="0.109"/>
-                    <GradientStop Color="Orange" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        
+        <Button Content="Přidat otázku" Margin="108,454,642,185" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Pridat_Click" />
+        <Button Content="Upravit otázku" Margin="388,454,388,185" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Upravit_Click" />
+        <Button Content="Odebrat otázku" Margin="657,454,121,185" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Odebrat_Click" />
+        <Button Content="Aktualizovat data" Margin="336,524,337,115" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Aktualizovat_Click" />
+        <Button x:Name="zpet" Content="Zpět" Height="45" Width="150" Margin="375,594,375,45" FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
     </Grid>
 </Window>
