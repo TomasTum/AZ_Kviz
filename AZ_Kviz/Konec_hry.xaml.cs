@@ -29,17 +29,18 @@ namespace AZ_Kviz
         }
 
         // Spuštění nové hry
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Nova_Click(object sender, RoutedEventArgs e)
         {
-            
-            this.Close();           //nedokončeno
+            Set_players set_Players = new Set_players();
+            set_Players.Show();
+            this.Close();
         }
 
         // Zavření hry
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             
-            this.Close();           //nedokončeno
+            this.Close();           
         }
     }
 }

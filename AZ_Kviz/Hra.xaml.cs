@@ -158,6 +158,7 @@ namespace AZ_Kviz
             {
                 string message = $"Vítězem se stává {currentPlayer.Name}!";
                 Konec_hry konec_hry = new Konec_hry(message);
+                konec_hry.ShowDialog();
                 this.Close();
                 return;
             }
@@ -206,6 +207,7 @@ namespace AZ_Kviz
             if (currentPlayer == player1)
             {
                 // Hráč 1 je na tahu
+                Player1Panel.Opacity = 1.0;
                 glowEffect.Color = Colors.Orange;
                 Player1Panel.Effect = glowEffect;
 

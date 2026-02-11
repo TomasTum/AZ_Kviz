@@ -10,8 +10,8 @@
         Title="Konec hry" Height="450" Width="800">
     <Grid>
         <Label Content="Konec hry" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
-        <Label x:Name="label1" Content="" HorizontalAlignment="Left" Margin="390,168,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Button Content="Nová hra" Margin="300,261,300,183" FontSize="20" Height="40" Width="200" Background="Orange" Cursor="Hand" Click="Button_Click" />
+        <Label x:Name="label1" Content="" HorizontalAlignment="Center" Margin="0,168,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Button Content="Nová hra" Margin="300,261,300,183" FontSize="20" Height="40" Width="200" Background="Orange" Cursor="Hand" Click="Nova_Click" />
 
 
         <Button Content="Ukončit" Margin="300,350,300,94" FontSize="20" Height="40" Width="200" Background="Orange" Cursor="Hand" Click="Close_Click" />

@@ -48,7 +48,7 @@ namespace AZ_Kviz
             this.Close();
         }
 
-        private void Upravit_Click(object sender, RoutedEventArgs e)
+        private async void Upravit_Click(object sender, RoutedEventArgs e)
         {
             string otazka = textbox1.Text.Trim();
             string odpoved = textbox2.Text.Trim();
@@ -87,6 +87,8 @@ namespace AZ_Kviz
                     labelvysledek.Background = Brushes.LightGreen;
                     textbox1.Clear();
                     textbox2.Clear();
+                    await Task.Delay(1000);
+                    this.Close();
                 }
                 catch (Exception ex)
                 {
