@@ -93,7 +93,6 @@ namespace AZ_Kviz
         }
 
 
-
         private void OnClick()
         {
             // Zkontrolujeme, zda je políčko volné, nebo jestli už není nějaké jiné políčko aktivní

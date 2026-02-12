@@ -32,7 +32,10 @@ namespace AZ_Kviz
 
         // Seznam všech dostupných otázek (ID)
         private List<int> allAvailableIds = new List<int>();
-        
+
+        // Propojené políčka
+        private List<Cell> connectedCells = new List<Cell>();
+
         private Random rnd = new Random();
 
         string selectedCategory;
@@ -154,11 +157,15 @@ namespace AZ_Kviz
             BtnSubmit.IsEnabled = true;
 
             // Kontrola vítěze
-            if (CheckWinner(currentPlayer.State))
+            if (CheckWinner(currentPlayer.State, out connectedCells))
             {
+                WinningCells(connectedCells);
+                await Task.Delay(2000); 
+
                 string message = $"Vítězem se stává {currentPlayer.Name}!";
                 Konec_hry konec_hry = new Konec_hry(message);
                 konec_hry.ShowDialog();
+
                 this.Close();
                 return;
             }
@@ -234,20 +241,59 @@ namespace AZ_Kviz
             }
         }
 
-        // Zjištění vítěze - BFS pro hledání propojení tří stran
-        private bool CheckWinner(CellState playerState)
+        // Zvýraznění vítězných políček
+        private void WinningCells(List<Cell> cells)
         {
+            // Velikost posunu
+            int spaceX = 20;
+            int spaceY = 15;
+
+            foreach (Cell cell in cells)
+            {
+                // Zvětšení
+                ScaleTransform scale = new ScaleTransform(1.3, 1.3);
+                cell.Button.RenderTransformOrigin = new Point(0.5, 0.5);
+                cell.Button.RenderTransform = scale;
+
+                // Posunutí do popředí
+                Panel.SetZIndex(cell.Button, 100);
+
+                // Získání aktuálních pozic
+                double currentLeft = Canvas.GetLeft(cell.Button);
+                double currentTop = Canvas.GetTop(cell.Button);
+
+                // --- Výpočet posunu ---
+                double shiftX = (cell.Column - (cell.Row / 2.0)) * spaceX;
+                double shiftY = cell.Row * spaceY;
+
+                // Apklikace posunu
+                Canvas.SetLeft(cell.Button, currentLeft + shiftX);
+                Canvas.SetTop(cell.Button, currentTop + shiftY);
+            }
+        }
+
+        // Zjištění vítěze - BFS pro hledání propojení tří stran
+        private bool CheckWinner(CellState playerState, out List<Cell> connectedCells)
+        {
+            // Propojené pole
+            connectedCells = null;
+
             List<Cell> playerCells = board.Cells.Where(c => c.State == playerState).ToList();
             // Minimálně musí mít 7 políček, aby mohl propojit všechny strany
             if (playerCells.Count < 7) return false;
 
-            // Navštívené buňky pro BFS
+            // Navštívené pole pro BFS
             List<Cell> visited = new List<Cell>();
+            
+
 
             foreach (Cell startCell in playerCells)
             {
                 // Pokud už tuto buňku navštívil, přeskočí ji
                 if (visited.Contains(startCell)) continue;
+
+                // Aktuální propojené pole
+                List<Cell> currentCells = new List<Cell>();
 
                 // Fronta pro BFS
                 Queue<Cell> queue = new Queue<Cell>();
@@ -262,18 +308,24 @@ namespace AZ_Kviz
                 while (queue.Count > 0)
                 {
                     // Aktuální políčko
-                    Cell curr = queue.Dequeue();
+                    Cell current = queue.Dequeue();
+                    currentCells.Add(current);
 
                     // Kontrola stran
-                    if (curr.Column == 0) touchesLeft = true;
-                    if (curr.Column == curr.Row) touchesRight = true;
-                    if (curr.Row == 6) touchesBottom = true;
+                    if (current.Column == 0) touchesLeft = true;
+                    if (current.Column == current.Row) touchesRight = true;
+                    if (current.Row == 6) touchesBottom = true;
 
                     // Když jsou propojené všechny tři strany je vítěz
-                    if (touchesLeft && touchesRight && touchesBottom) return true;
+                    if (touchesLeft && touchesRight && touchesBottom)
+                    {
+                        connectedCells = currentCells;
+                        return true;
+                    }
+                        
 
                     // Najde sousedy
-                    foreach (Cell neighbor in GetNeighbors(curr, playerCells))
+                    foreach (Cell neighbor in GetNeighbors(current, playerCells))
                     {
                         if (!visited.Contains(neighbor))
                         {
