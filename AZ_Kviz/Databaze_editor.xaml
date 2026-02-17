@@ -7,8 +7,12 @@
         xmlns:Sqlite="clr-namespace:Microsoft.Data.Sqlite;assembly=Microsoft.Data.Sqlite" x:Class="AZ_Kviz.Databaze_editor"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
-        MinHeight="700" MinWidth="1000"
-        Title="Editor databáze otázek" >
+        Title="Editor databáze otázek"
+        WindowStyle="None"
+        WindowState="Maximized"
+        ResizeMode="NoResize"
+        MinHeight="700"
+        MinWidth="1000">
     <Grid Loaded="Grid_Loaded">
         <Label Content="Databáze" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
         <DataGrid x:Name="Datagrid" HorizontalAlignment="Center" Height="293" Margin="0,136,0,0" VerticalAlignment="Top" Width="898" AutoGenerateColumns="False">

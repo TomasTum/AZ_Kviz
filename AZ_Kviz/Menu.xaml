@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AZ_Kviz"
         mc:Ignorable="d"
-        Title="AZ-kvíz" Height="500" Width="800" FontFamily="Arial">
+        Title="AZ-kvíz"
+        WindowStyle="None"
+        WindowState="Maximized"
+        ResizeMode="NoResize"
+        Height="500" 
+        Width="800" 
+        FontFamily="Arial">
     <Grid>
         <Label Content="AZ-kvíz" FontWeight="Bold" FontSize="40" Width="220" Margin="290,50,290,305" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="20" Width="300">
