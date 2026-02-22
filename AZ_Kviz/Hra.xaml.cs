@@ -363,5 +363,20 @@ namespace AZ_Kviz
             }
             return neighbors;
         }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+
+                MessageBoxResult result = MessageBox.Show("Opravdu chcete ukončit rozehranou hru?","Ukončení hry",MessageBoxButton.YesNo,MessageBoxImage.Error);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    this.Close();
+                }
+                
+            }
+        }
     }
 }

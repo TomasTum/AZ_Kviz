@@ -6,7 +6,7 @@
         WindowState="Maximized"
         ResizeMode="NoResize"
         Height="600" 
-        Width="1000">
+        Width="1000" KeyDown="Window_KeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
