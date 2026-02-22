@@ -31,8 +31,8 @@ namespace AZ_Kviz
         // Spuštění nové hry
         private void Nova_Click(object sender, RoutedEventArgs e)
         {
-            Set_players set_Players = new Set_players();
-            set_Players.Show();
+            Nastaveni_hracu nastaveni_Hracu = new Nastaveni_hracu();
+            nastaveni_Hracu.ShowDialog();
             this.Close();
         }
 

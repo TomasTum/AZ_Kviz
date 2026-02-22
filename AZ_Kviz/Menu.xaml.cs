@@ -25,8 +25,8 @@ namespace AZ_Kviz
 
         private void Hra_Click(object sender, RoutedEventArgs e)
         {
-            Set_players setPlayers = new Set_players();
-            setPlayers.ShowDialog();
+            Nastaveni_hracu nastaveni_Hracu = new Nastaveni_hracu();
+            nastaveni_Hracu.ShowDialog();
         }
 
         private void Nastaveni_Click(object sender, RoutedEventArgs e)

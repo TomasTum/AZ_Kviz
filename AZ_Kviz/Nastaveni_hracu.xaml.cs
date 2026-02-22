@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace AZ_Kviz
 {
     /// <summary>
-    /// Interakční logika pro Set_players.xaml
+    /// Interakční logika pro Nastaveni_hracu.xaml
     /// </summary>
-    public partial class Set_players : Window
+    public partial class Nastaveni_hracu : Window
     {
-        public Set_players()
+        public Nastaveni_hracu()
         {
             InitializeComponent();
         }
@@ -61,7 +61,7 @@ namespace AZ_Kviz
 
                     this.Close();
                     hra.ShowDialog();
-                }               
+                }
             }
         }
     }

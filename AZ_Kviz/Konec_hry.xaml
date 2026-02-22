@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AZ_Kviz"
         mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
-        MinHeight="500" MinWidth="665"
-        Title="Konec hry" Height="450" Width="800">
+        Title="Konec hry"
+        WindowStyle="None"
+        WindowState="Maximized"
+        ResizeMode="NoResize"
+        FontFamily="Arial">
     <Grid>
-        <Label Content="Konec hry" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
-        <Label x:Name="label1" Content="" HorizontalAlignment="Center" Margin="0,168,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Button Content="Nová hra" Margin="300,261,300,183" FontSize="20" Height="40" Width="200" Background="Orange" Cursor="Hand" Click="Nova_Click" />
-
-
-        <Button Content="Ukončit" Margin="300,350,300,94" FontSize="20" Height="40" Width="200" Background="Orange" Cursor="Hand" Click="Close_Click" />
-
-
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Konec hry" FontWeight="Bold" FontSize="40" Margin="0,0,0,50" HorizontalContentAlignment="Center"/>
+            <Label x:Name="label1" Content="" Margin="0,0,0,0" FontSize="20" Width="400" HorizontalContentAlignment="Center"/>
+            <Button Content="Nová hra" Margin="0,50,0,20" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Nova_Click" />
+            <Button Content="Ukončit hru" Margin="0,0,0,20" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Close_Click" />
+        </StackPanel>
     </Grid>
 </Window>

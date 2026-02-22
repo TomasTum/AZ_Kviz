@@ -9,16 +9,15 @@
         WindowStyle="None"
         WindowState="Maximized"
         ResizeMode="NoResize"
-        Height="500" 
-        Width="800" 
         FontFamily="Arial">
     <Grid>
-        <Label Content="AZ-kvíz" FontWeight="Bold" FontSize="40" Width="220" Margin="290,50,290,305" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Margin="20" Width="300">
-            <Button x:Name="Hra" Content="Nová hra" Height="45" Margin="5" FontSize="20" Background="Orange" Cursor="Hand" Click="Hra_Click" />
-            <Button x:Name="Nastaveni" Content="Nastavení" Height="45" Margin="5" FontSize="20" Background="Orange" Cursor="Hand" Click="Nastaveni_Click" />
-            <Button x:Name="Konec" Content="Konec hry" Height="45" Margin="5" FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="AZ-kvíz" FontWeight="Bold" FontSize="40" Width="220" Margin="0,20,0,20" HorizontalContentAlignment="Center"/>
+            <StackPanel Orientation="Vertical" Width="300">
+                <Button x:Name="Hra" Content="Nová hra" Height="45" Margin="5" FontSize="20" Background="Orange" Cursor="Hand" Click="Hra_Click" />
+                <Button x:Name="Nastaveni" Content="Nastavení" Height="45" Margin="5" FontSize="20" Background="Orange" Cursor="Hand" Click="Nastaveni_Click" />
+                <Button x:Name="Konec" Content="Konec hry" Height="45" Margin="5" FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
+            </StackPanel>
         </StackPanel>
-
     </Grid>
 </Window>

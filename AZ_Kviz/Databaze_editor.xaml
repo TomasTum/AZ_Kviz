@@ -4,30 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AZ_Kviz"
-        xmlns:Sqlite="clr-namespace:Microsoft.Data.Sqlite;assembly=Microsoft.Data.Sqlite" x:Class="AZ_Kviz.Databaze_editor"
+        xmlns:Sqlite="clr-namespace:Microsoft.Data.Sqlite;assembly=Microsoft.Data.Sqlite" 
+        x:Class="AZ_Kviz.Databaze_editor"
         mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
-        Title="Editor databáze otázek"
+        Title="Databáze otázek"
         WindowStyle="None"
         WindowState="Maximized"
         ResizeMode="NoResize"
-        MinHeight="700"
-        MinWidth="1000">
+        FontFamily="Arial">
     <Grid Loaded="Grid_Loaded">
-        <Label Content="Databáze" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
-        <DataGrid x:Name="Datagrid" HorizontalAlignment="Center" Height="293" Margin="0,136,0,0" VerticalAlignment="Top" Width="898" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="ID" Header="ID" FontSize="14" Binding="{Binding Id}"/>
-                <DataGridTextColumn x:Name="Otazka" Header="Otázka" FontSize="14" Binding="{Binding Otazka}"/>
-                <DataGridTextColumn x:Name="SpravnaOdpoved" Header="Správná odpověď" FontSize="14" Binding="{Binding SpravnaOdpoved}"/>
-                <DataGridTextColumn x:Name="Zkratka" Header="Zkratka" FontSize="14" Binding="{Binding Zkratka}"/>
-                <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" FontSize="14" Binding="{Binding Kategorie}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Button Content="Přidat otázku" Margin="108,454,642,185" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Pridat_Click" />
-        <Button Content="Upravit otázku" Margin="388,454,388,185" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Upravit_Click" />
-        <Button Content="Odebrat otázku" Margin="657,454,121,185" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Odebrat_Click" />
-        <Button Content="Aktualizovat data" Margin="336,524,337,115" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Aktualizovat_Click" />
-        <Button x:Name="zpet" Content="Zpět" Height="45" Width="150" Margin="375,594,375,45" FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Databáze" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center"/>
+            <DataGrid x:Name="Datagrid" Height="350" Margin="20,20,20,20" AutoGenerateColumns="False" CanUserAddRows="False" Cursor="Hand">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="ID" Header="ID" FontSize="14" Binding="{Binding Id}"/>
+                    <DataGridTextColumn x:Name="Otazka" Header="Otázka" FontSize="14" Binding="{Binding Otazka}"/>
+                    <DataGridTextColumn x:Name="SpravnaOdpoved" Header="Správná odpověď" FontSize="14" Binding="{Binding SpravnaOdpoved}"/>
+                    <DataGridTextColumn x:Name="Zkratka" Header="Zkratka" FontSize="14" Binding="{Binding Zkratka}"/>
+                    <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" FontSize="14" Binding="{Binding Kategorie}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0,20,15" Cursor="">
+                <Button Content="Přidat otázku" Margin="0,0,15,0" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Pridat_Click" />
+                <Button Content="Upravit otázku" Margin="0,0,15,0" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Upravit_Click" />
+                <Button Content="Odebrat otázku" Margin="0,0,0,0" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Odebrat_Click" />
+            </StackPanel>
+            <Button Content="Aktualizovat data" Margin="0,0,0,50" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Aktualizovat_Click" />
+            <Button x:Name="zpet" Content="Zpět" Margin="0,0,0,20" Height="45" Width="150"  FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
+        </StackPanel>
     </Grid>
 </Window>

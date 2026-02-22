@@ -5,25 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AZ_Kviz"
         mc:Ignorable="d"
-        SizeToContent="WidthAndHeight"
-        MinHeight="550" MinWidth="665"
-        Title="Upravit otázku">
+        Title="Upravit otázku"
+        WindowStyle="None"
+        WindowState="Maximized"
+        ResizeMode="NoResize"
+        FontFamily="Arial" Cursor="">
     <Grid>
-        <Label Content="Upravit" FontWeight="Bold" FontSize="40" Width="220" Margin="0,52,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Center"/>
-        <Label Content="Otázka:" HorizontalAlignment="Left" Margin="139,141,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Label Content="Správná odpověď:" HorizontalAlignment="Left" Margin="139,194,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <Label Content="Kategorie:" HorizontalAlignment="Left" Margin="139,0,0,0" VerticalAlignment="Center" FontSize="20"/>
-        <Label x:Name="labelvysledek" Content="" HorizontalAlignment="Center" Margin="0,286,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-        <TextBox x:Name="textbox1" HorizontalAlignment="Left" Margin="323,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
-        <TextBox x:Name="textbox2" HorizontalAlignment="Left" Margin="323,198,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" FontSize="20"/>
-        <ComboBox x:Name="combobox1" IsEditable="False" Width="200" Height="30" FontSize="20" Margin="323,252,142,252">
-            <ComboBoxItem>Technika a zajímavosti</ComboBoxItem>
-            <ComboBoxItem>Historie a zeměpis</ComboBoxItem>
-            <ComboBoxItem>Příroda a věda</ComboBoxItem>
-            <ComboBoxItem>Kultura a umění</ComboBoxItem>
-            <ComboBoxItem>Sport</ComboBoxItem>
-        </ComboBox>
-        <Button Content="Uložit" Margin="223,345,222,119" FontSize="20" Height="40" Width="200" Background="Orange" Cursor="Hand" Click="Upravit_Click" />
-        <Button x:Name="zpet" Content="Zpět" Margin="248,419,247,45" Height="40" Width="150" FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Upravit otázku" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
+                <Label Content="Otázka:" Margin="20,0,20,0" FontSize="20" Width="180"/>
+                <TextBox x:Name="textbox1" Margin="0,0,20,0" FontSize="20" Width="300" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                <Label Content="Správná odpověď:" Margin="20,0,20,0" FontSize="20" Width="180"/>
+                <TextBox x:Name="textbox2" Margin="0,0,20,0" FontSize="20" Width="300" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                <Label Content="Kategorie:" Margin="20,0,20,0" FontSize="20" Width="180"/>
+                <ComboBox x:Name="combobox1" IsEditable="False" FontSize="20" Width="300" Margin="0,0,20,0" Cursor="Hand">
+                    <ComboBoxItem>Technika a zajímavosti</ComboBoxItem>
+                    <ComboBoxItem>Historie a zeměpis</ComboBoxItem>
+                    <ComboBoxItem>Příroda a věda</ComboBoxItem>
+                    <ComboBoxItem>Kultura a umění</ComboBoxItem>
+                    <ComboBoxItem>Sport</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <Label x:Name="labelvysledek" Content="" Margin="0,20,0,50" FontSize="20" FontWeight="Bold" Width="400" HorizontalContentAlignment="Center"/>
+            <Button Content="Uložit" Margin="0,0,0,150" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Upravit_Click" />
+            <Button x:Name="zpet" Content="Zpět" Margin="0,0,0,20" Height="45" Width="150" FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
+        </StackPanel>
     </Grid>
 </Window>

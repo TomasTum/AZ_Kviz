@@ -251,7 +251,7 @@ namespace AZ_Kviz
             foreach (Cell cell in cells)
             {
                 // Zvětšení
-                ScaleTransform scale = new ScaleTransform(1.3, 1.3);
+                ScaleTransform scale = new ScaleTransform(1.1, 1.1);
                 cell.Button.RenderTransformOrigin = new Point(0.5, 0.5);
                 cell.Button.RenderTransform = scale;
 
@@ -260,15 +260,15 @@ namespace AZ_Kviz
 
                 // Získání aktuálních pozic
                 double currentLeft = Canvas.GetLeft(cell.Button);
-                double currentTop = Canvas.GetTop(cell.Button);
+                //double currentTop = Canvas.GetTop(cell.Button);
 
-                // --- Výpočet posunu ---
+                // Výpočet posunu
                 double shiftX = (cell.Column - (cell.Row / 2.0)) * spaceX;
-                double shiftY = cell.Row * spaceY;
+                //double shiftY = cell.Row * spaceY;
 
                 // Apklikace posunu
                 Canvas.SetLeft(cell.Button, currentLeft + shiftX);
-                Canvas.SetTop(cell.Button, currentTop + shiftY);
+               // Canvas.SetTop(cell.Button, currentTop + shiftY);
             }
         }
 
@@ -324,7 +324,7 @@ namespace AZ_Kviz
                     }
                         
 
-                    // Najde sousedy
+                    // Nalezení sousedů
                     foreach (Cell neighbor in GetNeighbors(current, playerCells))
                     {
                         if (!visited.Contains(neighbor))
@@ -339,7 +339,7 @@ namespace AZ_Kviz
         }
 
 
-        // Metoda pro nalezení sousedních políček v hexagonální síti
+        // Nalezení sousedních políček
         private List<Cell> GetNeighbors(Cell c, List<Cell> playerCells)
         {
             int r = c.Row;
