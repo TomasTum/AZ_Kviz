@@ -15,13 +15,13 @@
     <Grid Loaded="Grid_Loaded">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="Databáze" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center"/>
-            <DataGrid x:Name="Datagrid" Height="350" Margin="20,20,20,20" AutoGenerateColumns="False" CanUserAddRows="False" Cursor="Hand">
+            <DataGrid x:Name="Datagrid" Height="450" Margin="20,20,20,20" AutoGenerateColumns="False" FontSize="18" CanUserAddRows="False" Cursor="Hand">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="ID" Header="ID" FontSize="14" Binding="{Binding Id}"/>
-                    <DataGridTextColumn x:Name="Otazka" Header="Otázka" FontSize="14" Binding="{Binding Otazka}"/>
-                    <DataGridTextColumn x:Name="SpravnaOdpoved" Header="Správná odpověď" FontSize="14" Binding="{Binding SpravnaOdpoved}"/>
-                    <DataGridTextColumn x:Name="Zkratka" Header="Zkratka" FontSize="14" Binding="{Binding Zkratka}"/>
-                    <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" FontSize="14" Binding="{Binding Kategorie}"/>
+                    <DataGridTextColumn x:Name="ID" Header="ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn x:Name="Otazka" Header="Otázka" Binding="{Binding Otazka}"/>
+                    <DataGridTextColumn x:Name="SpravnaOdpoved" Header="Správná odpověď" Binding="{Binding SpravnaOdpoved}"/>
+                    <DataGridTextColumn x:Name="Zkratka" Header="Zkratka" Binding="{Binding Zkratka}"/>
+                    <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" Binding="{Binding Kategorie}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0,20,15" Cursor="">
