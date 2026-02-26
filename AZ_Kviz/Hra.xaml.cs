@@ -244,32 +244,36 @@ namespace AZ_Kviz
         // Zvýraznění vítězných políček
         private void WinningCells(List<Cell> cells)
         {
-            // Velikost posunu
-            int spaceX = 20;
-            int spaceY = 15;
-
+            // Záře
+            var glowEffect = new System.Windows.Media.Effects.DropShadowEffect
+            {
+                BlurRadius = 30,
+                ShadowDepth = 0
+            };
             foreach (Cell cell in cells)
             {
-                // Zvětšení
-                ScaleTransform scale = new ScaleTransform(1.1, 1.1);
-                cell.Button.RenderTransformOrigin = new Point(0.5, 0.5);
-                cell.Button.RenderTransform = scale;
-
-                // Posunutí do popředí
-                Panel.SetZIndex(cell.Button, 100);
-
-                // Získání aktuálních pozic
-                double currentLeft = Canvas.GetLeft(cell.Button);
-                //double currentTop = Canvas.GetTop(cell.Button);
-
-                // Výpočet posunu
-                double shiftX = (cell.Column - (cell.Row / 2.0)) * spaceX;
-                //double shiftY = cell.Row * spaceY;
-
-                // Apklikace posunu
-                Canvas.SetLeft(cell.Button, currentLeft + shiftX);
-               // Canvas.SetTop(cell.Button, currentTop + shiftY);
+                if (cell.State == CellState.Player1)
+                {
+                    glowEffect.Color = Colors.Orange;
+                }
+                else if (cell.State == CellState.Player2)
+                {
+                    glowEffect.Color = Colors.DeepSkyBlue;
+                }
+                cell.Button.Effect = glowEffect;
+                // Animace 
+                var animation = new System.Windows.Media.Animation.DoubleAnimation
+                {
+                    From = 1.0,
+                    To = 0.5,
+                    Duration = TimeSpan.FromSeconds(0.5),
+                    AutoReverse = true,
+                    RepeatBehavior = System.Windows.Media.Animation.RepeatBehavior.Forever
+                };
+                cell.Button.BeginAnimation(Button.OpacityProperty, animation);
             }
+
+
         }
 
         // Zjištění vítěze - BFS pro hledání propojení tří stran

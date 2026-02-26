@@ -30,6 +30,7 @@
                     <ComboBoxItem Tag="Příroda a věda">Příroda a věda</ComboBoxItem>
                     <ComboBoxItem Tag="Kultura a umění">Kultura a umění</ComboBoxItem>
                     <ComboBoxItem Tag="Sport">Sport</ComboBoxItem>
+                    <ComboBoxItem Tag="Jednoduché">Jednoduché</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
             <Button Content="Hrát" Margin="0,50,0,150" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Button_Click" />
