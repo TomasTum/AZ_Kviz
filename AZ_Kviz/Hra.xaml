@@ -5,8 +5,7 @@
         WindowStyle="None"
         WindowState="Maximized"
         ResizeMode="NoResize"
-        Height="600" 
-        Width="1000" KeyDown="Window_KeyDown">
+        KeyDown="Window_KeyDown">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,15 +14,43 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="40,20,40,10">
-            <Grid x:Name="Player1Panel" HorizontalAlignment="Left">
-                <Polygon Points="30,0 190,0 220,40 190,80 30,80 0,40" Fill="Orange" Stroke="#E67E22" StrokeThickness="2"/>
-                <TextBlock x:Name="TxtPlayer1Name" Text="Hráč 1" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <Grid x:Name="Player1Panel" HorizontalAlignment="Left" Height="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="Auto" MinWidth="160" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+
+                <Polygon Grid.Column="0" Points="30,0 0,40 30,80" Fill="Orange" />
+                <Rectangle Grid.Column="1" Fill="Orange" />
+                <Polygon Grid.Column="2" Points="0,0 30,40 0,80" Fill="Orange" />
+
+                <Polyline Grid.Column="0" Points="30,0 0,40 30,80" Stroke="#E67E22" StrokeThickness="2" />
+                <Border Grid.Column="1" BorderBrush="#E67E22" BorderThickness="0,2,0,2" />
+                <Polyline Grid.Column="2" Points="0,0 30,40 0,80" Stroke="#E67E22" StrokeThickness="2" />
+
+                <TextBlock Grid.Column="1" x:Name="TxtPlayer1Name" Text="Hráč 1" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"/>
             </Grid>
 
-            <Grid x:Name="Player2Panel" HorizontalAlignment="Right">
-                <Polygon Points="30,0 190,0 220,40 190,80 30,80 0,40" Fill="DeepSkyBlue" Stroke="#1F618D" StrokeThickness="2"/>
-                <TextBlock x:Name="TxtPlayer2Name" Text="Hráč 2" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid x:Name="Player2Panel" HorizontalAlignment="Right" Height="80">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="Auto" MinWidth="160" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+
+                <Polygon Grid.Column="0" Points="30,0 0,40 30,80" Fill="DeepSkyBlue" />
+                <Rectangle Grid.Column="1" Fill="DeepSkyBlue" />
+                <Polygon Grid.Column="2" Points="0,0 30,40 0,80" Fill="DeepSkyBlue" />
+
+                <Polyline Grid.Column="0" Points="30,0 0,40 30,80" Stroke="#1F618D" StrokeThickness="2" />
+                <Border Grid.Column="1" BorderBrush="#1F618D" BorderThickness="0,2,0,2" />
+                <Polyline Grid.Column="2" Points="0,0 30,40 0,80" Stroke="#1F618D" StrokeThickness="2" />
+
+                <TextBlock Grid.Column="1" x:Name="TxtPlayer2Name" Text="Hráč 2" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"/>
             </Grid>
+
         </Grid>
 
         <Canvas x:Name="GameBoard"
