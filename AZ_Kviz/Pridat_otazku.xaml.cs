@@ -47,7 +47,7 @@ namespace AZ_Kviz
                     // První písmeno otázky, odpovědi velké
                     otazka = char.ToUpper(otazka[0]) + otazka.Substring(1);
                     odpoved = char.ToUpper(odpoved[0]) + odpoved.Substring(1);
-                    if(!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
+                    if (!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
 
                     //Přidání otazníku na konec otázky, pokud tam není
                     if (!otazka.EndsWith("?"))
@@ -64,11 +64,21 @@ namespace AZ_Kviz
                         zkratka += char.ToUpper(slovo[0]);
                     }
 
-                    Database.AddQuestion(otazka, odpoved, zkratka, kategorie);
-                    labelvysledek.Content = "Otázka byla úspěšně přidána.";
-                    labelvysledek.Background = Brushes.LightGreen;
-                    textbox1.Clear();
-                    textbox2.Clear();
+                    if (Database.GetQuestionByQuestion(otazka))
+                    {
+                        labelvysledek.Content = "Tato otázka již existuje.";
+                        labelvysledek.Background = Brushes.Red;
+                    }
+                    else
+                    {
+                        Database.AddQuestion(otazka, odpoved, zkratka, kategorie);
+                        labelvysledek.Content = "Otázka byla úspěšně přidána.";
+                        labelvysledek.Background = Brushes.LightGreen;
+                        textbox1.Clear();
+                        textbox2.Clear();
+                    }
+
+                    
                 }
                 catch (Exception ex)
                 {

@@ -70,6 +70,32 @@ namespace AZ_Kviz
             }
         }
 
+        // Zjištění jestli existuje otázka podle Otázky
+        public static bool GetQuestionByQuestion(string question)
+        {
+            using var connection = GetConnection();
+            connection.Open();
+
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = "SELECT COUNT(1) FROM Questions WHERE QuestionText = @question";
+            cmd.Parameters.AddWithValue("@question", question);
+
+            // Počet záznamů, které odpovídají hledané otázce (vrací v long)
+            long count = (long)cmd.ExecuteScalar();
+
+            if (count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+
+        }
+
         // Načtení všech otázek
         public static List<Question> GetAllQuestions()
         {
