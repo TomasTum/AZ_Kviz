@@ -163,10 +163,12 @@ namespace AZ_Kviz
                 await Task.Delay(2000); 
 
                 string message = $"Vítězem se stává {currentPlayer.Name}!";
-                Konec_hry konec_hry = new Konec_hry(message);
+                Konec_hry konec_hry = new Konec_hry(message)
+                {
+                    Owner = this
+                };
                 konec_hry.ShowDialog();
 
-                this.Close();
                 return;
             }
 
@@ -372,11 +374,12 @@ namespace AZ_Kviz
         {
             if (e.Key == Key.Escape)
             {
-
-                MessageBoxResult result = MessageBox.Show("Opravdu chcete ukončit rozehranou hru?","Ukončení hry",MessageBoxButton.YesNo,MessageBoxImage.Error);
+                MessageBoxResult result = MessageBox.Show("Opravdu chcete ukončit rozehranou hru?","Ukončení hry",MessageBoxButton.YesNo,MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Yes)
                 {
+                    Menu menu = new Menu();
+                    menu.Show();
                     this.Close();
                 }
                 

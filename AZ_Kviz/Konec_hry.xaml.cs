@@ -32,15 +32,29 @@ namespace AZ_Kviz
         private void Nova_Click(object sender, RoutedEventArgs e)
         {
             Nastaveni_hracu nastaveni_Hracu = new Nastaveni_hracu();
-            nastaveni_Hracu.ShowDialog();
+            nastaveni_Hracu.Show();
+
+            if (this.Owner is Window owner)
+            {
+                owner.Close();
+            }
+            
             this.Close();
+           
         }
 
         // Zavření hry
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            
-            this.Close();           
+            Menu menu = new Menu();
+            menu.Show();
+
+            if (this.Owner is Window owner)
+            {
+                owner.Close();
+            }
+
+            this.Close();
         }
     }
 }

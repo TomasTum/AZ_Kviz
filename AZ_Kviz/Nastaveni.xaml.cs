@@ -29,10 +29,13 @@ namespace AZ_Kviz
         private void Databaze_Click(object sender, RoutedEventArgs e)
         {
             Databaze_editor databaze_Editor = new Databaze_editor();
-            databaze_Editor.ShowDialog();
+            databaze_Editor.Show();
+            this.Close();
         }
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
+            Menu menu = new Menu();
+            menu.Show();
             this.Close();
         }
     }

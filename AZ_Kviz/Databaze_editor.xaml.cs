@@ -42,6 +42,8 @@ namespace AZ_Kviz
 
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
+            Nastaveni nastaveni = new Nastaveni();
+            nastaveni.Show();
             this.Close();
         }
 
@@ -64,7 +66,6 @@ namespace AZ_Kviz
         {
             Pridat_otazku pridat_Otazku = new Pridat_otazku();
             pridat_Otazku.ShowDialog();
-            
             UpdateData();
 
         }
