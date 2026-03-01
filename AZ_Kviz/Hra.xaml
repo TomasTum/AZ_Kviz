@@ -23,7 +23,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Polygon Grid.Column="0" Points="30,0 0,40 30,80" Fill="Orange" />
-                <Rectangle Grid.Column="1" Fill="Orange" />
+                <Rectangle Grid.Column="1" Fill="Orange" Margin="-1,0,-1,0" />
                 <Polygon Grid.Column="2" Points="0,0 30,40 0,80" Fill="Orange" />
 
                 <Polyline Grid.Column="0" Points="30,0 0,40 30,80" Stroke="#E67E22" StrokeThickness="2" />
@@ -41,11 +41,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Polygon Grid.Column="0" Points="30,0 0,40 30,80" Fill="DeepSkyBlue" />
-                <Rectangle Grid.Column="1" Fill="DeepSkyBlue" />
+                <Rectangle Grid.Column="1" Fill="DeepSkyBlue" Margin="-1,0,-1,0" />
                 <Polygon Grid.Column="2" Points="0,0 30,40 0,80" Fill="DeepSkyBlue" />
 
                 <Polyline Grid.Column="0" Points="30,0 0,40 30,80" Stroke="#1F618D" StrokeThickness="2" />
-                <Border Grid.Column="1" BorderBrush="#1F618D" BorderThickness="0,2,0,2" />
+                <Border Grid.Column="1" BorderBrush="#1F618D" BorderThickness="0,2,0,2" Margin="-1,0,-1,0" />
                 <Polyline Grid.Column="2" Points="0,0 30,40 0,80" Stroke="#1F618D" StrokeThickness="2" />
 
                 <TextBlock Grid.Column="1" x:Name="TxtPlayer2Name" Text="Hráč 2" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"/>
@@ -53,13 +53,15 @@
 
         </Grid>
 
-        <Canvas x:Name="GameBoard"
+        <Viewbox Grid.Row="1" Margin="20" Stretch="Uniform">
+            <Canvas x:Name="GameBoard"
                 Grid.Row="1"
                 Height="450" 
                 Width="600"
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
                 Background="Transparent"/>
+        </Viewbox>
 
         <StackPanel x:Name="QuestionArea"
                     Grid.Row="2"

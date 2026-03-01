@@ -15,11 +15,11 @@
             <Label Content="Nová hra" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,20">
                 <Label Content="Hráč 1:"  Margin="20,0,20,0" FontSize="20" Width="230"/>
-                <TextBox x:Name="jmeno1" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" MaxLength="20"/>
+                <TextBox x:Name="jmeno1" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" MaxLength="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                 <Label Content="Hráč 2:"  Margin="20,0,20,0" FontSize="20" Width="230"/>
-                <TextBox x:Name="jmeno2" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" MaxLength="20"/>
+                <TextBox x:Name="jmeno2" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" MaxLength="30"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                 <Label Content="Kategorie otázek ve hře:"  Margin="20,0,20,0" FontSize="20" Width="230"/>
