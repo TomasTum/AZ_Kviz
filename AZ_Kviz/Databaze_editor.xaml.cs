@@ -85,7 +85,7 @@ namespace AZ_Kviz
             }
             else
             {
-                MessageBox.Show("Prosím, označte nejprve řádek, který chcete upravit.", "Upozornění");
+                MessageBox.Show("Prosím, označte nejprve řádek, který chcete upravit.", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -124,7 +124,7 @@ namespace AZ_Kviz
             }
             else
             {
-                MessageBox.Show("Prosím, označte nejprve řádek, který chcete smazat.", "Upozornění");
+                MessageBox.Show("Prosím, označte nejprve řádek, který chcete smazat.", "Upozornění", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }

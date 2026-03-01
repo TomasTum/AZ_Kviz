@@ -7,15 +7,18 @@
         mc:Ignorable="d"
         Title="Konec hry"
         WindowStyle="None"
-        WindowState="Maximized"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         FontFamily="Arial">
-    <Grid>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Konec hry" FontWeight="Bold" FontSize="40" Margin="0,0,0,50" HorizontalContentAlignment="Center"/>
-            <Label x:Name="label1" Content="" Margin="0,0,0,0" FontSize="20" Width="400" HorizontalContentAlignment="Center"/>
-            <Button Content="Nová hra" Margin="0,50,0,20" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Nova_Click" />
-            <Button Content="Ukončit hru" Margin="0,0,0,20" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Close_Click" />
-        </StackPanel>
-    </Grid>
+    <Border BorderBrush="Black" BorderThickness="2">
+        <Grid>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Label Content="Konec hry" FontWeight="Bold" FontSize="40" Margin="0,0,0,50" HorizontalContentAlignment="Center"/>
+                <Label x:Name="label1" Content="" Margin="0,0,0,0" FontSize="20" Width="400" HorizontalContentAlignment="Center"/>
+                <Button Content="Nová hra" Margin="0,50,0,20" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Nova_Click" />
+                <Button Content="Ukončit hru" Margin="0,0,0,20" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Close_Click" />
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>
