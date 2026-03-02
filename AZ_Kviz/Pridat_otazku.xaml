@@ -10,7 +10,8 @@
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        FontFamily="Arial">
+        FontFamily="Arial"
+        MouseLeftButtonDown="Window_MouseDown">
     
     <Border BorderBrush="Black" BorderThickness="2">
         <Grid>

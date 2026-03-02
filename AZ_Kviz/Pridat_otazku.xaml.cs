@@ -78,13 +78,23 @@ namespace AZ_Kviz
                         textbox2.Clear();
                     }
 
-                    
+
                 }
                 catch (Exception ex)
                 {
                     labelvysledek.Content = "Chyba při přidávání otázky: " + ex.Message;
                     labelvysledek.Background = Brushes.Red;
                 }
+            }
+        }
+
+        // Posouvání okna
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
             }
         }
     }
