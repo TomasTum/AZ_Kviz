@@ -6,7 +6,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>AZ kviz.ico</ApplicationIcon>
+    <ApplicationIcon>AZkviz.ico</ApplicationIcon>
+    <Authors>Tomáš Tůma</Authors>
+    <Product>AZ Kvíz</Product>
+    <AssemblyName>AZ-kvíz</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="AZ kviz.ico" />
+    <Content Include="AZkviz.ico" />
     <Content Include="Data\azkviz.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
