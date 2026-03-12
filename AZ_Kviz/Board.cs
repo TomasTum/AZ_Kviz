@@ -20,6 +20,7 @@ namespace AZ_Kviz
         private double HexHeight = 52;
         private double StartX = 350;
         private double StartY = 40;
+        private double Gap = 2.0;
 
         // Seznam všech buněk na desce
         public List<Cell> Cells { get; set; } = new List<Cell>();
@@ -40,7 +41,7 @@ namespace AZ_Kviz
             double canvasWidth = double.IsNaN(canvas.Width) ? 500 : canvas.Width;
 
             // 2. Startovní X bude přesná polovina šířky Canvasu
-            double centerStartX = canvasWidth / 2.0;
+            StartX = canvasWidth / 2.0;
 
             // Vytvoření šestiúhelníkové mřížky
             for (int row = 0; row < TotalRows; row++)
@@ -59,7 +60,7 @@ namespace AZ_Kviz
                     // (row * HexWidth / 2.0) posouvá celou řadu doleva podle toho, jak je dlouhá
                     // (col * HexWidth) posouvá konkrétní políčko v řadě doprava
                     // (HexWidth / 2.0) je drobná korekce na střed samotného šestiúhelníku
-                    double offsetX = centerStartX - (row * HexWidth / 2.0) + (col * HexWidth) - (HexWidth / 2.0);
+                    double offsetX = StartX - (row * (HexWidth + Gap) / 2.0) + (col * (HexWidth + Gap)) - (HexWidth / 2.0);
 
                     // StartY - jak vysoko pod horním okrajem pyramida začne
                     double offsetY = StartY + row * (HexHeight - 5);

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace AZ_Kviz
 {
     /// <summary>
-    /// Interakční logika pro Databaze_editor.xaml
+    /// Interakční logika pro Databaze2_editor.xaml
     /// </summary>
-    public partial class Databaze_editor : Window
+    public partial class Databaze2_editor : Window
     {
-        public Databaze_editor()
+        public Databaze2_editor()
         {
             InitializeComponent();
         }
@@ -64,8 +64,8 @@ namespace AZ_Kviz
 
         private void Pridat_Click(object sender, RoutedEventArgs e)
         {
-            Pridat_otazku pridat_Otazku = new Pridat_otazku();
-            pridat_Otazku.ShowDialog();
+            Pridat2_otazku pridat2_Otazku = new Pridat2_otazku();
+            pridat2_Otazku.ShowDialog();
             UpdateData();
 
         }
@@ -77,10 +77,10 @@ namespace AZ_Kviz
 
         private void Upravit_Click(object sender, RoutedEventArgs e)
         {
-            if(Datagrid.SelectedItem is Question vybranyRadek)
+            if (Datagrid.SelectedItem is Question vybranyRadek)
             {
-                Upravit_otazku upravit_Otazku = new Upravit_otazku(vybranyRadek.Id);
-                upravit_Otazku.ShowDialog();
+                Upravit2_otazku upravit2_Otazku = new Upravit2_otazku(vybranyRadek.Id);
+                upravit2_Otazku.ShowDialog();
                 UpdateData();
             }
             else
@@ -92,8 +92,8 @@ namespace AZ_Kviz
         // Aktualizace dat v DataGridu
         private void UpdateData()
         {
-                var data = Database.GetAllQuestions();
-                Datagrid.ItemsSource = data;
+            var data = Database.GetAllSubQuestions();
+            Datagrid.ItemsSource = data;
         }
 
         private void DeleteQuestion()
@@ -106,7 +106,7 @@ namespace AZ_Kviz
                 {
                     try
                     {
-                        Database.DeleteQuestion(vybranyRadek.Id);
+                        Database.DeleteSubQuestion(vybranyRadek.Id);
                         try
                         {
                             UpdateData();
@@ -128,5 +128,4 @@ namespace AZ_Kviz
             }
         }
     }
-    
 }

@@ -39,8 +39,6 @@ namespace AZ_Kviz
                 MessageBox.Show("Otázka s daným ID nebyla nalezena.", "Chyba");
                 this.Close();
             }
-
-
         }
 
         private void Konec_Click(object sender, RoutedEventArgs e)

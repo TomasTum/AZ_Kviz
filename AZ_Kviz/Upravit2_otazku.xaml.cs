@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,13 +16,31 @@ using System.Windows.Shapes;
 namespace AZ_Kviz
 {
     /// <summary>
-    /// Interakční logika pro Pridat_otazku.xaml
+    /// Interakční logika pro Upravit2_otazku.xaml
     /// </summary>
-    public partial class Pridat_otazku : Window
+    public partial class Upravit2_otazku : Window
     {
-        public Pridat_otazku()
+
+        private (string Otazka, string Odpoved, string Kategorie)? question;
+        int id;
+
+        public Upravit2_otazku(int index)
         {
             InitializeComponent();
+
+            id = index;
+            question = Database.GetSubQuestionById(index);
+            if (question.HasValue)
+            {
+                textbox1.Text = question.Value.Otazka;
+                combobox2.Text = question.Value.Odpoved;
+                combobox1.Text = question.Value.Kategorie;
+            }
+            else
+            {
+                MessageBox.Show("Otázka s daným ID nebyla nalezena.", "Chyba");
+                this.Close();
+            }
         }
 
         private void Konec_Click(object sender, RoutedEventArgs e)
@@ -30,10 +48,10 @@ namespace AZ_Kviz
             this.Close();
         }
 
-        private void Pridat_Click(object sender, RoutedEventArgs e)
+        private async void Upravit_Click(object sender, RoutedEventArgs e)
         {
             string otazka = textbox1.Text.Trim();
-            string odpoved = textbox2.Text.Trim();
+            string odpoved = combobox2.Text.Trim();
             string kategorie = combobox1.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(otazka) || string.IsNullOrWhiteSpace(odpoved) || string.IsNullOrWhiteSpace(kategorie))
@@ -49,40 +67,23 @@ namespace AZ_Kviz
                     odpoved = char.ToUpper(odpoved[0]) + odpoved.Substring(1);
                     if (!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
 
-                    //Přidání otazníku na konec otázky, pokud tam není
+                    // Přidání otazníku na konec otázky, pokud tam není
                     if (!otazka.EndsWith("?"))
                     {
                         otazka += "?";
                     }
 
-                    // Vytvoření zkratky z první písmen každého slova v odpovědi
-                    string[] slova = odpoved.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    string zkratka = "";
 
-                    foreach (string slovo in slova)
-                    {
-                        zkratka += char.ToUpper(slovo[0]);
-                    }
-
-                    if (Database.GetQuestionByQuestion(otazka))
-                    {
-                        labelvysledek.Content = "Tato otázka již existuje.";
-                        labelvysledek.Background = Brushes.Red;
-                    }
-                    else
-                    {
-                        Database.AddQuestion(otazka, odpoved, zkratka, kategorie);
-                        labelvysledek.Content = "Otázka byla úspěšně přidána.";
-                        labelvysledek.Background = Brushes.LightGreen;
-                        textbox1.Clear();
-                        textbox2.Clear();
-                    }
-
-
+                    Database.UpdateSubQuestion(id, otazka, odpoved, kategorie);
+                    labelvysledek.Content = "Otázka byla úspěšně upravena.";
+                    labelvysledek.Background = Brushes.LightGreen;
+                    textbox1.Clear();
+                    await Task.Delay(1000);
+                    this.Close();
                 }
                 catch (Exception ex)
                 {
-                    labelvysledek.Content = "Chyba při přidávání otázky: " + ex.Message;
+                    labelvysledek.Content = "Chyba při úpravě otázky: " + ex.Message;
                     labelvysledek.Background = Brushes.Red;
                 }
             }

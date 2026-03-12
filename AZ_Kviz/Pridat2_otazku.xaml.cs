@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,11 +15,11 @@ using System.Windows.Shapes;
 namespace AZ_Kviz
 {
     /// <summary>
-    /// Interakční logika pro Pridat_otazku.xaml
+    /// Interakční logika pro Pridat2_otazku.xaml
     /// </summary>
-    public partial class Pridat_otazku : Window
+    public partial class Pridat2_otazku : Window
     {
-        public Pridat_otazku()
+        public Pridat2_otazku()
         {
             InitializeComponent();
         }
@@ -33,7 +32,7 @@ namespace AZ_Kviz
         private void Pridat_Click(object sender, RoutedEventArgs e)
         {
             string otazka = textbox1.Text.Trim();
-            string odpoved = textbox2.Text.Trim();
+            string odpoved = combobox2.Text.Trim();
             string kategorie = combobox1.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(otazka) || string.IsNullOrWhiteSpace(odpoved) || string.IsNullOrWhiteSpace(kategorie))
@@ -55,27 +54,17 @@ namespace AZ_Kviz
                         otazka += "?";
                     }
 
-                    // Vytvoření zkratky z první písmen každého slova v odpovědi
-                    string[] slova = odpoved.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    string zkratka = "";
-
-                    foreach (string slovo in slova)
-                    {
-                        zkratka += char.ToUpper(slovo[0]);
-                    }
-
-                    if (Database.GetQuestionByQuestion(otazka))
+                    if (Database.GetSubQuestionByQuestion(otazka))
                     {
                         labelvysledek.Content = "Tato otázka již existuje.";
                         labelvysledek.Background = Brushes.Red;
                     }
                     else
                     {
-                        Database.AddQuestion(otazka, odpoved, zkratka, kategorie);
+                        Database.AddSubQuestion(otazka, odpoved, kategorie);
                         labelvysledek.Content = "Otázka byla úspěšně přidána.";
                         labelvysledek.Background = Brushes.LightGreen;
                         textbox1.Clear();
-                        textbox2.Clear();
                     }
 
 

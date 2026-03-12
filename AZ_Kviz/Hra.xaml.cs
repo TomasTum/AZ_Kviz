@@ -24,6 +24,7 @@ namespace AZ_Kviz
         private Board board;
         private Cell activeCell;
         private (string Otazka, string Odpoved, string Zkratka, string Kategorie)? currentQuestion;
+        private (string Otazka, string Odpoved, string Kategorie)? currentSubQuestion;
         private bool isQuestionActive = false;
 
         private Player player1;
@@ -31,7 +32,8 @@ namespace AZ_Kviz
         private Player currentPlayer; // Aktuální hráč na tahu
 
         // Seznam všech dostupných otázek (ID)
-        private List<int> allAvailableIds = new List<int>();
+        private List<int> allAvailableQuestions = new List<int>();
+        private List<int> allAvailableSubQuestions = new List<int>();
 
         // Propojené políčka
         private List<Cell> connectedCells = new List<Cell>();
@@ -66,47 +68,65 @@ namespace AZ_Kviz
         // Načtení všech ID otázek z databáze
         private void LoadAllQuestionIds()
         {
-            allAvailableIds = Database.GetAllQuestions(selectedCategory).Select(q => q.Id).ToList();
+            allAvailableQuestions = Database.GetAllQuestions(selectedCategory).Select(q => q.Id).ToList();
+            allAvailableSubQuestions = Database.GetAllSubQuestions(selectedCategory).Select(q => q.Id).ToList();
         }
 
+        // Kliknutí na políčko
         private void Board_OnCellClicked(Cell clickedCell)
         {
-            // Kontrola, nepoužitých otázek
-            if (allAvailableIds.Count == 0)
-            {
-                MessageBox.Show("Došly otázky v databázi!", "Konec otázek");
-                this.Close();
-                return;
-            }
-
+            
             // Kontrola, zda již není aktivní otázka
             if (isQuestionActive) return;
 
             isQuestionActive = true;
-
             activeCell = clickedCell;
-
             int randomId;
 
-            // Generování náhodného ID otázky, která je v seznamu dostupných a nebyla použita
-            int index = rnd.Next(0, allAvailableIds.Count);
-            randomId = allAvailableIds[index];
-
-            // Načtení konkrétní otázky z DB
-            currentQuestion = Database.GetQuestionById(randomId);
-
-            // Smazání použitého ID z dostupných otázek
-            allAvailableIds.Remove(randomId);
-
-            // Zobrazení UI
-            if (currentQuestion.HasValue)
+            if(activeCell.State == CellState.Black)
             {
-                isQuestionActive = true;
-                TxtQuestion.Text = currentQuestion.Value.Otazka;
-                TxtHint.Text = currentQuestion.Value.Zkratka;
-                TxtAnswer.Text = ""; // Vyčistit textbox
-                QuestionArea.Visibility = Visibility.Visible; // Ukázat panel
-                TxtAnswer.Focus(); // Nastavit kurzor do pole
+                // Generování náhodného ID otázky, která je v seznamu dostupných a nebyla použita
+                int index = rnd.Next(0, allAvailableSubQuestions.Count);
+                randomId = allAvailableSubQuestions[index];
+
+                // Načtení konkrétní otázky z DB
+                currentSubQuestion = Database.GetSubQuestionById(randomId);
+
+                // Smazání použitého ID z dostupných otázek
+                allAvailableSubQuestions.Remove(randomId);
+
+
+                // Zobrazení UI
+                if (currentSubQuestion.HasValue)
+                {
+                    isQuestionActive = true;
+                    TxtSubQuestion.Text = currentSubQuestion.Value.Otazka;
+                    SubQuestionArea.Visibility = Visibility.Visible;
+                }
+
+            }
+            else
+            {
+                // Generování náhodného ID otázky, která je v seznamu dostupných a nebyla použita
+                int index = rnd.Next(0, allAvailableQuestions.Count);
+                randomId = allAvailableQuestions[index];
+
+                // Načtení konkrétní otázky z DB
+                currentQuestion = Database.GetQuestionById(randomId);
+
+                // Smazání použitého ID z dostupných otázek
+                allAvailableQuestions.Remove(randomId);
+
+                // Zobrazení UI
+                if (currentQuestion.HasValue)
+                {
+                    isQuestionActive = true;
+                    TxtQuestion.Text = currentQuestion.Value.Otazka;
+                    TxtHint.Text = currentQuestion.Value.Zkratka;
+                    TxtAnswer.Text = "";
+                    QuestionArea.Visibility = Visibility.Visible;
+                    TxtAnswer.Focus();
+                }
             }
         }
 
@@ -175,6 +195,160 @@ namespace AZ_Kviz
             // Střídání hráčů
             currentPlayer = (currentPlayer == player1) ? player2 : player1;
             UpdateTurnVisuals();
+        }
+
+        private async void BtnYes_Click(object sender, RoutedEventArgs e)
+        {
+            // Pokud není aktivní otázka, nic se neděje
+            if (!currentSubQuestion.HasValue) return;
+
+            // Kliknutí jen jednou, zamezení opakovanému klikání
+            BtnYes.IsEnabled = false;
+            BtnNo.IsEnabled = false;
+
+            int delay;
+
+            if (currentSubQuestion.Value.Odpoved == "ANO")
+            {
+                // SPRÁVNĚ
+                activeCell.SetState(currentPlayer.State, currentPlayer.PlayerColor);
+
+                delay = 1000;
+
+                if (CheckWinner(currentPlayer.State, out connectedCells))
+                {
+                    WinningCells(connectedCells);
+                    await Task.Delay(2000);
+
+                    string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    Konec_hry konec_hry = new Konec_hry(message)
+                    {
+                        Owner = this
+                    };
+                    konec_hry.ShowDialog();
+
+                    return;
+                }
+
+                currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                UpdateTurnVisuals();
+            }
+            else
+            {
+                // ŠPATNĚ
+                Player opponent = (currentPlayer == player1) ? player2 : player1;
+                activeCell.SetState(opponent.State, opponent.PlayerColor);
+
+                delay = 3000;
+
+                if (CheckWinner(opponent.State, out connectedCells))
+                {
+                    WinningCells(connectedCells);
+                    await Task.Delay(2000);
+
+                    string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    Konec_hry konec_hry = new Konec_hry(message)
+                    {
+                        Owner = this
+                    };
+                    konec_hry.ShowDialog();
+
+                    return;
+                }
+
+                TxtSubCorrectAnswer.Text = $"Správná odpověď: {currentSubQuestion.Value.Odpoved}";
+                TxtSubCorrectAnswer.Visibility = Visibility.Visible;
+
+            }
+
+            await Task.Delay(delay);
+
+            // Vyčistit a skrýt panel
+            SubQuestionArea.Visibility = Visibility.Collapsed;
+            TxtSubCorrectAnswer.Text = "";
+            TxtSubCorrectAnswer.Visibility = Visibility.Collapsed;
+            currentSubQuestion = null;
+            isQuestionActive = false;
+            Cell.IsAnyCellActive = false;
+            BtnYes.IsEnabled = true;
+            BtnNo.IsEnabled = true;
+        }
+
+        private async void BtnNo_Click(object sender, RoutedEventArgs e)
+        {
+            // Pokud není aktivní otázka, nic se neděje
+            if (!currentSubQuestion.HasValue) return;
+
+            // Kliknutí jen jednou, zamezení opakovanému klikání
+            BtnYes.IsEnabled = false;
+            BtnNo.IsEnabled = false;
+
+            int delay;
+
+            if (currentSubQuestion.Value.Odpoved == "NE")
+            {
+                // SPRÁVNĚ
+                activeCell.SetState(currentPlayer.State, currentPlayer.PlayerColor);
+
+                delay = 1000;
+
+                if (CheckWinner(currentPlayer.State, out connectedCells))
+                {
+                    WinningCells(connectedCells);
+                    await Task.Delay(2000);
+
+                    string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    Konec_hry konec_hry = new Konec_hry(message)
+                    {
+                        Owner = this
+                    };
+                    konec_hry.ShowDialog();
+
+                    return;
+                }
+
+                currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                UpdateTurnVisuals();
+            }
+            else
+            {
+                // ŠPATNĚ
+                Player opponent = (currentPlayer == player1) ? player2 : player1;
+                activeCell.SetState(opponent.State, opponent.PlayerColor);
+
+                delay = 3000;
+
+                if (CheckWinner(opponent.State, out connectedCells))
+                {
+                    WinningCells(connectedCells);
+                    await Task.Delay(2000);
+
+                    string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    Konec_hry konec_hry = new Konec_hry(message)
+                    {
+                        Owner = this
+                    };
+                    konec_hry.ShowDialog();
+
+                    return;
+                }
+
+                TxtSubCorrectAnswer.Text = $"Správná odpověď: {currentSubQuestion.Value.Odpoved}";
+                TxtSubCorrectAnswer.Visibility = Visibility.Visible;
+
+            }
+
+            await Task.Delay(delay);
+
+            // Vyčistit a skrýt panel
+            SubQuestionArea.Visibility = Visibility.Collapsed;
+            TxtSubCorrectAnswer.Text = "";
+            TxtSubCorrectAnswer.Visibility = Visibility.Collapsed;
+            currentSubQuestion = null;
+            isQuestionActive = false;
+            Cell.IsAnyCellActive = false;
+            BtnYes.IsEnabled = true;
+            BtnNo.IsEnabled = true;
         }
 
 
@@ -385,5 +559,7 @@ namespace AZ_Kviz
                 
             }
         }
+
+        
     }
 }

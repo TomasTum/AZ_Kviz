@@ -38,5 +38,12 @@ namespace AZ_Kviz
             menu.Show();
             this.Close();
         }
+
+        private void Databaze2_Click(object sender, RoutedEventArgs e)
+        {
+            Databaze2_editor databaze2_Editor = new Databaze2_editor();
+            databaze2_Editor.Show();
+            this.Close();
+        }
     }
 }

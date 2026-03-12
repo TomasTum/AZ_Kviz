@@ -35,7 +35,10 @@ namespace AZ_Kviz
         {
             string player1Name = jmeno1.Text;
             string player2Name = jmeno2.Text;
-            int requiredQuestions = 40; // Počet otázek potřebných pro hru
+
+            // Počet otázek potřebných pro hru
+            int requiredQuestions = 28;
+            int requiredSubQuestions = 28;
 
             // Získání vybrané kategorie z ComboBoxu
             var selectedItem = kategorieselect.SelectedItem as ComboBoxItem;
@@ -49,9 +52,17 @@ namespace AZ_Kviz
             else
             {
                 int totalQuestions = Database.GetAllQuestions(selectedCategory).Count;
+                int totalSubQuestions = Database.GetAllSubQuestions(selectedCategory).Count;
+
                 if (totalQuestions < requiredQuestions)
                 {
                     MessageBox.Show($"Není dostatek otázek v databázi pro zahájení hry. Požadováno: {requiredQuestions} otázek, dostupných: {totalQuestions} otázek.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                    
+                }
+                else if (totalSubQuestions < requiredSubQuestions)
+                {
+                    MessageBox.Show($"Není dostatek náhradních otázek v databázi pro zahájení hry. Požadováno: {requiredSubQuestions} otázek, dostupných: {totalSubQuestions} otázek.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 else
