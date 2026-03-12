@@ -10,7 +10,9 @@
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
-        FontFamily="Arial">
+        FontFamily="Arial"
+        MouseLeftButtonDown="Window_MouseDown">
+    
     <Border BorderBrush="Black" BorderThickness="2">
         <Grid>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">

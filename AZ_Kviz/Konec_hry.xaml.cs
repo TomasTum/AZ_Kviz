@@ -56,5 +56,15 @@ namespace AZ_Kviz
 
             this.Close();
         }
+
+
+        // Posouvání okna
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

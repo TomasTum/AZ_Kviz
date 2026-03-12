@@ -139,12 +139,12 @@ namespace AZ_Kviz
             // Kliknutí jen jednou, zamezení opakovanému klikání
             BtnSubmit.IsEnabled = false;
 
-            //odstranění diakritiky
+            // Odstranění diakritiky
             string cleanUserAnswer = RemoveDiacritics(TxtAnswer.Text.Trim());
             string cleanCorrectAnswer = RemoveDiacritics(currentQuestion.Value.Odpoved.Trim());
 
             int delay;
-            // porovnání odpovědí
+            // Porovnání odpovědí
             if (cleanUserAnswer == cleanCorrectAnswer)
             {
                 // SPRÁVNĚ
@@ -442,7 +442,7 @@ namespace AZ_Kviz
                 {
                     From = 1.0,
                     To = 0.5,
-                    Duration = TimeSpan.FromSeconds(0.5),
+                    Duration = TimeSpan.FromSeconds(1.5),
                     AutoReverse = true,
                     RepeatBehavior = System.Windows.Media.Animation.RepeatBehavior.Forever
                 };
