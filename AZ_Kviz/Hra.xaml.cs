@@ -217,6 +217,7 @@ namespace AZ_Kviz
 
                 if (CheckWinner(currentPlayer.State, out connectedCells))
                 {
+                    SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
                     await Task.Delay(2000);
 
@@ -243,6 +244,7 @@ namespace AZ_Kviz
 
                 if (CheckWinner(opponent.State, out connectedCells))
                 {
+                    SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
                     await Task.Delay(2000);
 
@@ -294,6 +296,7 @@ namespace AZ_Kviz
 
                 if (CheckWinner(currentPlayer.State, out connectedCells))
                 {
+                    SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
                     await Task.Delay(2000);
 
@@ -320,6 +323,7 @@ namespace AZ_Kviz
 
                 if (CheckWinner(opponent.State, out connectedCells))
                 {
+                    SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
                     await Task.Delay(2000);
 
