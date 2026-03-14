@@ -23,7 +23,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                     <Label Content="Správná odpověď:" Margin="20,0,20,0" FontSize="20" Width="180"/>
-                    <TextBox x:Name="textbox2" Margin="0,0,20,0" FontSize="20" Width="300" VerticalAlignment="Center"/>
+                    <TextBox x:Name="textbox2" Margin="0,0,20,0" FontSize="20" Width="300" VerticalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
                     <Label Content="Kategorie:" Margin="20,0,20,0" FontSize="20" Width="180"/>
