@@ -19,7 +19,7 @@ namespace AZ_Kviz
     /// <summary>
     /// Interakční logika pro Hra.xaml
     /// </summary>
-    public partial class Hra : Window
+    public partial class Hra : UserControl
     {
         private Board board;
         private Cell activeCell;
@@ -42,9 +42,14 @@ namespace AZ_Kviz
 
         string selectedCategory;
 
+        Window parentWindow;
+
         public Hra(Player player1, Player player2, string kategorie)
         {
             InitializeComponent();
+
+            //Hlavní okno pro případné modální dialogy (konec hry)
+            parentWindow = Window.GetWindow(this);
 
             this.player1 = player1;
             this.player2 = player2;
@@ -185,7 +190,8 @@ namespace AZ_Kviz
                 string message = $"Vítězem se stává {currentPlayer.Name}!";
                 Konec_hry konec_hry = new Konec_hry(message)
                 {
-                    Owner = this
+                    Owner = parentWindow,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
                 };
                 konec_hry.ShowDialog();
 
@@ -224,7 +230,8 @@ namespace AZ_Kviz
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
-                        Owner = this
+                        Owner = parentWindow,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     konec_hry.ShowDialog();
 
@@ -251,7 +258,8 @@ namespace AZ_Kviz
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
-                        Owner = this
+                        Owner = parentWindow,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     konec_hry.ShowDialog();
 
@@ -303,7 +311,8 @@ namespace AZ_Kviz
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
-                        Owner = this
+                        Owner = parentWindow,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     konec_hry.ShowDialog();
 
@@ -330,7 +339,8 @@ namespace AZ_Kviz
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
-                        Owner = this
+                        Owner = parentWindow,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     konec_hry.ShowDialog();
 
@@ -556,9 +566,8 @@ namespace AZ_Kviz
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    Menu menu = new Menu();
-                    menu.Show();
-                    this.Close();
+                    var mainWin = (Hlavni_okno)Window.GetWindow(this);
+                    mainWin.SwitchView(new Menu());
                 }
                 
             }

@@ -16,7 +16,7 @@ namespace AZ_Kviz
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class Menu : Window
+    public partial class Menu : UserControl
     {
         public Menu()
         {
@@ -25,16 +25,14 @@ namespace AZ_Kviz
 
         private void Hra_Click(object sender, RoutedEventArgs e)
         {
-            Nastaveni_hracu nastaveni_Hracu = new Nastaveni_hracu();
-            nastaveni_Hracu.Show();
-            this.Close();
+            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            mainWin.SwitchView(new Nastaveni_hracu());
         }
 
         private void Nastaveni_Click(object sender, RoutedEventArgs e)
         {
-            Nastaveni nastaveni = new Nastaveni();
-            nastaveni.Show();
-            this.Close();
+            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            mainWin.SwitchView(new Nastaveni());
         }
 
         private void Konec_Click(object sender, RoutedEventArgs e)

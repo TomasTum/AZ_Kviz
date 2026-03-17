@@ -9,7 +9,7 @@
     <ApplicationIcon>AZkviz.ico</ApplicationIcon>
     <Authors>Tomáš Tůma</Authors>
     <Product>AZ Kvíz</Product>
-    <AssemblyName>AZ-kvíz</AssemblyName>
+    <AssemblyName>AZ-kviz</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

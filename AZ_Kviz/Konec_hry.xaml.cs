@@ -31,8 +31,8 @@ namespace AZ_Kviz
         // Spuštění nové hry
         private void Nova_Click(object sender, RoutedEventArgs e)
         {
-            Nastaveni_hracu nastaveni_Hracu = new Nastaveni_hracu();
-            nastaveni_Hracu.Show();
+            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            mainWin.SwitchView(new Nastaveni_hracu());
 
             if (this.Owner is Window owner)
             {
@@ -46,8 +46,8 @@ namespace AZ_Kviz
         // Zavření hry
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            Menu menu = new Menu();
-            menu.Show();
+            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            mainWin.SwitchView(new Menu());
 
             if (this.Owner is Window owner)
             {

@@ -1,4 +1,4 @@
-﻿<Window x:Class="AZ_Kviz.Databaze_editor"
+﻿<UserControl x:Class="AZ_Kviz.Databaze_editor"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,11 +6,8 @@
         xmlns:local="clr-namespace:AZ_Kviz"
         xmlns:Sqlite="clr-namespace:Microsoft.Data.Sqlite;assembly=Microsoft.Data.Sqlite" 
         mc:Ignorable="d"
-        Title="Databáze otázek"
-        WindowStyle="None"
-        WindowState="Maximized"
-        ResizeMode="NoResize"
         FontFamily="Arial">
+
     <Grid Loaded="Grid_Loaded">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="Databáze otázek" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center"/>
@@ -32,4 +29,4 @@
             <Button x:Name="zpet" Content="Zpět" Margin="0,0,0,20" Height="45" Width="150"  FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
         </StackPanel>
     </Grid>
-</Window>
+</UserControl>

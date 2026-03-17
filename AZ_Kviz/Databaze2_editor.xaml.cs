@@ -17,7 +17,7 @@ namespace AZ_Kviz
     /// <summary>
     /// Interakční logika pro Databaze2_editor.xaml
     /// </summary>
-    public partial class Databaze2_editor : Window
+    public partial class Databaze2_editor : UserControl
     {
         public Databaze2_editor()
         {
@@ -42,9 +42,8 @@ namespace AZ_Kviz
 
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
-            Nastaveni nastaveni = new Nastaveni();
-            nastaveni.Show();
-            this.Close();
+            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            mainWin.SwitchView(new Nastaveni());
         }
 
         private void Odebrat_Click(object sender, RoutedEventArgs e)

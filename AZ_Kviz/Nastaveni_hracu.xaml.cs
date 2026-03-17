@@ -17,7 +17,7 @@ namespace AZ_Kviz
     /// <summary>
     /// Interakční logika pro Nastaveni_hracu.xaml
     /// </summary>
-    public partial class Nastaveni_hracu : Window
+    public partial class Nastaveni_hracu : UserControl
     {
         public Nastaveni_hracu()
         {
@@ -26,9 +26,8 @@ namespace AZ_Kviz
 
         private void Zpet_Click(object sender, RoutedEventArgs e)
         {
-            Menu menu = new Menu();
-            menu.Show();
-            this.Close();
+            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            mainWin.SwitchView(new Menu());
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -72,8 +71,8 @@ namespace AZ_Kviz
 
                     Hra hra = new Hra(player1, player2, selectedCategory);
 
-                    hra.Show();
-                    this.Close();
+                    var mainWin = (Hlavni_okno)Window.GetWindow(this);
+                    mainWin.SwitchView(hra);
                 }
             }
         }
