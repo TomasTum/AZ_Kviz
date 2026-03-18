@@ -37,10 +37,51 @@ namespace AZ_Kviz
             }
             else
             {
-                throw new FileNotFoundException("Databázový soubor nebyl nalezen v žádné z očekávaných cest!", $"{dbPath1} nebo {dbPath2}");
+                chosenConnection = connectionString2;
+
+                // Zjištění že složka Data existuje
+                string directory = Path.GetDirectoryName(dbPath2);
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
+                // Vytvoření databáze
+                CreateDatabase(chosenConnection);
             }
 
             return new SqliteConnection(chosenConnection);
+        }
+
+        // Vytvoření databáze
+        private static void CreateDatabase(string connectionString)
+        {
+            using (var connection = new SqliteConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    // SQL příkazy přesně podle tvých obrázků
+                    command.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS ""Questions"" (
+                        ""Id"" INTEGER NOT NULL,
+                        ""QuestionText"" TEXT NOT NULL,
+                        ""CorrectAnswer"" TEXT NOT NULL,
+                        ""Shortcut"" TEXT NOT NULL,
+                        ""Category"" TEXT,
+                        PRIMARY KEY(""Id"" AUTOINCREMENT)
+                    );
+
+                    CREATE TABLE IF NOT EXISTS ""SubQuestions"" (
+                        ""Id"" INTEGER NOT NULL,
+                        ""QuestionText"" TEXT NOT NULL,
+                        ""CorrectAnswer"" TEXT NOT NULL,
+                        ""Category"" TEXT,
+                        PRIMARY KEY(""Id"" AUTOINCREMENT)
+                    );";
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
 
