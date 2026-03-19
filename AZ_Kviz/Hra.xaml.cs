@@ -178,6 +178,11 @@ namespace AZ_Kviz
             if (CheckWinner(currentPlayer.State, out connectedCells))
             {
                 WinningCells(connectedCells);
+
+                // Reset pro novou hru
+                isQuestionActive = false;
+                Cell.IsAnyCellActive = false;
+
                 await Task.Delay(2000); 
 
                 string message = $"Vítězem se stává {currentPlayer.Name}!";
@@ -219,6 +224,11 @@ namespace AZ_Kviz
                 {
                     SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
+
+                    // Reset pro novou hru
+                    isQuestionActive = false;
+                    Cell.IsAnyCellActive = false;
+
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
@@ -248,9 +258,14 @@ namespace AZ_Kviz
                 {
                     SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
+
+                    // Reset pro novou hru
+                    isQuestionActive = false;
+                    Cell.IsAnyCellActive = false;
+
                     await Task.Delay(2000);
 
-                    string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    string message = $"Vítězem se stává {opponent.Name}!";
                     var currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
@@ -302,6 +317,11 @@ namespace AZ_Kviz
                 {
                     SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
+
+                    // Reset pro novou hru
+                    isQuestionActive = false;
+                    Cell.IsAnyCellActive = false;
+
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
@@ -331,9 +351,14 @@ namespace AZ_Kviz
                 {
                     SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
+
+                    // Reset pro novou hru
+                    isQuestionActive = false; 
+                    Cell.IsAnyCellActive = false;
+
                     await Task.Delay(2000);
 
-                    string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    string message = $"Vítězem se stává {opponent.Name}!";
                     var currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
