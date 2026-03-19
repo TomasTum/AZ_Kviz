@@ -25,33 +25,25 @@ namespace AZ_Kviz
 
             string messageWinner = message;
             label1.Content = messageWinner;
-
         }
 
         // Spuštění nové hry
         private void Nova_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
-            mainWin.SwitchView(new Nastaveni_hracu());
-
-            if (this.Owner is Window owner)
+            if (this.Owner is Hlavni_okno mainWin)
             {
-                owner.Close();
+                mainWin.SwitchView(new Nastaveni_hracu());
             }
-            
+
             this.Close();
-           
         }
 
         // Zavření hry
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
-            mainWin.SwitchView(new Menu());
-
-            if (this.Owner is Window owner)
+            if (this.Owner is Hlavni_okno mainWin)
             {
-                owner.Close();
+                mainWin.SwitchView(new Menu());
             }
 
             this.Close();

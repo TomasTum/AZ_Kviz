@@ -42,14 +42,9 @@ namespace AZ_Kviz
 
         string selectedCategory;
 
-        Window parentWindow;
-
         public Hra(Player player1, Player player2, string kategorie)
         {
             InitializeComponent();
-
-            //Hlavní okno pro případné modální dialogy (konec hry)
-            parentWindow = Window.GetWindow(this);
 
             this.player1 = player1;
             this.player2 = player2;
@@ -100,7 +95,6 @@ namespace AZ_Kviz
                 // Smazání použitého ID z dostupných otázek
                 allAvailableSubQuestions.Remove(randomId);
 
-
                 // Zobrazení UI
                 if (currentSubQuestion.HasValue)
                 {
@@ -108,7 +102,6 @@ namespace AZ_Kviz
                     TxtSubQuestion.Text = currentSubQuestion.Value.Otazka;
                     SubQuestionArea.Visibility = Visibility.Visible;
                 }
-
             }
             else
             {
@@ -188,9 +181,10 @@ namespace AZ_Kviz
                 await Task.Delay(2000); 
 
                 string message = $"Vítězem se stává {currentPlayer.Name}!";
+                var currentWindow = Window.GetWindow(this);
                 Konec_hry konec_hry = new Konec_hry(message)
                 {
-                    Owner = parentWindow,
+                    Owner = currentWindow,
                     WindowStartupLocation = WindowStartupLocation.CenterOwner
                 };
                 konec_hry.ShowDialog();
@@ -228,9 +222,10 @@ namespace AZ_Kviz
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    var currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
-                        Owner = parentWindow,
+                        Owner = currentWindow,
                         WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     konec_hry.ShowDialog();
@@ -256,9 +251,10 @@ namespace AZ_Kviz
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    var currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
-                        Owner = parentWindow,
+                        Owner = currentWindow,
                         WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     konec_hry.ShowDialog();
@@ -309,9 +305,10 @@ namespace AZ_Kviz
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    var currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
-                        Owner = parentWindow,
+                        Owner = currentWindow,
                         WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     konec_hry.ShowDialog();
@@ -337,9 +334,10 @@ namespace AZ_Kviz
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
+                    var currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
-                        Owner = parentWindow,
+                        Owner = currentWindow,
                         WindowStartupLocation = WindowStartupLocation.CenterOwner
                     };
                     konec_hry.ShowDialog();
