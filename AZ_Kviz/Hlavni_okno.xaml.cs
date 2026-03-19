@@ -29,5 +29,28 @@ namespace AZ_Kviz
         {
             MainContent.Content = newView;
         }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                // Když je obsah hra
+                if (MainContent.Content is Hra)
+                {
+                    MessageBoxResult result = MessageBox.Show(
+                        "Opravdu chcete ukončit rozehranou hru?",
+                        "Ukončení hry",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        SwitchView(new Menu());
+                    }
+
+                    e.Handled = true;
+                }
+            }
+        }
     }
 }
