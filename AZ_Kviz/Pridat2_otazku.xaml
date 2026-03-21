@@ -11,7 +11,8 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         FontFamily="Arial"
-        MouseLeftButtonDown="Window_MouseDown">
+        MouseLeftButtonDown="Window_MouseDown"
+        PreviewKeyDown="Window_PreviewKeyDown">
     
     <Border BorderBrush="Black" BorderThickness="2">
         <Grid>
