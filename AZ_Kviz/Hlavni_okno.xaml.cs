@@ -30,11 +30,12 @@ namespace AZ_Kviz
             MainContent.Content = newView;
         }
 
+        // Kliknití ESC
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                // Když je obsah hra
+                // Obsah hra
                 if (MainContent.Content is Hra)
                 {
                     MessageBoxResult result = MessageBox.Show(
@@ -48,6 +49,40 @@ namespace AZ_Kviz
                         SwitchView(new Menu());
                     }
 
+                    e.Handled = true;
+                }
+                else if (MainContent.Content is Nastaveni)
+                {
+                    SwitchView(new Menu());
+                    e.Handled = true;
+                }
+                else if (MainContent.Content is Databaze_editor)
+                {
+                    SwitchView(new Nastaveni());
+                    e.Handled = true;
+                }
+                else if (MainContent.Content is Databaze2_editor)
+                {
+                    SwitchView(new Nastaveni());
+                    e.Handled = true;
+                }
+                else if (MainContent.Content is Nastaveni_hracu)
+                {
+                    SwitchView(new Menu());
+                    e.Handled = true;
+                }
+                else if (MainContent.Content is Menu)
+                {
+                    MessageBoxResult result = MessageBox.Show(
+                        "Opravdu chcete ukončit aplikaci?",
+                        "Ukončení aplikace",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        Application.Current.Shutdown();
+                    }
                     e.Handled = true;
                 }
             }
