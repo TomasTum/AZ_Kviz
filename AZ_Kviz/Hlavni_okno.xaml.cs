@@ -35,7 +35,6 @@ namespace AZ_Kviz
         {
             if (e.Key == Key.Escape)
             {
-                // Obsah hra
                 if (MainContent.Content is Hra)
                 {
                     MessageBoxResult result = MessageBox.Show(
@@ -43,12 +42,10 @@ namespace AZ_Kviz
                         "Ukončení hry",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Warning);
-
                     if (result == MessageBoxResult.Yes)
                     {
                         SwitchView(new Menu());
                     }
-
                     e.Handled = true;
                 }
                 else if (MainContent.Content is Nastaveni)
@@ -78,7 +75,6 @@ namespace AZ_Kviz
                         "Ukončení aplikace",
                         MessageBoxButton.YesNo,
                         MessageBoxImage.Warning);
-
                     if (result == MessageBoxResult.Yes)
                     {
                         Application.Current.Shutdown();

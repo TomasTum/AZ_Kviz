@@ -6,13 +6,16 @@
         xmlns:local="clr-namespace:AZ_Kviz"
         mc:Ignorable="d"
         FontFamily="Arial">
+
     <Grid>
+
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Nastavení" FontWeight="Bold" FontSize="40" Width="220" HorizontalContentAlignment="Center"/>
+            <Label Content="Nastavení" FontWeight="Bold" FontSize="40" Width="220" HorizontalContentAlignment="Center" />
             <Button x:Name="databaze" Content="Databáze otázek" Height="45" Width="300" FontSize="20" Margin="0,150,0,0" Background="Orange" Cursor="Hand" Click="Databaze_Click" />
             <Button x:Name="databaze2" Content="Databáze náhradních otázek" Height="45" Width="300" FontSize="20" Margin="0,20,0,0" Background="Orange" Cursor="Hand" Click="Databaze2_Click" />
             <Button x:Name="zpet" Content="Zpět" Height="45" Width="150"  FontSize="20" Margin="0,250,0,30" Background="Orange" Cursor="Hand" Click="Konec_Click" />
         </StackPanel>
 
     </Grid>
+
 </UserControl>

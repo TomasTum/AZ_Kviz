@@ -24,23 +24,26 @@ namespace AZ_Kviz
             InitializeComponent();
         }
 
+        // Zpět
         private void Zpet_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
             mainWin.SwitchView(new Menu());
         }
 
+        // Zahájení hry
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // Jména hráčů
             string player1Name = jmeno1.Text;
             string player2Name = jmeno2.Text;
 
-            // Počet otázek potřebných pro hru
+            // Počet potřených otázek
             int requiredQuestions = 28;
             int requiredSubQuestions = 28;
 
-            // Získání vybrané kategorie z ComboBoxu
-            var selectedItem = kategorieselect.SelectedItem as ComboBoxItem;
+            // Kategorie
+            ComboBoxItem? selectedItem = kategorieselect.SelectedItem as ComboBoxItem;
             string selectedCategory = selectedItem?.Tag?.ToString() ?? "Vse";
 
             if (string.IsNullOrWhiteSpace(player1Name) || string.IsNullOrWhiteSpace(player2Name))
@@ -57,7 +60,7 @@ namespace AZ_Kviz
                 {
                     MessageBox.Show($"Není dostatek otázek v databázi pro zahájení hry. Požadováno: {requiredQuestions} otázek, dostupných: {totalQuestions} otázek.", "Chyba", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
-                    
+
                 }
                 else if (totalSubQuestions < requiredSubQuestions)
                 {
@@ -71,7 +74,7 @@ namespace AZ_Kviz
 
                     Hra hra = new Hra(player1, player2, selectedCategory);
 
-                    var mainWin = (Hlavni_okno)Window.GetWindow(this);
+                    Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
                     mainWin.SwitchView(hra);
                 }
             }

@@ -9,8 +9,11 @@
         FontFamily="Arial">
 
     <Grid Loaded="Grid_Loaded">
+
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
             <Label Content="Databáze náhradních otázek" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center"/>
+
             <DataGrid x:Name="Datagrid" Height="450" Margin="20,20,20,20" AutoGenerateColumns="False" FontSize="18" CanUserAddRows="False" Cursor="Hand">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="ID" Header="ID" Binding="{Binding Id}"/>
@@ -19,13 +22,18 @@
                     <DataGridTextColumn x:Name="Kategorie" Header="Kategorie" Binding="{Binding Kategorie}"/>
                 </DataGrid.Columns>
             </DataGrid>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20,0,20,15" Cursor="">
                 <Button Content="Přidat otázku" Margin="0,0,15,0" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Pridat_Click" />
                 <Button Content="Upravit otázku" Margin="0,0,15,0" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Upravit_Click" />
                 <Button Content="Odebrat otázku" Margin="0,0,0,0" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Odebrat_Click" />
             </StackPanel>
+
             <Button Content="Aktualizovat data" Margin="0,0,0,50" Height="45" Width="250" FontSize="20" Background="Orange" Cursor="Hand" Click="Aktualizovat_Click" />
             <Button x:Name="zpet" Content="Zpět" Margin="0,0,0,20" Height="45" Width="150"  FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
+
         </StackPanel>
+
     </Grid>
+
 </UserControl>

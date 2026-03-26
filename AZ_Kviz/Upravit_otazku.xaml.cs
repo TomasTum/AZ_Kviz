@@ -19,7 +19,7 @@ namespace AZ_Kviz
     /// </summary>
     public partial class Upravit_otazku : Window
     {
-        private (string Otazka, string Odpoved, string Zkratka, string Kategorie)? question;
+        (string Otazka, string Odpoved, string Zkratka, string Kategorie)? question;
         int id;
 
         public Upravit_otazku(int index)
@@ -37,15 +37,17 @@ namespace AZ_Kviz
             else
             {
                 MessageBox.Show("Otázka s daným ID nebyla nalezena.", "Chyba");
-                this.Close();
+                Close();
             }
         }
 
+        // Konec
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
+        // Upravení otázky
         private async void Upravit_Click(object sender, RoutedEventArgs e)
         {
             string otazka = textbox1.Text.Trim();
@@ -65,13 +67,13 @@ namespace AZ_Kviz
                     odpoved = char.ToUpper(odpoved[0]) + odpoved.Substring(1);
                     if (!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
 
-                    // Přidání otazníku na konec otázky, pokud tam není
+                    // Přidání otazníku
                     if (!otazka.EndsWith("?"))
                     {
                         otazka += "?";
                     }
 
-                    // Vytvoření zkratky z první písmen každého slova v odpovědi
+                    // Vytvoření zkratky
                     string[] slova = odpoved.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     string zkratka = "";
 
@@ -86,7 +88,7 @@ namespace AZ_Kviz
                     textbox1.Clear();
                     textbox2.Clear();
                     await Task.Delay(1000);
-                    this.Close();
+                    Close();
                 }
                 catch (Exception ex)
                 {
@@ -102,15 +104,16 @@ namespace AZ_Kviz
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                this.DragMove();
+                DragMove();
             }
         }
 
+        // Kluknutí ESC
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                Close();
                 e.Handled = true;
             }
         }

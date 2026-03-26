@@ -28,18 +28,18 @@ namespace AZ_Kviz
 
         private void Databaze_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
             mainWin.SwitchView(new Databaze_editor());
         }
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
             mainWin.SwitchView(new Menu());
         }
 
         private void Databaze2_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
             mainWin.SwitchView(new Databaze2_editor());
         }
     }

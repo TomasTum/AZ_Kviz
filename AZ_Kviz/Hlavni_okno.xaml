@@ -10,7 +10,11 @@
         WindowState="Maximized"
         ResizeMode="NoResize" 
         PreviewKeyDown="Window_PreviewKeyDown">
+
     <Grid>
+
         <ContentControl x:Name="MainContent" />
+
     </Grid>
+
 </Window>

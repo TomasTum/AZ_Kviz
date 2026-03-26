@@ -26,10 +26,13 @@ namespace AZ_Kviz
         private (string Otazka, string Odpoved, string Zkratka, string Kategorie)? currentQuestion;
         private (string Otazka, string Odpoved, string Kategorie)? currentSubQuestion;
         private bool isQuestionActive = false;
+        private string selectedCategory;
+        private Random rnd = new Random();
 
+        // Hráči
         private Player player1;
         private Player player2;
-        private Player currentPlayer; // Aktuální hráč na tahu
+        private Player currentPlayer;
 
         // Seznam všech dostupných otázek (ID)
         private List<int> allAvailableQuestions = new List<int>();
@@ -38,18 +41,14 @@ namespace AZ_Kviz
         // Propojené políčka
         private List<Cell> connectedCells = new List<Cell>();
 
-        private Random rnd = new Random();
-
-        string selectedCategory;
-
         public Hra(Player player1, Player player2, string kategorie)
         {
             InitializeComponent();
 
             this.player1 = player1;
             this.player2 = player2;
-            this.currentPlayer = player1; // Začíná hráč 1
-            // Nastavení vizuální indikace tahu
+            // Začíná hráč 1
+            currentPlayer = player1;
             UpdateTurnVisuals();
 
             //Kategorie otázek pro hru
@@ -65,7 +64,7 @@ namespace AZ_Kviz
             LoadAllQuestionIds();
         }
 
-        // Načtení všech ID otázek z databáze
+        // Načtení všech ID otázek
         private void LoadAllQuestionIds()
         {
             allAvailableQuestions = Database.GetAllQuestions(selectedCategory).Select(q => q.Id).ToList();
@@ -75,7 +74,7 @@ namespace AZ_Kviz
         // Kliknutí na políčko
         private void Board_OnCellClicked(Cell clickedCell)
         {
-            
+
             // Kontrola, zda již není aktivní otázka
             if (isQuestionActive) return;
 
@@ -83,7 +82,7 @@ namespace AZ_Kviz
             activeCell = clickedCell;
             int randomId;
 
-            if(activeCell.State == CellState.Black)
+            if (activeCell.State == CellState.Black)
             {
                 // Generování náhodného ID otázky, která je v seznamu dostupných a nebyla použita
                 int index = rnd.Next(0, allAvailableSubQuestions.Count);
@@ -131,10 +130,10 @@ namespace AZ_Kviz
         // Kontrola odpovědi
         private async void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            // Pokud není aktivní otázka, nic se neděje
+            // Kontrola aktivní otázky
             if (!currentQuestion.HasValue) return;
 
-            // Kliknutí jen jednou, zamezení opakovanému klikání
+            // Kliknutí jen jednou
             BtnSubmit.IsEnabled = false;
 
             // Odstranění diakritiky
@@ -142,6 +141,7 @@ namespace AZ_Kviz
             string cleanCorrectAnswer = RemoveDiacritics(currentQuestion.Value.Odpoved.Trim());
 
             int delay;
+
             // Porovnání odpovědí
             if (cleanUserAnswer == cleanCorrectAnswer)
             {
@@ -155,7 +155,6 @@ namespace AZ_Kviz
                 // ŠPATNĚ
                 activeCell.SetState(CellState.Black, Brushes.Gray);
                 TxtAnswer.Background = Brushes.IndianRed;
-                // Zobrazení správné odpovědi
                 TxtCorrectAnswer.Text = $"Správná odpověď: {currentQuestion.Value.Odpoved}";
                 TxtCorrectAnswer.Visibility = Visibility.Visible;
                 delay = 3000;
@@ -163,7 +162,7 @@ namespace AZ_Kviz
 
             await Task.Delay(delay);
 
-            // Vyčistit a skrýt panel
+            // Srytí UI
             QuestionArea.Visibility = Visibility.Collapsed;
             TxtAnswer.Background = Brushes.White;
             TxtAnswer.Clear();
@@ -183,10 +182,10 @@ namespace AZ_Kviz
                 isQuestionActive = false;
                 Cell.IsAnyCellActive = false;
 
-                await Task.Delay(2000); 
+                await Task.Delay(2000);
 
                 string message = $"Vítězem se stává {currentPlayer.Name}!";
-                var currentWindow = Window.GetWindow(this);
+                Window currentWindow = Window.GetWindow(this);
                 Konec_hry konec_hry = new Konec_hry(message)
                 {
                     Owner = currentWindow,
@@ -202,12 +201,13 @@ namespace AZ_Kviz
             UpdateTurnVisuals();
         }
 
+        // Odpověď ANO
         private async void BtnYes_Click(object sender, RoutedEventArgs e)
         {
-            // Pokud není aktivní otázka, nic se neděje
+            // Kontrola aktivní otázky
             if (!currentSubQuestion.HasValue) return;
 
-            // Kliknutí jen jednou, zamezení opakovanému klikání
+            // Kliknutí jen jednou
             BtnYes.IsEnabled = false;
             BtnNo.IsEnabled = false;
 
@@ -220,6 +220,7 @@ namespace AZ_Kviz
 
                 delay = 1000;
 
+                // Kontrola vítěze
                 if (CheckWinner(currentPlayer.State, out connectedCells))
                 {
                     SubQuestionArea.Visibility = Visibility.Collapsed;
@@ -232,7 +233,7 @@ namespace AZ_Kviz
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
-                    var currentWindow = Window.GetWindow(this);
+                    Window currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
                         Owner = currentWindow,
@@ -243,6 +244,7 @@ namespace AZ_Kviz
                     return;
                 }
 
+                // Střídání hráčů
                 currentPlayer = (currentPlayer == player1) ? player2 : player1;
                 UpdateTurnVisuals();
             }
@@ -254,6 +256,7 @@ namespace AZ_Kviz
 
                 delay = 3000;
 
+                // Kontrola vítěze
                 if (CheckWinner(opponent.State, out connectedCells))
                 {
                     SubQuestionArea.Visibility = Visibility.Collapsed;
@@ -266,7 +269,7 @@ namespace AZ_Kviz
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {opponent.Name}!";
-                    var currentWindow = Window.GetWindow(this);
+                    Window currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
                         Owner = currentWindow,
@@ -279,12 +282,11 @@ namespace AZ_Kviz
 
                 TxtSubCorrectAnswer.Text = $"Správná odpověď: {currentSubQuestion.Value.Odpoved}";
                 TxtSubCorrectAnswer.Visibility = Visibility.Visible;
-
             }
 
             await Task.Delay(delay);
 
-            // Vyčistit a skrýt panel
+            // Srytí UI
             SubQuestionArea.Visibility = Visibility.Collapsed;
             TxtSubCorrectAnswer.Text = "";
             TxtSubCorrectAnswer.Visibility = Visibility.Collapsed;
@@ -295,12 +297,13 @@ namespace AZ_Kviz
             BtnNo.IsEnabled = true;
         }
 
+        // Odpověď NE
         private async void BtnNo_Click(object sender, RoutedEventArgs e)
         {
-            // Pokud není aktivní otázka, nic se neděje
+            // Kontrola aktivní otázky
             if (!currentSubQuestion.HasValue) return;
 
-            // Kliknutí jen jednou, zamezení opakovanému klikání
+            // Kliknutí jen jednou
             BtnYes.IsEnabled = false;
             BtnNo.IsEnabled = false;
 
@@ -313,6 +316,7 @@ namespace AZ_Kviz
 
                 delay = 1000;
 
+                // Kontrola vítěze
                 if (CheckWinner(currentPlayer.State, out connectedCells))
                 {
                     SubQuestionArea.Visibility = Visibility.Collapsed;
@@ -325,7 +329,7 @@ namespace AZ_Kviz
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {currentPlayer.Name}!";
-                    var currentWindow = Window.GetWindow(this);
+                    Window currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
                         Owner = currentWindow,
@@ -336,6 +340,7 @@ namespace AZ_Kviz
                     return;
                 }
 
+                // Střídání hráčů
                 currentPlayer = (currentPlayer == player1) ? player2 : player1;
                 UpdateTurnVisuals();
             }
@@ -347,19 +352,20 @@ namespace AZ_Kviz
 
                 delay = 3000;
 
+                // Kontrola vítěze
                 if (CheckWinner(opponent.State, out connectedCells))
                 {
                     SubQuestionArea.Visibility = Visibility.Collapsed;
                     WinningCells(connectedCells);
 
                     // Reset pro novou hru
-                    isQuestionActive = false; 
+                    isQuestionActive = false;
                     Cell.IsAnyCellActive = false;
 
                     await Task.Delay(2000);
 
                     string message = $"Vítězem se stává {opponent.Name}!";
-                    var currentWindow = Window.GetWindow(this);
+                    Window currentWindow = Window.GetWindow(this);
                     Konec_hry konec_hry = new Konec_hry(message)
                     {
                         Owner = currentWindow,
@@ -372,12 +378,11 @@ namespace AZ_Kviz
 
                 TxtSubCorrectAnswer.Text = $"Správná odpověď: {currentSubQuestion.Value.Odpoved}";
                 TxtSubCorrectAnswer.Visibility = Visibility.Visible;
-
             }
 
             await Task.Delay(delay);
 
-            // Vyčistit a skrýt panel
+            // Srytí UI
             SubQuestionArea.Visibility = Visibility.Collapsed;
             TxtSubCorrectAnswer.Text = "";
             TxtSubCorrectAnswer.Visibility = Visibility.Collapsed;
@@ -389,13 +394,13 @@ namespace AZ_Kviz
         }
 
 
-        // Odstranění diakritiky z textu
+        // Odstranění diakritiky
         private string RemoveDiacritics(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return text;
 
-            // Rozloží znaky na základní písmeno + diakritické znaménko (FormD)
+            // Rozložení znaků na základní písmeno + diakritické znaménko (FormD)
             string normalizedString = text.Normalize(NormalizationForm.FormD);
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -409,15 +414,15 @@ namespace AZ_Kviz
                 }
             }
 
-            // Vrátíme text zpět do kompaktní podoby a převedeme na malá písmena pro snadné porovnání
+            // Normalizace zpět do FormC + malá písmena
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC).ToLower();
         }
 
         // Aktualní hrač na tahu - vizuální indikace
         private void UpdateTurnVisuals()
         {
-            // Definice efektu záře
-            var glowEffect = new System.Windows.Media.Effects.DropShadowEffect
+            // Záře
+            System.Windows.Media.Effects.DropShadowEffect glowEffect = new System.Windows.Media.Effects.DropShadowEffect
             {
                 BlurRadius = 20,
                 ShadowDepth = 0,
@@ -432,10 +437,10 @@ namespace AZ_Kviz
                 Player1Panel.Effect = glowEffect;
 
                 // Hráč 2 čeká
-                Player2Panel.Opacity = 0.4; // Ztlumení
-                Player2Panel.Effect = null; // Žádná záře
+                Player2Panel.Opacity = 0.4;
+                Player2Panel.Effect = null;
 
-                // Barva tlačítka pro odpověď na barvu hráče 1
+                // Barva tlačítka pro odpověď
                 BtnSubmit.Background = Brushes.Orange;
             }
             else
@@ -449,7 +454,7 @@ namespace AZ_Kviz
                 Player1Panel.Opacity = 0.4;
                 Player1Panel.Effect = null;
 
-                // Barva tlačítka pro odpověď na barvu hráče 2
+                // Barva tlačítka pro odpověď
                 BtnSubmit.Background = Brushes.DeepSkyBlue;
             }
         }
@@ -458,11 +463,12 @@ namespace AZ_Kviz
         private void WinningCells(List<Cell> cells)
         {
             // Záře
-            var glowEffect = new System.Windows.Media.Effects.DropShadowEffect
+            System.Windows.Media.Effects.DropShadowEffect glowEffect = new System.Windows.Media.Effects.DropShadowEffect
             {
                 BlurRadius = 30,
                 ShadowDepth = 0
             };
+
             foreach (Cell cell in cells)
             {
                 if (cell.State == CellState.Player1)
@@ -474,8 +480,9 @@ namespace AZ_Kviz
                     glowEffect.Color = Colors.DeepSkyBlue;
                 }
                 cell.Button.Effect = glowEffect;
+
                 // Animace 
-                var animation = new System.Windows.Media.Animation.DoubleAnimation
+                System.Windows.Media.Animation.DoubleAnimation animation = new System.Windows.Media.Animation.DoubleAnimation
                 {
                     From = 1.0,
                     To = 0.5,
@@ -485,39 +492,36 @@ namespace AZ_Kviz
                 };
                 cell.Button.BeginAnimation(Button.OpacityProperty, animation);
             }
-
-
         }
 
-        // Zjištění vítěze - BFS pro hledání propojení tří stran
+        // Zjištění vítěze - BFS
         private bool CheckWinner(CellState playerState, out List<Cell> connectedCells)
         {
             // Propojené pole
             connectedCells = null;
 
             List<Cell> playerCells = board.Cells.Where(c => c.State == playerState).ToList();
-            // Minimálně musí mít 7 políček, aby mohl propojit všechny strany
+
+            // Min 7 polí
             if (playerCells.Count < 7) return false;
 
-            // Navštívené pole pro BFS
+            // Navštívené pole
             List<Cell> visited = new List<Cell>();
-            
-
 
             foreach (Cell startCell in playerCells)
             {
-                // Pokud už tuto buňku navštívil, přeskočí ji
+                // Přeskočení navštívených
                 if (visited.Contains(startCell)) continue;
 
                 // Aktuální propojené pole
                 List<Cell> currentCells = new List<Cell>();
 
-                // Fronta pro BFS
+                // Fronta
                 Queue<Cell> queue = new Queue<Cell>();
                 queue.Enqueue(startCell);
                 visited.Add(startCell);
 
-                // Které strany jsou propojené
+                // Propojené strany
                 bool touchesLeft = false;
                 bool touchesRight = false;
                 bool touchesBottom = false;
@@ -533,15 +537,14 @@ namespace AZ_Kviz
                     if (current.Column == current.Row) touchesRight = true;
                     if (current.Row == 6) touchesBottom = true;
 
-                    // Když jsou propojené všechny tři strany je vítěz
+                    // 3 strany = vítěz
                     if (touchesLeft && touchesRight && touchesBottom)
                     {
                         connectedCells = currentCells;
                         return true;
                     }
-                        
 
-                    // Nalezení sousedů
+                    // Nalezení sousedních polí
                     foreach (Cell neighbor in GetNeighbors(current, playerCells))
                     {
                         if (!visited.Contains(neighbor))
@@ -552,17 +555,18 @@ namespace AZ_Kviz
                     }
                 }
             }
+
             return false;
         }
 
 
-        // Nalezení sousedních políček
+        // Nalezení sousedních polí
         private List<Cell> GetNeighbors(Cell c, List<Cell> playerCells)
         {
             int r = c.Row;
             int col = c.Column;
 
-            // Relativní souřadnice 6 sousedů v trojúhelníkové síti
+            // Relativní souřadnice sousedů
             (int dr, int dc)[] directions = new (int dr, int dc)[]
             {
                 (0, -1), (0, 1),   // vlevo, vpravo
@@ -572,7 +576,7 @@ namespace AZ_Kviz
 
             List<Cell> neighbors = new List<Cell>();
 
-            // Pro každý směr zkontroluje, zda existuje sousední buňka s danými souřadnicemi a patří hráči
+            // Kontrola polí v okolí
             foreach ((int dr, int dc) d in directions)
             {
                 Cell n = playerCells.FirstOrDefault(cell => cell.Row == r + d.dr && cell.Column == col + d.dc);
@@ -581,21 +585,19 @@ namespace AZ_Kviz
             return neighbors;
         }
 
+        // Kliknití ESC
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                MessageBoxResult result = MessageBox.Show("Opravdu chcete ukončit rozehranou hru?","Ukončení hry",MessageBoxButton.YesNo,MessageBoxImage.Warning);
+                MessageBoxResult result = MessageBox.Show("Opravdu chcete ukončit rozehranou hru?", "Ukončení hry", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    var mainWin = (Hlavni_okno)Window.GetWindow(this);
+                    Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
                     mainWin.SwitchView(new Menu());
                 }
-                
             }
         }
-
-        
     }
 }

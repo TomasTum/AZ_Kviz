@@ -24,13 +24,14 @@ namespace AZ_Kviz
             InitializeComponent();
         }
 
+        // Načtení dat
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 UpdateData();
 
-                // Zabrání výchozímu mazání řádku DataGridem a připojí vlastní obsluhu kláves
+                // Úprava zakladního chování DataGridu
                 Datagrid.CanUserDeleteRows = false;
                 Datagrid.PreviewKeyDown += Datagrid_PreviewKeyDown;
             }
@@ -40,18 +41,20 @@ namespace AZ_Kviz
             }
         }
 
+        // Konec
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
             mainWin.SwitchView(new Nastaveni());
         }
 
+        // Odebrat otázku
         private void Odebrat_Click(object sender, RoutedEventArgs e)
         {
             DeleteQuestion();
         }
 
-        // Použití PreviewKeyDown, aby výchozí chování DataGridu (smazání řádku) nebylo provedeno
+        // Kliknutí na klávesu
         private void Datagrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
@@ -61,22 +64,24 @@ namespace AZ_Kviz
             }
         }
 
+        // Přidat otázku
         private void Pridat_Click(object sender, RoutedEventArgs e)
         {
             Pridat_otazku pridat_Otazku = new Pridat_otazku();
             pridat_Otazku.ShowDialog();
             UpdateData();
-
         }
 
+        // Aktualizovat DataGrid
         private void Aktualizovat_Click(object sender, RoutedEventArgs e)
         {
             UpdateData();
         }
 
+        // Upravit otázku
         private void Upravit_Click(object sender, RoutedEventArgs e)
         {
-            if(Datagrid.SelectedItem is Question vybranyRadek)
+            if (Datagrid.SelectedItem is Question vybranyRadek)
             {
                 Upravit_otazku upravit_Otazku = new Upravit_otazku(vybranyRadek.Id);
                 upravit_Otazku.ShowDialog();
@@ -88,13 +93,14 @@ namespace AZ_Kviz
             }
         }
 
-        // Aktualizace dat v DataGridu
+        // Aktualizace dat DataGridu
         private void UpdateData()
         {
-                var data = Database.GetAllQuestions();
-                Datagrid.ItemsSource = data;
+            List<Question> data = Database.GetAllQuestions();
+            Datagrid.ItemsSource = data;
         }
 
+        // Smazání otázky
         private void DeleteQuestion()
         {
             if (Datagrid.SelectedItem is Question vybranyRadek)
@@ -127,5 +133,4 @@ namespace AZ_Kviz
             }
         }
     }
-    
 }

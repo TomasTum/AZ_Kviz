@@ -32,7 +32,6 @@ namespace AZ_Kviz
         public int Row { get; set; }
         public int Column { get; set; }
 
-        // Konstruktor
         public Cell(int id)
         {
             Id = id;
@@ -42,7 +41,7 @@ namespace AZ_Kviz
 
         FrameworkElementFactory polygonF;
 
-        // Vytvoření šestiúhelníkového tlačítka
+        // Vytvoření tlačítka
         private Button CreateButton()
         {
             Button button = new Button
@@ -61,14 +60,12 @@ namespace AZ_Kviz
             polygonF.SetValue(Polygon.PointsProperty, PointCollection.Parse("30,0 60,15 60,45 30,60 0,45 0,15"));
 
 
-            //polygonF.SetValue(Polygon.FillProperty, Brushes.White); nahrazeno níže
-            var fillBinding = new Binding("Background")
+            Binding fillBinding = new Binding("Background")
             {
                 RelativeSource = new RelativeSource(RelativeSourceMode.TemplatedParent)
             };
             polygonF.SetBinding(Polygon.FillProperty, fillBinding);
 
-            // implicitní background
             button.Background = Brushes.White;
 
             polygonF.SetValue(Polygon.StrokeProperty, Brushes.Black);
@@ -84,27 +81,21 @@ namespace AZ_Kviz
 
             template.VisualTree = grid;
             button.Template = template;
-
-            
             button.Click += (s, e) => OnClick();
 
-           
             return button;
         }
 
-
+        // Kliknutí na tlačítko
         private void OnClick()
         {
-            // Zkontrolujeme, zda je políčko volné, nebo jestli už není nějaké jiné políčko aktivní
-            if (IsAnyCellActive || (State != CellState.Free && State != CellState.Black))
-                return; 
+            if (IsAnyCellActive || (State != CellState.Free && State != CellState.Black)) return;
 
             IsAnyCellActive = true;
             Button.Background = Brushes.LightBlue;
-            
-            // Předáme samo sebe (this), aby okno vědělo, o které políčko jde
-            Clicked?.Invoke(this);
 
+            // Vyvolání událost kliknutí
+            Clicked?.Invoke(this);
         }
 
         // Nastavení čísla na tlačítko
@@ -113,18 +104,17 @@ namespace AZ_Kviz
             Button.Content = number;
         }
 
-        // Nastavení stavu políčka a jeho barvy
+        // Nastavení políčka (satv, barva)
         public void SetState(CellState newState, Brush color)
         {
             this.State = newState;
             this.Button.Background = color;
 
-            // Pokud je políčko zabrané hráčem, vypne se kurzor ruky
+            // Vypnutí ruky
             if (newState == CellState.Player1 || newState == CellState.Player2)
             {
                 Button.Cursor = System.Windows.Input.Cursors.Arrow;
             }
         }
-
     }
 }

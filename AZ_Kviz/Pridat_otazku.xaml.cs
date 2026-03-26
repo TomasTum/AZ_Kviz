@@ -25,11 +25,13 @@ namespace AZ_Kviz
             InitializeComponent();
         }
 
+        // Konec
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
+        // Přidání otázky
         private void Pridat_Click(object sender, RoutedEventArgs e)
         {
             string otazka = textbox1.Text.Trim();
@@ -47,15 +49,16 @@ namespace AZ_Kviz
                     // První písmeno otázky, odpovědi velké
                     otazka = char.ToUpper(otazka[0]) + otazka.Substring(1);
                     odpoved = char.ToUpper(odpoved[0]) + odpoved.Substring(1);
+
                     if (!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
 
-                    //Přidání otazníku na konec otázky, pokud tam není
+                    //Přidání otazníku
                     if (!otazka.EndsWith("?"))
                     {
                         otazka += "?";
                     }
 
-                    // Vytvoření zkratky z první písmen každého slova v odpovědi
+                    // Vytvoření zkratky
                     string[] slova = odpoved.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                     string zkratka = "";
 
@@ -64,6 +67,7 @@ namespace AZ_Kviz
                         zkratka += char.ToUpper(slovo[0]);
                     }
 
+                    // Existuje otázka?
                     if (Database.GetQuestionByQuestion(otazka))
                     {
                         labelvysledek.Content = "Tato otázka již existuje.";
@@ -77,8 +81,6 @@ namespace AZ_Kviz
                         textbox1.Clear();
                         textbox2.Clear();
                     }
-
-
                 }
                 catch (Exception ex)
                 {
@@ -94,18 +96,18 @@ namespace AZ_Kviz
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                this.DragMove();
+                DragMove();
             }
         }
 
+        // Kliknutí ESC
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                Close();
                 e.Handled = true;
             }
         }
     }
 }
-

@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         KeyDown="Window_KeyDown"
         FontFamily="Arial">
+
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -22,11 +24,9 @@
                 <Polygon Grid.Column="0" Points="30,0 0,40 30,80" Fill="Orange" />
                 <Rectangle Grid.Column="1" Fill="Orange" Margin="-1,0,-1,0" />
                 <Polygon Grid.Column="2" Points="0,0 30,40 0,80" Fill="Orange" />
-
                 <Polyline Grid.Column="0" Points="30,0 0,40 30,80" Stroke="#E67E22" StrokeThickness="2" />
                 <Border Grid.Column="1" BorderBrush="#E67E22" BorderThickness="0,2,0,2" />
                 <Polyline Grid.Column="2" Points="0,0 30,40 0,80" Stroke="#E67E22" StrokeThickness="2" />
-
                 <TextBlock Grid.Column="1" x:Name="TxtPlayer1Name" Text="Hráč 1" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"/>
             </Grid>
 
@@ -40,11 +40,9 @@
                 <Polygon Grid.Column="0" Points="30,0 0,40 30,80" Fill="DeepSkyBlue" />
                 <Rectangle Grid.Column="1" Fill="DeepSkyBlue" Margin="-1,0,-1,0" />
                 <Polygon Grid.Column="2" Points="0,0 30,40 0,80" Fill="DeepSkyBlue" />
-
                 <Polyline Grid.Column="0" Points="30,0 0,40 30,80" Stroke="#1F618D" StrokeThickness="2" />
                 <Border Grid.Column="1" BorderBrush="#1F618D" BorderThickness="0,2,0,2" Margin="-1,0,-1,0" />
                 <Polyline Grid.Column="2" Points="0,0 30,40 0,80" Stroke="#1F618D" StrokeThickness="2" />
-
                 <TextBlock Grid.Column="1" x:Name="TxtPlayer2Name" Text="Hráč 2" FontSize="24" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"/>
             </Grid>
 
@@ -75,9 +73,9 @@
                        MaxWidth="800"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
                 <Grid Width="80" Height="80" Margin="0,0,20,0">
                     <Polygon Points="40,0 80,20 80,60 40,80 0,60 0,20" Fill="White" Stroke="Black" StrokeThickness="2" />
-
                     <Viewbox MaxWidth="55" MaxHeight="45" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock x:Name="TxtHint" 
                            Text="V" 
@@ -89,8 +87,8 @@
                 </Grid>
 
                 <StackPanel VerticalAlignment="Center">
-                    <TextBox x:Name="TxtAnswer" Width="300" Padding="8" FontSize="18"/>
 
+                    <TextBox x:Name="TxtAnswer" Width="300" Padding="8" FontSize="18"/>
                     <Button x:Name="BtnSubmit"
                             Content="Odpovědět" 
                             Click="BtnSubmit_Click" 
@@ -103,7 +101,6 @@
                             Foreground="Black"
                             Cursor="Hand"
                             IsDefault="True"/>
-
                     <TextBlock x:Name="TxtCorrectAnswer" 
                                Text="Správná odpověď: ..." 
                                Foreground="Red" 
@@ -112,8 +109,11 @@
                                Margin="0,10,0,0" 
                                HorizontalAlignment="Center" 
                                Visibility="Collapsed"/>
+
                 </StackPanel>
+
             </StackPanel>
+
         </StackPanel>
 
         <StackPanel x:Name="SubQuestionArea"
@@ -131,6 +131,7 @@
                MaxWidth="800"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
                 <Button x:Name="BtnYes" Content="ANO" Width="150" Height="70" Margin="10" Click="BtnYes_Click" Background="Orange" FontSize="22" FontWeight="Bold" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -143,7 +144,6 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-
                 <Button x:Name="BtnNo" Content="NE" Width="150" Height="70" Margin="10" Click="BtnNo_Click" Background="DeepSkyBlue" FontSize="22" FontWeight="Bold" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -156,7 +156,9 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
+
             </StackPanel>
+
             <TextBlock x:Name="TxtSubCorrectAnswer" 
                Text="Správná odpověď: ..." 
                Foreground="Red" 
@@ -165,6 +167,9 @@
                Margin="0,10,0,0" 
                HorizontalAlignment="Center" 
                Visibility="Collapsed"/>
+
         </StackPanel>
+
     </Grid>
+
 </UserControl>

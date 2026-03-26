@@ -13,21 +13,27 @@
         FontFamily="Arial"
         MouseLeftButtonDown="Window_MouseDown"
         PreviewKeyDown="Window_PreviewKeyDown">
-    
+
     <Border BorderBrush="Black" BorderThickness="2">
+
         <Grid>
+
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Label Content="Přidat otázku" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center"/>
+
+                <Label Content="Přidat otázku" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center" />
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
-                    <Label Content="Otázka:" Margin="20,0,20,0" FontSize="20" Width="180"/>
-                    <TextBox x:Name="textbox1" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center"/>
+                    <Label Content="Otázka:" Margin="20,0,20,0" FontSize="20" Width="180" />
+                    <TextBox x:Name="textbox1" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" />
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-                    <Label Content="Správná odpověď:" Margin="20,0,20,0" FontSize="20" Width="180"/>
-                    <TextBox x:Name="textbox2" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center"/>
+                    <Label Content="Správná odpověď:" Margin="20,0,20,0" FontSize="20" Width="180" />
+                    <TextBox x:Name="textbox2" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" />
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-                    <Label Content="Kategorie:" Margin="20,0,20,0" FontSize="20" Width="180"/>
+                    <Label Content="Kategorie:" Margin="20,0,20,0" FontSize="20" Width="180" />
                     <ComboBox x:Name="combobox1" IsEditable="False" Width="300" FontSize="20" Margin="0,0,20,0" Cursor="Hand">
                         <ComboBoxItem>Technika a zajímavosti</ComboBoxItem>
                         <ComboBoxItem>Historie a zeměpis</ComboBoxItem>
@@ -36,10 +42,15 @@
                         <ComboBoxItem>Sport</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
-                <Label x:Name="labelvysledek" Content="" Margin="0,20,0,50" FontSize="20" FontWeight="Bold" Width="400" HorizontalContentAlignment="Center"/>
+
+                <Label x:Name="labelvysledek" Content="" Margin="0,20,0,50" FontSize="20" FontWeight="Bold" Width="400" HorizontalContentAlignment="Center" />
                 <Button Content="Uložit" Margin="0,0,0,100" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Pridat_Click" />
                 <Button Content="Zpět" Margin="0,0,0,20" Height="45" Width="150"  FontSize="20" Background="Orange" Cursor="Hand" Click="Konec_Click" />
+
             </StackPanel>
+
         </Grid>
+
     </Border>
+
 </Window>

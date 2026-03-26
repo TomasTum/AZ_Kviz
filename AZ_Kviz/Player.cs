@@ -13,7 +13,7 @@ namespace AZ_Kviz
     {
         public string Name { get; set; }
         public Brush PlayerColor { get; set; }
-        public CellState State { get; set; } // Určuje, zda hráč obsazuje políčka jako Player1 nebo Player2
+        public CellState State { get; set; }
 
         public Player(string name, Brush color, CellState state)
         {

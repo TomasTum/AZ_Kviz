@@ -21,7 +21,7 @@ namespace AZ_Kviz
     public partial class Upravit2_otazku : Window
     {
 
-        private (string Otazka, string Odpoved, string Kategorie)? question;
+        (string Otazka, string Odpoved, string Kategorie)? question;
         int id;
 
         public Upravit2_otazku(int index)
@@ -39,15 +39,17 @@ namespace AZ_Kviz
             else
             {
                 MessageBox.Show("Otázka s daným ID nebyla nalezena.", "Chyba");
-                this.Close();
+                Close();
             }
         }
 
+        // Konec
         private void Konec_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
+        // Upravení otázky
         private async void Upravit_Click(object sender, RoutedEventArgs e)
         {
             string otazka = textbox1.Text.Trim();
@@ -67,19 +69,18 @@ namespace AZ_Kviz
                     odpoved = char.ToUpper(odpoved[0]) + odpoved.Substring(1);
                     if (!string.IsNullOrWhiteSpace(kategorie)) kategorie = char.ToUpper(kategorie[0]) + kategorie.Substring(1);
 
-                    // Přidání otazníku na konec otázky, pokud tam není
+                    // Přidání otazníku
                     if (!otazka.EndsWith("?"))
                     {
                         otazka += "?";
                     }
-
 
                     Database.UpdateSubQuestion(id, otazka, odpoved, kategorie);
                     labelvysledek.Content = "Otázka byla úspěšně upravena.";
                     labelvysledek.Background = Brushes.LightGreen;
                     textbox1.Clear();
                     await Task.Delay(1000);
-                    this.Close();
+                    Close();
                 }
                 catch (Exception ex)
                 {
@@ -94,15 +95,16 @@ namespace AZ_Kviz
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                this.DragMove();
+                DragMove();
             }
         }
 
+        // Kluknití ESC
         private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                Close();
                 e.Handled = true;
             }
         }

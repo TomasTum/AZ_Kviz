@@ -14,6 +14,5 @@ namespace AZ_Kviz
         public string SpravnaOdpoved { get; set; }
         public string Zkratka { get; set; }
         public string Kategorie { get; set; }
-
     }
 }

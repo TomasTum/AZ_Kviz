@@ -19,7 +19,7 @@ namespace AZ_Kviz
         private static string connectionString1 => $"Data Source={Path.GetFullPath(dbPath1)}";
         private static string connectionString2 => $"Data Source={Path.GetFullPath(dbPath2)}";
 
-        // Získání připojení k databázi
+        // Připojení k databázi
         public static SqliteConnection GetConnection()
         {
             string chosenPath;
@@ -37,16 +37,13 @@ namespace AZ_Kviz
             }
             else
             {
+                // Vytvoření databáze, pokud neexistuje
                 chosenConnection = connectionString2;
-
-                // Zjištění že složka Data existuje
                 string directory = Path.GetDirectoryName(dbPath2);
                 if (!Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);
                 }
-
-                // Vytvoření databáze
                 CreateDatabase(chosenConnection);
             }
 
@@ -56,12 +53,11 @@ namespace AZ_Kviz
         // Vytvoření databáze
         private static void CreateDatabase(string connectionString)
         {
-            using (var connection = new SqliteConnection(connectionString))
+            using (SqliteConnection connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SqliteCommand command = connection.CreateCommand())
                 {
-                    // SQL příkazy přesně podle tvých obrázků
                     command.CommandText = @"
                     CREATE TABLE IF NOT EXISTS ""Questions"" (
                         ""Id"" INTEGER NOT NULL,
@@ -88,14 +84,14 @@ namespace AZ_Kviz
         // Načtení otázky podle ID
         public static (string Otazka, string Odpoved, string Zkratka, string Kategorie)? GetQuestionById(int id)
         {
-            using var connection = GetConnection();
+            using SqliteConnection connection = GetConnection();
             connection.Open();
 
-            using var cmd = connection.CreateCommand();
+            using SqliteCommand cmd = connection.CreateCommand();
             cmd.CommandText = "SELECT QuestionText, CorrectAnswer, Shortcut, Category FROM Questions WHERE Id = @id";
             cmd.Parameters.AddWithValue("@id", id);
 
-            using var reader = cmd.ExecuteReader();
+            using SqliteDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
                 string otazka = reader.GetString(0);
@@ -111,17 +107,17 @@ namespace AZ_Kviz
             }
         }
 
-        // Načtení nahradní otázky podle ID
+        // Načtení náhradní otázky podle ID
         public static (string Otazka, string Odpoved, string Kategorie)? GetSubQuestionById(int id)
         {
-            using var connection = GetConnection();
+            using SqliteConnection connection = GetConnection();
             connection.Open();
 
-            using var cmd = connection.CreateCommand();
+            using SqliteCommand cmd = connection.CreateCommand();
             cmd.CommandText = "SELECT QuestionText, CorrectAnswer, Category FROM SubQuestions WHERE Id = @id";
             cmd.Parameters.AddWithValue("@id", id);
 
-            using var reader = cmd.ExecuteReader();
+            using SqliteDataReader reader = cmd.ExecuteReader();
             if (reader.Read())
             {
                 string otazka = reader.GetString(0);
@@ -131,38 +127,36 @@ namespace AZ_Kviz
             }
             else
             {
-                Console.WriteLine($"Otázka s ID {id} nebyla nalezena.");
+                Console.WriteLine($"Náhradní otázka s ID {id} nebyla nalezena.");
                 return null;
             }
         }
 
-        // Zjištění jestli existuje otázka podle Otázky
+        // Existuje otázka?
         public static bool GetQuestionByQuestion(string question)
         {
-            using var connection = GetConnection();
+            using SqliteConnection connection = GetConnection();
             connection.Open();
 
-            using var cmd = connection.CreateCommand();
+            using SqliteCommand cmd = connection.CreateCommand();
             cmd.CommandText = "SELECT COUNT(1) FROM Questions WHERE QuestionText = @question";
             cmd.Parameters.AddWithValue("@question", question);
 
-            // Počet záznamů, které odpovídají hledané otázce (vrací v long)
             long count = (long)cmd.ExecuteScalar();
 
             return count > 0;
         }
 
-        // Zjištění jestli existuje náhradní otázka podle Otázky
+        // Existuje náhradní otázka?
         public static bool GetSubQuestionByQuestion(string question)
         {
-            using var connection = GetConnection();
+            using SqliteConnection connection = GetConnection();
             connection.Open();
 
-            using var cmd = connection.CreateCommand();
+            using SqliteCommand cmd = connection.CreateCommand();
             cmd.CommandText = "SELECT COUNT(1) FROM SubQuestions WHERE QuestionText = @question";
             cmd.Parameters.AddWithValue("@question", question);
 
-            // Počet záznamů, které odpovídají hledané otázce (vrací v long)
             long count = (long)cmd.ExecuteScalar();
 
             return count > 0;
@@ -171,16 +165,15 @@ namespace AZ_Kviz
         // Načtení všech otázek
         public static List<Question> GetAllQuestions()
         {
-            var seznam = new List<Question>();
+            List<Question> seznam = new List<Question>();
 
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var cmd = connection.CreateCommand())
+                using (SqliteCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Shortcut, Category FROM Questions";
-
-                    using (var reader = cmd.ExecuteReader())
+                    using (SqliteDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -190,29 +183,28 @@ namespace AZ_Kviz
                                 Otazka = reader.GetString(1),
                                 SpravnaOdpoved = reader.GetString(2),
                                 Zkratka = reader.GetString(3),
-                                // Ošetření, kdyby kategorie byla prázdná (null)
                                 Kategorie = reader.IsDBNull(4) ? "" : reader.GetString(4)
                             });
                         }
                     }
                 }
             }
+
             return seznam;
         }
 
         // Načtení všech náhradních otázek
         public static List<Question> GetAllSubQuestions()
         {
-            var seznam = new List<Question>();
+            List<Question> seznam = new List<Question>();
 
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var cmd = connection.CreateCommand())
+                using (SqliteCommand cmd = connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Category FROM SubQuestions";
-
-                    using (var reader = cmd.ExecuteReader())
+                    using (SqliteDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -221,25 +213,25 @@ namespace AZ_Kviz
                                 Id = reader.GetInt32(0),
                                 Otazka = reader.GetString(1),
                                 SpravnaOdpoved = reader.GetString(2),
-                                // Ošetření, kdyby kategorie byla prázdná (null)
                                 Kategorie = reader.IsDBNull(3) ? "" : reader.GetString(3)
                             });
                         }
                     }
                 }
             }
+
             return seznam;
         }
 
-        // Načtení všech otázek, filtrovaných podle kategorie
+        // Načtení všech otázek, podle kategorie
         public static List<Question> GetAllQuestions(string kategorie)
         {
-            var seznam = new List<Question>();
+            List<Question> seznam = new List<Question>();
 
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var cmd = connection.CreateCommand())
+                using (SqliteCommand cmd = connection.CreateCommand())
                 {
                     if (kategorie == "Vše")
                     {
@@ -250,8 +242,7 @@ namespace AZ_Kviz
                         cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Shortcut, Category FROM Questions WHERE Category = @kategorie";
                         cmd.Parameters.AddWithValue("@kategorie", kategorie);
                     }
-
-                    using (var reader = cmd.ExecuteReader())
+                    using (SqliteDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -261,25 +252,25 @@ namespace AZ_Kviz
                                 Otazka = reader.GetString(1),
                                 SpravnaOdpoved = reader.GetString(2),
                                 Zkratka = reader.GetString(3),
-                                // Ošetření, kdyby kategorie byla prázdná (null)
                                 Kategorie = reader.IsDBNull(4) ? "" : reader.GetString(4)
                             });
                         }
                     }
                 }
             }
+
             return seznam;
         }
 
-        // Načtení všech náhradních otázek, filtrovaných podle kategorie
+        // Načtení všech náhradních otázek, podle kategorie
         public static List<Question> GetAllSubQuestions(string kategorie)
         {
-            var seznam = new List<Question>();
+            List<Question> seznam = new List<Question>();
 
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var cmd = connection.CreateCommand())
+                using (SqliteCommand cmd = connection.CreateCommand())
                 {
                     if (kategorie == "Vše")
                     {
@@ -290,8 +281,7 @@ namespace AZ_Kviz
                         cmd.CommandText = "SELECT Id, QuestionText, CorrectAnswer, Category FROM SubQuestions WHERE Category = @kategorie";
                         cmd.Parameters.AddWithValue("@kategorie", kategorie);
                     }
-
-                    using (var reader = cmd.ExecuteReader())
+                    using (SqliteDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -300,57 +290,55 @@ namespace AZ_Kviz
                                 Id = reader.GetInt32(0),
                                 Otazka = reader.GetString(1),
                                 SpravnaOdpoved = reader.GetString(2),
-                                // Ošetření, kdyby kategorie byla prázdná (null)
                                 Kategorie = reader.IsDBNull(3) ? "" : reader.GetString(3)
                             });
                         }
                     }
                 }
             }
+
             return seznam;
         }
 
-        // Smazání otázky z databáze podle ID
+        // Smazání otázky, podle ID
         public static void DeleteQuestion(int id)
         {
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SqliteCommand command = connection.CreateCommand())
                 {
                     command.CommandText = "DELETE FROM Questions WHERE Id = @id";
                     command.Parameters.AddWithValue("@id", id);
-
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        // Smazání náhradní otázky z databáze podle ID
+        // Smazání náhradní otázky, podle ID
         public static void DeleteSubQuestion(int id)
         {
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SqliteCommand command = connection.CreateCommand())
                 {
                     command.CommandText = "DELETE FROM SubQuestions WHERE Id = @id";
                     command.Parameters.AddWithValue("@id", id);
-
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        // Přidání nové otázky do databáze
+        // Přidání otázky
         public static void AddQuestion(string otazka, string odpoved, string zkratka, string kategorie)
         {
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SqliteCommand command = connection.CreateCommand())
                 {
-                    //Zjistíme nejmenší volné ID pro novou otázku
+                    // Nejmenší volné ID
                     command.CommandText = @"
                         INSERT INTO Questions (Id, QuestionText, CorrectAnswer, Shortcut, Category)
                         VALUES (
@@ -363,20 +351,20 @@ namespace AZ_Kviz
                     command.Parameters.AddWithValue("@odpoved", odpoved);
                     command.Parameters.AddWithValue("@zkratka", zkratka);
                     command.Parameters.AddWithValue("@kategorie", string.IsNullOrEmpty(kategorie) ? (object)DBNull.Value : kategorie);
-
                     command.ExecuteNonQuery();
                 }
             }
         }
 
+        // Přidání náhradní otázky
         public static void AddSubQuestion(string otazka, string odpoved, string kategorie)
         {
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SqliteCommand command = connection.CreateCommand())
                 {
-                    //Zjistíme nejmenší volné ID pro novou náhradní otázku (v tabulce SubQuestions)
+                    // Nejmenší volné ID
                     command.CommandText = @"
                         INSERT INTO SubQuestions (Id, QuestionText, CorrectAnswer, Category)
                         VALUES (
@@ -388,19 +376,18 @@ namespace AZ_Kviz
                     command.Parameters.AddWithValue("@otazka", otazka);
                     command.Parameters.AddWithValue("@odpoved", odpoved);
                     command.Parameters.AddWithValue("@kategorie", string.IsNullOrEmpty(kategorie) ? (object)DBNull.Value : kategorie);
-
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        // Upravení existující otázky v databázi podle ID
+        // Upravení otázky, podle ID
         public static void UpdateQuestion(int id, string otazka, string odpoved, string zkratka, string kategorie)
         {
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SqliteCommand command = connection.CreateCommand())
                 {
                     command.CommandText = @"
                         UPDATE Questions
@@ -414,19 +401,18 @@ namespace AZ_Kviz
                     command.Parameters.AddWithValue("@odpoved", odpoved);
                     command.Parameters.AddWithValue("@zkratka", zkratka);
                     command.Parameters.AddWithValue("@kategorie", string.IsNullOrEmpty(kategorie) ? (object)DBNull.Value : kategorie);
-
                     command.ExecuteNonQuery();
                 }
             }
         }
 
-        // Upravení existující náhradní otázky v databázi podle ID
+        // Upravení náhradní otázky, podle ID
         public static void UpdateSubQuestion(int id, string otazka, string odpoved, string kategorie)
         {
-            using (var connection = GetConnection())
+            using (SqliteConnection connection = GetConnection())
             {
                 connection.Open();
-                using (var command = connection.CreateCommand())
+                using (SqliteCommand command = connection.CreateCommand())
                 {
                     command.CommandText = @"
                         UPDATE SubQuestions
@@ -438,7 +424,6 @@ namespace AZ_Kviz
                     command.Parameters.AddWithValue("@otazka", otazka);
                     command.Parameters.AddWithValue("@odpoved", odpoved);
                     command.Parameters.AddWithValue("@kategorie", string.IsNullOrEmpty(kategorie) ? (object)DBNull.Value : kategorie);
-
                     command.ExecuteNonQuery();
                 }
             }

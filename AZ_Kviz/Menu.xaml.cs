@@ -25,13 +25,13 @@ namespace AZ_Kviz
 
         private void Hra_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
             mainWin.SwitchView(new Nastaveni_hracu());
         }
 
         private void Nastaveni_Click(object sender, RoutedEventArgs e)
         {
-            var mainWin = (Hlavni_okno)Window.GetWindow(this);
+            Hlavni_okno mainWin = (Hlavni_okno)Window.GetWindow(this);
             mainWin.SwitchView(new Nastaveni());
         }
 

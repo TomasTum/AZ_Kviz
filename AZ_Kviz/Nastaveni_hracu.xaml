@@ -6,19 +6,25 @@
         xmlns:local="clr-namespace:AZ_Kviz"
         mc:Ignorable="d"
         FontFamily="Arial">
+
     <Grid>
+
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Nová hra" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center"/>
+
+            <Label Content="Nová hra" FontWeight="Bold" FontSize="40" Margin="0,0,0,0" HorizontalContentAlignment="Center" />
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,20">
-                <Label Content="Hráč 1:"  Margin="20,0,20,0" FontSize="20" Width="230"/>
-                <TextBox x:Name="jmeno1" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" MaxLength="30"/>
+                <Label Content="Hráč 1:"  Margin="20,0,20,0" FontSize="20" Width="230" />
+                <TextBox x:Name="jmeno1" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" MaxLength="30" />
             </StackPanel>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-                <Label Content="Hráč 2:"  Margin="20,0,20,0" FontSize="20" Width="230"/>
-                <TextBox x:Name="jmeno2" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" MaxLength="30"/>
+                <Label Content="Hráč 2:"  Margin="20,0,20,0" FontSize="20" Width="230" />
+                <TextBox x:Name="jmeno2" Margin="0,0,20,0" Width="300" FontSize="20" VerticalContentAlignment="Center" MaxLength="30" />
             </StackPanel>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-                <Label Content="Kategorie otázek ve hře:"  Margin="20,0,20,0" FontSize="20" Width="230"/>
+                <Label Content="Kategorie otázek ve hře:"  Margin="20,0,20,0" FontSize="20" Width="230" />
                 <ComboBox x:Name="kategorieselect" IsEditable="False" Width="300" FontSize="20" Margin="0,0,20,0" SelectedIndex="0">
                     <ComboBoxItem Tag="Vše">Vše</ComboBoxItem>
                     <ComboBoxItem Tag="Technika a zajímavosti">Technika a zajímavosti</ComboBoxItem>
@@ -29,8 +35,12 @@
                     <ComboBoxItem Tag="Jednoduché">Jednoduché</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
+
             <Button Content="Hrát" Margin="0,50,0,150" FontSize="20" Height="45" Width="200" Background="Orange" Cursor="Hand" Click="Button_Click" />
             <Button Content="Zpět" Margin="0,0,0,20" Height="45" Width="150" FontSize="20" Background="Orange" Cursor="Hand" Click="Zpet_Click" />
+
         </StackPanel>
+
     </Grid>
+
 </UserControl>

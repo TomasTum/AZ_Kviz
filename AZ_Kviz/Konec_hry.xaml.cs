@@ -30,23 +30,23 @@ namespace AZ_Kviz
         // Spuštění nové hry
         private void Nova_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner is Hlavni_okno mainWin)
+            if (Owner is Hlavni_okno mainWin)
             {
                 mainWin.SwitchView(new Nastaveni_hracu());
             }
 
-            this.Close();
+            Close();
         }
 
         // Zavření hry
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner is Hlavni_okno mainWin)
+            if (Owner is Hlavni_okno mainWin)
             {
                 mainWin.SwitchView(new Menu());
             }
 
-            this.Close();
+            Close();
         }
 
 
@@ -55,7 +55,7 @@ namespace AZ_Kviz
         {
             if (e.ChangedButton == MouseButton.Left)
             {
-                this.DragMove();
+                DragMove();
             }
         }
     }
