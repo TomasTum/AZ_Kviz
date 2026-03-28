@@ -11,9 +11,9 @@ namespace AZ_Kviz
 {
     public class Database
     {
-        // Cesta k databázi ve Visual Studiu
+        // Cesta ve Visual Studiu
         private static string dbPath1 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\Data", "azkviz.db");
-        // Cesta k databázi v publikované aplikaci
+        // Cesta v publikované aplikaci
         private static string dbPath2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "azkviz.db");
 
         private static string connectionString1 => $"Data Source={Path.GetFullPath(dbPath1)}";
